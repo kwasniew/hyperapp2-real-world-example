@@ -1,6 +1,6 @@
 import { app } from "./web_modules/hyperapp.js";
 import { html } from "./html.js";
-import {RoutePages} from "./routerSubscription.js";
+import {RoutePages} from "./Router.js";
 import {mapValues} from "./object.js";
 
 const initialState = {
