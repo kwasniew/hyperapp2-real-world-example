@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "postinstall": "pika-web --dest src/web_modules",
+    "build": "parcel build src/index.html",
+    "test": "tape -r esm test/unit/*Test.js | faucet",
+    "start": "http-server src"
+  },
+  "dependencies": {
+    "htm": "2.1.1",
+    "hyperapp": "2.0.0-beta.22",
+    "hyperapp-fx": "2.0.0-beta.1",
+    "snarkdown": "1.2.2"
+  },
+  "devDependencies": {
+    "@pika/web": "0.4.3",
+    "esm": "3.2.25",
+    "faucet": "0.0.1",
+    "http-server": "0.11.1",
+    "prettier": "1.18.2",
+    "tape": "4.10.2"
+  }
+}
