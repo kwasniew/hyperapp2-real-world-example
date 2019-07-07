@@ -82,7 +82,7 @@ export const ChangeTab = (state, { name, type }) => {
 
 export const LoadHomePage = page => state => {
   const newState = {
-    ...state,
+    user: state.user,
     page,
     active: GLOBAL_FEED,
     feeds: [

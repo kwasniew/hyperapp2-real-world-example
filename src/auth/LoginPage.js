@@ -1,6 +1,6 @@
 import { html } from "../shared/html.js";
 import { REGISTER } from "../routing/pages.js";
-import { ChangeEmail, ChangePassword } from "./actions.js";
+import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
 import { targetValue } from "../shared/events.js";
 
 export const LoginPage = ({ email, password, inProgress, error }) => html`
@@ -13,7 +13,7 @@ export const LoginPage = ({ email, password, inProgress, error }) => html`
             <a href=${REGISTER}>Need an account?</a>
           </p>
 
-          <form>
+          <form onsubmit=${SubmitLogin}>
             <fieldset>
               <fieldset class="form-group">
                 <input
