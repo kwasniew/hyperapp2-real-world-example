@@ -1,4 +1,4 @@
-import { homePage } from "../home/view.js";
+import { HomePage } from "../home/view.js";
 import { registerPage } from "../register/view.js";
 
 // export const pages = {
@@ -24,7 +24,7 @@ export const PROFILE = "/profile/:username";
 export const PROFILE_FAVORITED = "/profile/:username/favorited";
 
 export const pages = {
-  [HOME]: homePage,
+  [HOME]: HomePage,
   [LOGIN]: registerPage,
   [REGISTER]: registerPage,
   [NEW_EDITOR]: registerPage,
