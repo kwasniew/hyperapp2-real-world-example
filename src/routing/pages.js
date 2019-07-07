@@ -1,5 +1,6 @@
-import { HomePage } from "../home/view.js";
+import { HomePage } from "../home/HomePage.js";
 import { registerPage } from "../register/view.js";
+import {LoadHomePage} from "../home/actions.js";
 
 // export const pages = {
 //   "/": homePage,
@@ -29,6 +30,10 @@ export const pages = {
   [REGISTER]: registerPage,
   [NEW_EDITOR]: registerPage,
   [SETTINGS]: registerPage
+};
+
+export const routes = {
+  [HOME]: LoadHomePage(HOME)
 };
 
 export const article = slug => ARTICLE.replace(":slug", slug);

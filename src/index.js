@@ -1,12 +1,11 @@
 import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./routing/Router.js";
-import { arrayToObject } from "./shared/object.js";
 import { view } from "./shared/view.js";
-import { pages, HOME } from "./routing/pages.js";
-import {FetchArticles} from "./home/actions.js";
+import { pages, routes, HOME } from "./routing/pages.js";
 
 const initialState = {
   page: HOME,
+  articles: [],
   // user: {
   //   image:
   //     "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
@@ -16,11 +15,8 @@ const initialState = {
   isLoading: false
 };
 
-const SetPage = page => (state, params) => ({ ...state, page });
-const routes = arrayToObject(SetPage)(Object.keys(pages));
-
 app({
-  init: () => [initialState, FetchArticles],
+  init: () => [initialState],
   view,
   subscriptions: state => [RoutePages({ routes })],
   node: document.getElementById("app")
