@@ -31,6 +31,16 @@ const FeedTab = ({ active, visible, type, name }, children) =>
       `
     : "";
 
+const FavoriteButton = ({ article }) => {
+  const style = article.favorited ? "btn-primary" : "btn-outline-primary";
+
+  return html`
+    <button class=${"btn btn-sm btn-primary pull-xs-right " + style}>
+      <i class="ion-heart" /> ${article.favoritesCount}
+    </button>
+  `;
+};
+
 const ArticlePreview = ({ article }) => html`
   <div class="article-preview">
     <div class="article-meta">
@@ -43,6 +53,7 @@ const ArticlePreview = ({ article }) => html`
         </a>
         <span class="date">${format(article.createdAt)}</span>
       </div>
+      ${FavoriteButton({ article })}
     </div>
     <a href=${articleLink(article.slug)} class="preview-link">
       <h1>${article.title}</h1>
@@ -61,7 +72,7 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
-const ListPagination = ({pages}) => {
+const ListPagination = ({ pages }) => {
   if (pages.length < 2) {
     return "";
   }
@@ -90,7 +101,7 @@ const ListPagination = ({pages}) => {
   `;
 };
 
-const ArticleList = ({isLoading, articles, pages}) => {
+const ArticleList = ({ isLoading, articles, pages }) => {
   if (isLoading) {
     return html`
       <div class="article-preview">Loading...</div>
@@ -104,7 +115,7 @@ const ArticleList = ({isLoading, articles, pages}) => {
   return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
-      ${ListPagination({pages})}
+      ${ListPagination({ pages })}
     </div>
   `;
 };

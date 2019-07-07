@@ -1,8 +1,7 @@
 import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./routing/Router.js";
 import { view } from "./shared/view.js";
-import { pages, routes, HOME } from "./routing/pages.js";
-import { USER_FEED, GLOBAL_FEED, TAG_FEED } from "./home/feeds.js";
+import { routes } from "./routing/pages.js";
 
 const initialState = {
   // user: {
