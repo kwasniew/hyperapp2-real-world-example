@@ -1,8 +1,9 @@
 import { HomePage } from "../home/HomePage.js";
 import { registerPage } from "../register/view.js";
 import { LoadHomePage } from "../home/actions.js";
-import { LoadLoginPage } from "../auth/actions.js";
-import {LoginPage} from "../auth/LoginPage.js";
+import { LoadLoginPage, LoadRegisterPage } from "../auth/actions.js";
+import { LoginPage } from "../auth/LoginPage.js";
+import { RegisterPage } from "../auth/RegisterPage.js";
 
 // export const pages = {
 //   "/": homePage,
@@ -29,14 +30,15 @@ export const PROFILE_FAVORITED = "/profile/:username/favorited";
 export const pages = {
   [HOME]: HomePage,
   [LOGIN]: LoginPage,
-  [REGISTER]: registerPage,
+  [REGISTER]: RegisterPage,
   [NEW_EDITOR]: registerPage,
   [SETTINGS]: registerPage
 };
 
 export const routes = {
   [HOME]: LoadHomePage(HOME),
-  [LOGIN]: LoadLoginPage(LOGIN)
+  [LOGIN]: LoadLoginPage(LOGIN),
+  [REGISTER]: LoadRegisterPage(REGISTER)
 };
 
 export const article = slug => ARTICLE.replace(":slug", slug);

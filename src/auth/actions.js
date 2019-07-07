@@ -1,9 +1,21 @@
+const defaultAuthFields = {
+  email: "",
+  password: "",
+  inProgress: false,
+  errors: {}
+};
+
 export const LoadLoginPage = page => state => {
-    return {
-        page,
-        email: "",
-        password: "",
-        inProgress: false,
-        errors: {}
-    };
+  return {
+    page,
+    ...defaultAuthFields
+  };
+};
+
+export const LoadRegisterPage = page => state => {
+  return {
+    page,
+    ...defaultAuthFields,
+    username: ""
+  };
 };
