@@ -31,4 +31,5 @@ export const pages = {
   [SETTINGS]: registerPage
 };
 
+export const article = slug => ARTICLE.replace(":slug", slug);
 export const profile = username => PROFILE.replace(":username", username);

@@ -2,6 +2,8 @@ import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
 import { ChangeTab } from "./actions.js";
 import { GLOBAL_FEED } from "./feeds.js";
+import { profile, article as articleLink } from "../routing/pages.js";
+import { format } from "../shared/date.js";
 
 const Banner = () =>
   html`
@@ -26,6 +28,36 @@ const GlobalFeedTab = ({ active }) =>
     </li>
   `;
 
+const ArticlePreview = ({ article }) => html`
+  <div class="article-preview">
+    <div class="article-meta">
+      <a href=${profile(article.author.username)}>
+        <img src=${article.author.image} />
+      </a>
+      <div class="info">
+        <a class="author" href=${profile(article.author.username)}>
+          ${article.author.username}
+        </a>
+        <span class="date">${format(article.createdAt)}</span>
+      </div>
+    </div>
+    <a href=${articleLink(article.slug)} class="preview-link">
+      <h1>${article.title}</h1>
+      <p>${article.description}</p>
+      <span>Read more...</span>
+      <ul class="tag-list">
+        ${article.tagList.map(tag => {
+          return html`
+            <li class="tag-default tag-pill tag-outline" key=${tag}>
+              ${tag}
+            </li>
+          `;
+        })}
+      </ul>
+    </a>
+  </div>
+`;
+
 const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   if (isLoading) {
     return html`
@@ -39,7 +71,7 @@ const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   }
   return html`
     <div>
-      ${articles.length}
+      ${articles.map(article => ArticlePreview({ article }))}
     </div>
   `;
 };
