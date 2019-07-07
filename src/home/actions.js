@@ -22,7 +22,7 @@ export const FetchTags = Http({
   action: SetTags
 });
 
-const FetchArticlesEffect = feeds => {
+const FetchArticles = feeds => {
     const activeFeed = Object.values(feeds).find(feed => feed.active);
     if(activeFeed.type === GLOBAL_FEED) {
         return FetchGlobalFeed;
@@ -51,10 +51,10 @@ export const ChangeTab = (state, {name, type}) => {
   };
   const feeds = mapValues(updateFeed)(state.feeds);
   const newState = { ...state, feeds, articles: [], isLoading: true };
-  return [newState, [preventDefault, FetchArticlesEffect(feeds)]];
+  return [newState, [preventDefault, FetchArticles(feeds)]];
 };
 
 export const LoadHomePage = page => state => [
   { ...state, page, articles: [], currentPage: 0, tags: [], isLoading: true },
-  [FetchArticlesEffect(state.feeds), FetchTags]
+  [FetchArticles(state.feeds), FetchTags]
 ];

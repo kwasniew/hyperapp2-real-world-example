@@ -97,7 +97,6 @@ const Tags = ({ tags }) => html`
 
 export const HomePage = ({
   user,
-  tab,
   articles,
   articlesCount,
   currentPage,
