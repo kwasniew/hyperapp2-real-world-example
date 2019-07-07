@@ -25,6 +25,7 @@ export const PROFILE_FAVORITED = "/profile/:username/favorited";
 
 export const pages = {
     [HOME]: homePage,
+    [LOGIN]: registerPage,
     [REGISTER]: registerPage
 };
 

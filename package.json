@@ -6,6 +6,7 @@
     "start": "http-server src"
   },
   "dependencies": {
+    "classcat": "4.0.2",
     "htm": "2.1.1",
     "hyperapp": "2.0.0-beta.22",
     "hyperapp-fx": "2.0.0-beta.1",
