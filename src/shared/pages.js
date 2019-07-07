@@ -24,10 +24,11 @@ export const PROFILE = "/profile/:username";
 export const PROFILE_FAVORITED = "/profile/:username/favorited";
 
 export const pages = {
-    [HOME]: homePage,
-    [LOGIN]: registerPage,
-    [REGISTER]: registerPage
+  [HOME]: homePage,
+  [LOGIN]: registerPage,
+  [REGISTER]: registerPage,
+  [NEW_EDITOR]: registerPage,
+  [SETTINGS]: registerPage
 };
 
-
-
+export const profile = username => PROFILE.replace(":username", username);

@@ -6,7 +6,11 @@ import { view } from "./shared/layout.js";
 import { pages, HOME } from "./shared/pages.js";
 
 const initialState = {
-  page: HOME
+  page: HOME,
+  user: {
+    image: "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
+    name: "matt"
+  }
 };
 
 const SetPage = page => (state, params) => ({ ...state, page });

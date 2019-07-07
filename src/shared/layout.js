@@ -1,8 +1,16 @@
 import { html } from "../html.js";
-import { pages, HOME, LOGIN, REGISTER } from "./pages.js";
+import {
+  pages,
+  profile,
+  HOME,
+  LOGIN,
+  REGISTER,
+  NEW_EDITOR,
+  SETTINGS
+} from "./pages.js";
 import cc from "../web_modules/classcat.js";
 
-const navItem = ({ page, path }, children) => html`
+const NavItem = ({ page, path }, children) => html`
   <li class="nav-item">
     <a
       href="${path}"
@@ -13,49 +21,60 @@ const navItem = ({ page, path }, children) => html`
   </li>
 `;
 
-const userView = (page, user) => html`
-  <ul class="nav navbar-nav pull-xs-right"></ul>
-`;
-
-const anonymousView = page => html`
+const UserView = ({ page, user }) => html`
   <ul class="nav navbar-nav pull-xs-right">
-    ${navItem(
-      { page, path: HOME },
+    ${NavItem({ page, path: HOME }, "Home")}
+    ${NavItem(
+      { page, path: NEW_EDITOR },
       html`
-        Home
+        <i class="ion-compose" /> New Post
       `
     )}
-    ${navItem(
-      { page, path: LOGIN },
+    ${NavItem(
+      { page, path: SETTINGS },
       html`
-        Sign In
+        <i class="ion-gear-a" /> Settings
       `
     )}
-    ${navItem(
-      { page, path: REGISTER },
+    ${NavItem(
+      { page, path: profile(user.name) },
       html`
-        Sign Up
+        ${user.image
+          ? html`
+              <img src="${user.image}" class="user-pic" alt="${user.name}" />
+            `
+          : ""}
+        ${user.name}
       `
     )}
   </ul>
 `;
 
-const header = (page, user) =>
+const AnonymousView = ({ page }) => html`
+  <ul class="nav navbar-nav pull-xs-right">
+    ${NavItem({ page, path: HOME }, "Home")}
+    ${NavItem({ page, path: LOGIN }, "Sign in")}
+    ${NavItem({ page, path: REGISTER }, "Sign up")}
+  </ul>
+`;
+
+const Header = ({ page, user }) =>
   html`
     <nav class="navbar navbar-light">
       <div class="container">
         <a class="navbar-brand" href="${HOME}">
           conduit
         </a>
-        ${user ? userView(page, user) : anonymousView(page)}
+        ${user ? UserView({ page, user }) : AnonymousView({ page })}
       </div>
     </nav>
   `;
 
 export const view = state =>
-  console.log(state) ||
+  console.log(JSON.stringify(state, null, 4)) ||
   html`
     <div>
-      ${header(state.page, state.user)} ${pages[state.page](state)}
+      ${Header({ page: state.page, user: state.user })}
+      ${pages[state.page](state)}
     </div>
   `;
