@@ -1,17 +1,18 @@
 import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./routing/Router.js";
 import { arrayToObject } from "./shared/object.js";
-import { view } from "./shared/layout.js";
+import { view } from "./shared/view.js";
 import { pages, HOME } from "./routing/pages.js";
 import {FetchArticles} from "./home/actions.js";
 
 const initialState = {
   page: HOME,
-  user: {
-    image:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
-    name: "matt"
-  },
+  // user: {
+  //   image:
+  //     "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
+  //   name: "matt"
+  // },
+  user: null,
   isLoading: false
 };
 
