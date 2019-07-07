@@ -21,6 +21,14 @@ const NavItem = ({ page, path }, children) => html`
   </li>
 `;
 
+const UserImage = ({ user }) => html`
+  <img src="${user.image}" class="user-pic" alt="${user.name}" />
+`;
+
+const UserLink = ({ user }) => html`
+  ${user.image ? UserImage({ user }) : ""} ${user.name}
+`;
+
 const UserView = ({ page, user }) => html`
   <ul class="nav navbar-nav pull-xs-right">
     ${NavItem({ page, path: HOME }, "Home")}
@@ -36,17 +44,7 @@ const UserView = ({ page, user }) => html`
         <i class="ion-gear-a" /> Settings
       `
     )}
-    ${NavItem(
-      { page, path: profile(user.name) },
-      html`
-        ${user.image
-          ? html`
-              <img src="${user.image}" class="user-pic" alt="${user.name}" />
-            `
-          : ""}
-        ${user.name}
-      `
-    )}
+    ${NavItem({ page, path: profile(user.name) }, UserLink({ user }))}
   </ul>
 `;
 

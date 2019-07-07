@@ -1,7 +1,6 @@
 import { app } from "./web_modules/hyperapp.js";
-import { html } from "./html.js";
 import { RoutePages } from "./Router.js";
-import { mapValues, arrayToObject } from "./object.js";
+import { arrayToObject } from "./object.js";
 import { view } from "./shared/layout.js";
 import { pages, HOME } from "./shared/pages.js";
 
