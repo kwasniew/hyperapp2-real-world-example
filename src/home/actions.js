@@ -5,15 +5,15 @@ import { mapValues } from "../shared/object.js";
 
 const API_ROOT = "https://conduit.productionready.io/api";
 
-const Loading = state => ({ ...state, isLoading: true });
-const LoadingFinished = state => ({ ...state, isLoading: false });
+const SetArticles = (state, { articles }) => ({ ...state, isLoading: false, articles });
 
-const SetArticles = (state, { articles }) => ({ ...state, articles });
-
-export const FetchArticles = Http({
-  url: API_ROOT + "/articles",
-  action: SetArticles
+export const FetchFeed = path => Http({
+    url: API_ROOT + path,
+    action: SetArticles
 });
+
+export const FetchGlobalFeed = FetchFeed("/articles");
+export const FetchTagFeed = tag => FetchFeed(`/articles?tag=${tag}`);
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -21,6 +21,17 @@ export const FetchTags = Http({
   url: API_ROOT + "/tags",
   action: SetTags
 });
+
+const FetchArticlesEffect = feeds => {
+    const activeFeed = Object.values(feeds).find(feed => feed.active);
+    if(activeFeed.type === GLOBAL_FEED) {
+        return FetchGlobalFeed;
+    } else if(activeFeed.type === TAG_FEED) {
+        return FetchTagFeed(activeFeed.name);
+    } else {
+        return null;
+    }
+};
 
 export const ChangeTab = (state, {name, type}) => {
   const updateFeed = feed => {
@@ -39,10 +50,11 @@ export const ChangeTab = (state, {name, type}) => {
     return feed;
   };
   const feeds = mapValues(updateFeed)(state.feeds);
-  return [{ ...state, feeds }, preventDefault];
+  const newState = { ...state, feeds, articles: [], isLoading: true };
+  return [newState, [preventDefault, FetchArticlesEffect(feeds)]];
 };
 
 export const LoadHomePage = page => state => [
-  { ...state, page, articles: [], currentPage: 0, tags: [], tab: GLOBAL_FEED },
-  [FetchArticles, FetchTags]
+  { ...state, page, articles: [], currentPage: 0, tags: [], isLoading: true },
+  [FetchArticlesEffect(state.feeds), FetchTags]
 ];

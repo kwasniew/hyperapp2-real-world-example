@@ -22,7 +22,7 @@ const FeedTab = ({ active, visible, type, name }, children) =>
           <a
             href=""
             class="${cc({ "nav-link": true, active })}"
-            onClick=${[ChangeTab, {name, type}]}
+            onClick=${[ChangeTab, { name, type }]}
           >
             ${children}
           </a>
@@ -86,7 +86,7 @@ const Tags = ({ tags }) => html`
           href=""
           class="tag-pill tag-default"
           key="${tag}"
-          onClick=${[ChangeTab, {type: TAG_FEED, name: tag}]}
+          onClick=${[ChangeTab, { type: TAG_FEED, name: tag }]}
         >
           ${tag}
         </a>
@@ -105,7 +105,6 @@ export const HomePage = ({
   tags,
   feeds
 }) =>
-  console.log(user) ||
   html`
     <div class="home-page" key="home-page">
       ${user ? "" : Banner()}
@@ -115,9 +114,14 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${FeedTab({ ...feeds[USER_FEED] }, "Your Feed")} 
+                ${FeedTab({ ...feeds[USER_FEED] }, "Your Feed")}
                 ${FeedTab({ ...feeds[GLOBAL_FEED] }, "Global Feed")}
-                ${FeedTab({ ...feeds[TAG_FEED] }, html`<i class="ion-pound" /> ${feeds[TAG_FEED].name}`)}
+                ${FeedTab(
+                  { ...feeds[TAG_FEED] },
+                  html`
+                    <i class="ion-pound" /> ${feeds[TAG_FEED].name}
+                  `
+                )}
               </ul>
             </div>
             ${ArticleList({ articles, articlesCount, currentPage, isLoading })}
