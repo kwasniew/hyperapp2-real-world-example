@@ -1,4 +1,4 @@
-import { html } from "../html.js";
+import { html } from "./html.js";
 import {
   pages,
   profile,
@@ -7,7 +7,7 @@ import {
   REGISTER,
   NEW_EDITOR,
   SETTINGS
-} from "./pages.js";
+} from "../routing/pages.js";
 import cc from "../web_modules/classcat.js";
 
 const NavItem = ({ page, path }, children) => html`

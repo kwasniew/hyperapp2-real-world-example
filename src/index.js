@@ -1,8 +1,8 @@
 import { app } from "./web_modules/hyperapp.js";
-import { RoutePages } from "./lib/Router.js";
-import { arrayToObject } from "./object.js";
+import { RoutePages } from "./routing/Router.js";
+import { arrayToObject } from "./shared/object.js";
 import { view } from "./shared/layout.js";
-import { pages, HOME } from "./shared/pages.js";
+import { pages, HOME } from "./routing/pages.js";
 import {FetchArticles} from "./home/actions.js";
 
 const initialState = {
