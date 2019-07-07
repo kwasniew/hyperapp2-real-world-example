@@ -1,7 +1,7 @@
 import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
 import { ChangeTab } from "./actions.js";
-import { GLOBAL_FEED } from "./feeds.js";
+import { GLOBAL_FEED, USER_FEED, TAG_FEED } from "./feeds.js";
 import { profile, article as articleLink } from "../routing/pages.js";
 import { format } from "../shared/date.js";
 
@@ -15,18 +15,20 @@ const Banner = () =>
     </div>
   `;
 
-const GlobalFeedTab = ({ active }) =>
-  html`
-    <li class="nav-item">
-      <a
-        href=""
-        class="${cc({ "nav-link": true, active })}"
-        onClick=${[ChangeTab, GLOBAL_FEED]}
-      >
-        Global Feed
-      </a>
-    </li>
-  `;
+const FeedTab = ({ active, visible, type, name }, children) =>
+  visible
+    ? html`
+        <li class="nav-item">
+          <a
+            href=""
+            class="${cc({ "nav-link": true, active })}"
+            onClick=${[ChangeTab, {name, type}]}
+          >
+            ${children}
+          </a>
+        </li>
+      `
+    : "";
 
 const ArticlePreview = ({ article }) => html`
   <div class="article-preview">
@@ -84,7 +86,7 @@ const Tags = ({ tags }) => html`
           href=""
           class="tag-pill tag-default"
           key="${tag}"
-          onClick=${[ChangeTab, tag]}
+          onClick=${[ChangeTab, {type: TAG_FEED, name: tag}]}
         >
           ${tag}
         </a>
@@ -100,7 +102,8 @@ export const HomePage = ({
   articlesCount,
   currentPage,
   isLoading,
-  tags
+  tags,
+  feeds
 }) =>
   console.log(user) ||
   html`
@@ -112,7 +115,9 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${GlobalFeedTab({ active: tab === GLOBAL_FEED })}
+                ${FeedTab({ ...feeds[USER_FEED] }, "Your Feed")} 
+                ${FeedTab({ ...feeds[GLOBAL_FEED] }, "Global Feed")}
+                ${FeedTab({ ...feeds[TAG_FEED] }, html`<i class="ion-pound" /> ${feeds[TAG_FEED].name}`)}
               </ul>
             </div>
             ${ArticleList({ articles, articlesCount, currentPage, isLoading })}
