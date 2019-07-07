@@ -73,6 +73,6 @@ export const view = state =>
   html`
     <div>
       ${Header({ page: state.page, user: state.user })}
-      ${pages[state.page](state)}
+      ${state.page ? pages[state.page](state) : ''}
     </div>
   `;

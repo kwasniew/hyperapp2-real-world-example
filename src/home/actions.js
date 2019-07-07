@@ -1,6 +1,6 @@
 import { Http } from "../web_modules/hyperapp-fx.js";
 import { preventDefault } from "../shared/events.js";
-import { GLOBAL_FEED, TAG_FEED } from "./feeds.js";
+import { GLOBAL_FEED, TAG_FEED, USER_FEED } from "./feeds.js";
 
 const API_ROOT = "https://conduit.productionready.io/api";
 
@@ -80,12 +80,18 @@ export const ChangeTab = (state, { name, type }) => {
   return [newState, [preventDefault, FetchArticles(newState)]];
 };
 
-export const LoadHomePage = page => state => [
-  {
+export const LoadHomePage = page => state => {
+  const newState = {
     ...state,
     page,
+    active: GLOBAL_FEED,
+    feeds: [
+      { visible: false, type: USER_FEED },
+      { visible: true, type: GLOBAL_FEED },
+      { visible: false, type: TAG_FEED, name: "" }
+    ],
     tags: [],
     ...loadingArticles
-  },
-  [FetchArticles(state), FetchTags]
-];
+  };
+  return [newState, [FetchArticles(newState), FetchTags]];
+};
