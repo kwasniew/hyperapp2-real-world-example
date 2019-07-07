@@ -60,29 +60,29 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
-function pages({ articlesCount, currentPage }) {
+function pages({ articlesCount, currentPageIndex }) {
   const range = [];
   for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
-    range.push({ number: i, isCurrent: i === currentPage });
+    range.push({ number: i, isCurrent: i === currentPageIndex });
   }
   return range;
 }
 
-const ListPagination = ({ articlesCount, currentPage }) => {
+const ListPagination = ({ articlesCount, currentPageIndex }) => {
   if (articlesCount <= 10) {
     return "";
   }
   return html`
     <nav>
       <ul class="pagination">
-        ${pages({ articlesCount, currentPage }).map(
+        ${pages({ articlesCount, currentPageIndex }).map(
           page =>
             html`
               <li
                 class=${page.isCurrent ? "page-item active" : "page-item"}
                 key=${String(page.number)}
               >
-                <a class="page-link" href="" onClick=${[ChangePage, {currentPage: page.number}]}>
+                <a class="page-link" href="" onClick=${[ChangePage, {currentPageIndex: page.number}]}>
                   ${page.number + 1}
                 </a>
               </li>
@@ -93,7 +93,7 @@ const ListPagination = ({ articlesCount, currentPage }) => {
   `;
 };
 
-const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
+const ArticleList = ({ articles, articlesCount, currentPageIndex, isLoading }) => {
   if (isLoading) {
     return html`
       <div class="article-preview">Loading...</div>
@@ -107,7 +107,7 @@ const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
-      ${ListPagination({ articlesCount, currentPage })}
+      ${ListPagination({ articlesCount, currentPageIndex })}
     </div>
   `;
 };
@@ -133,7 +133,7 @@ export const HomePage = ({
   user,
   articles,
   articlesCount,
-  currentPage,
+  currentPageIndex,
   isLoading,
   tags,
   feeds,
@@ -158,7 +158,7 @@ export const HomePage = ({
                 )}
               </ul>
             </div>
-            ${ArticleList({ articles, articlesCount, currentPage, isLoading })}
+            ${ArticleList({ articles, articlesCount, currentPageIndex, isLoading })}
           </div>
 
           <div class="col-md-3">

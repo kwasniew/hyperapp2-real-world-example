@@ -31,22 +31,30 @@ export const FetchTags = Http({
 
 const FetchArticles = state => {
   const activeFeed = state.feeds.find(feed => feed.type === state.active);
+  const page = state.currentPageIndex;
   if (activeFeed.type === GLOBAL_FEED) {
-    return FetchGlobalFeed({ page: state.currentPage });
+    return FetchGlobalFeed({ page });
   } else if (activeFeed.type === TAG_FEED) {
-    return FetchTagFeed({ tag: activeFeed.name, page: state.currentPage });
+    return FetchTagFeed({ tag: activeFeed.name, page });
   } else {
     return null;
   }
 };
 
-export const ChangePage = (state, { currentPage }) => {
+export const ChangePage = (state, { currentPageIndex }) => {
   const newState = {
     ...state,
-    currentPage
+    currentPageIndex
   };
 
   return [newState, [preventDefault, FetchArticles(newState)]];
+};
+
+const loadingArticles = {
+  articles: [],
+  articlesCount: 0,
+  isLoading: true,
+  currentPageIndex: 0
 };
 
 export const ChangeTab = (state, { name, type }) => {
@@ -66,9 +74,7 @@ export const ChangeTab = (state, { name, type }) => {
     ...state,
     active: type,
     feeds,
-    articles: [],
-    currentPage: 0,
-    isLoading: true
+    ...loadingArticles
   };
   return [newState, [preventDefault, FetchArticles(newState)]];
 };
@@ -77,11 +83,8 @@ export const LoadHomePage = page => state => [
   {
     ...state,
     page,
-    articles: [],
-    articlesCount: 0,
-    currentPage: 0,
     tags: [],
-    isLoading: true
+    ...loadingArticles
   },
   [FetchArticles(state), FetchTags]
 ];
