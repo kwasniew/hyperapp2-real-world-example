@@ -8,11 +8,13 @@ const initialState = {
   page: HOME,
   articles: [],
   tags: [],
-  feeds: {
-    [USER_FEED]: { visible: false, active: false, type: USER_FEED },
-    [GLOBAL_FEED]: { visible: true, active: true, type: GLOBAL_FEED },
-    [TAG_FEED]: { visible: false, active: true, type: TAG_FEED, name: "" }
-  },
+  active: GLOBAL_FEED,
+  feeds: [
+    { visible: false, type: USER_FEED },
+    { visible: true, type: GLOBAL_FEED },
+    { visible: false, type: TAG_FEED, name: "" }
+  ],
+
   // user: {
   //   image:
   //     "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",

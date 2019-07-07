@@ -21,7 +21,7 @@ const FeedTab = ({ active, visible, type, name }, children) =>
         <li class="nav-item">
           <a
             href=""
-            class="${cc({ "nav-link": true, active })}"
+            class="${cc({ "nav-link": true, active: active === type })}"
             onClick=${[ChangeTab, { name, type }]}
           >
             ${children}
@@ -102,7 +102,8 @@ export const HomePage = ({
   currentPage,
   isLoading,
   tags,
-  feeds
+  feeds,
+  active
 }) =>
   html`
     <div class="home-page" key="home-page">
@@ -113,12 +114,18 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${FeedTab({ ...feeds[USER_FEED] }, "Your Feed")}
-                ${FeedTab({ ...feeds[GLOBAL_FEED] }, "Global Feed")}
                 ${FeedTab(
-                  { ...feeds[TAG_FEED] },
+                  { ...feeds[0], active },
+                  "Your Feed"
+                )}
+                ${FeedTab(
+                  { ...feeds[1], active },
+                  "Global Feed"
+                )}
+                ${FeedTab(
+                  { ...feeds[2], active },
                   html`
-                    <i class="ion-pound" /> ${feeds[TAG_FEED].name}
+                    <i class="ion-pound" /> ${feeds[2].name}
                   `
                 )}
               </ul>

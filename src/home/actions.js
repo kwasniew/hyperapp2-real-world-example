@@ -22,8 +22,8 @@ export const FetchTags = Http({
   action: SetTags
 });
 
-const FetchArticles = feeds => {
-    const activeFeed = Object.values(feeds).find(feed => feed.active);
+const FetchArticles = state => {
+    const activeFeed = state.feeds.find(feed => feed.type === state.active);
     if(activeFeed.type === GLOBAL_FEED) {
         return FetchGlobalFeed;
     } else if(activeFeed.type === TAG_FEED) {
@@ -36,10 +36,8 @@ const FetchArticles = feeds => {
 export const ChangeTab = (state, {name, type}) => {
   const updateFeed = feed => {
     if (feed.type === type) {
-      feed.active = true;
       feed.visible = true;
     } else {
-      feed.active = false;
       if(feed.type === TAG_FEED) {
         feed.visible = false;
       }
@@ -49,12 +47,12 @@ export const ChangeTab = (state, {name, type}) => {
     }
     return feed;
   };
-  const feeds = mapValues(updateFeed)(state.feeds);
-  const newState = { ...state, feeds, articles: [], isLoading: true };
-  return [newState, [preventDefault, FetchArticles(feeds)]];
+  const feeds = state.feeds.map(updateFeed);
+  const newState = { ...state, active: type, feeds, articles: [], isLoading: true };
+  return [newState, [preventDefault, FetchArticles(newState)]];
 };
 
 export const LoadHomePage = page => state => [
   { ...state, page, articles: [], currentPage: 0, tags: [], isLoading: true },
-  [FetchArticles(state.feeds), FetchTags]
+  [FetchArticles(state), FetchTags]
 ];
