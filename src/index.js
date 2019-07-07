@@ -6,6 +6,7 @@ import { USER_FEED, GLOBAL_FEED, TAG_FEED } from "./home/feeds.js";
 
 const initialState = {
   page: HOME,
+  articlesCount: 0,
   articles: [],
   tags: [],
   active: GLOBAL_FEED,

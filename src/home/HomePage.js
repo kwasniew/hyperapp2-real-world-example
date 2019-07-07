@@ -1,6 +1,6 @@
 import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
-import { ChangeTab } from "./actions.js";
+import { ChangeTab, ChangePage } from "./actions.js";
 import { GLOBAL_FEED, USER_FEED, TAG_FEED } from "./feeds.js";
 import { profile, article as articleLink } from "../routing/pages.js";
 import { format } from "../shared/date.js";
@@ -60,6 +60,39 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
+function pages({ articlesCount, currentPage }) {
+  const range = [];
+  for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
+    range.push({ number: i, isCurrent: i === currentPage });
+  }
+  return range;
+}
+
+const ListPagination = ({ articlesCount, currentPage }) => {
+  if (articlesCount <= 10) {
+    return "";
+  }
+  return html`
+    <nav>
+      <ul class="pagination">
+        ${pages({ articlesCount, currentPage }).map(
+          page =>
+            html`
+              <li
+                class=${page.isCurrent ? "page-item active" : "page-item"}
+                key=${String(page.number)}
+              >
+                <a class="page-link" href="" onClick=${[ChangePage, {currentPage: page.number}]}>
+                  ${page.number + 1}
+                </a>
+              </li>
+            `
+        )}
+      </ul>
+    </nav>
+  `;
+};
+
 const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   if (isLoading) {
     return html`
@@ -74,6 +107,7 @@ const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
+      ${ListPagination({ articlesCount, currentPage })}
     </div>
   `;
 };
@@ -114,14 +148,8 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${FeedTab(
-                  { ...feeds[0], active },
-                  "Your Feed"
-                )}
-                ${FeedTab(
-                  { ...feeds[1], active },
-                  "Global Feed"
-                )}
+                ${FeedTab({ ...feeds[0], active }, "Your Feed")}
+                ${FeedTab({ ...feeds[1], active }, "Global Feed")}
                 ${FeedTab(
                   { ...feeds[2], active },
                   html`

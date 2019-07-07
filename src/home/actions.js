@@ -1,14 +1,14 @@
 import { Http } from "../web_modules/hyperapp-fx.js";
 import { preventDefault } from "../shared/events.js";
 import { GLOBAL_FEED, TAG_FEED } from "./feeds.js";
-import { mapValues } from "../shared/object.js";
 
 const API_ROOT = "https://conduit.productionready.io/api";
 
-const SetArticles = (state, { articles }) => ({
+const SetArticles = (state, { articles, articlesCount }) => ({
   ...state,
   isLoading: false,
-  articles
+  articles,
+  articlesCount
 });
 
 export const FetchFeed = path =>
@@ -17,8 +17,10 @@ export const FetchFeed = path =>
     action: SetArticles
   });
 
-export const FetchGlobalFeed = FetchFeed("/articles");
-export const FetchTagFeed = tag => FetchFeed(`/articles?tag=${tag}`);
+export const FetchGlobalFeed = ({ page }) =>
+  FetchFeed(`/articles?limit=10&offset=${page * 10}`);
+export const FetchTagFeed = ({ tag, page }) =>
+  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`);
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -30,12 +32,21 @@ export const FetchTags = Http({
 const FetchArticles = state => {
   const activeFeed = state.feeds.find(feed => feed.type === state.active);
   if (activeFeed.type === GLOBAL_FEED) {
-    return FetchGlobalFeed;
+    return FetchGlobalFeed({ page: state.currentPage });
   } else if (activeFeed.type === TAG_FEED) {
-    return FetchTagFeed(activeFeed.name);
+    return FetchTagFeed({ tag: activeFeed.name, page: state.currentPage });
   } else {
     return null;
   }
+};
+
+export const ChangePage = (state, { currentPage }) => {
+  const newState = {
+    ...state,
+    currentPage
+  };
+
+  return [newState, [preventDefault, FetchArticles(newState)]];
 };
 
 export const ChangeTab = (state, { name, type }) => {
@@ -56,12 +67,21 @@ export const ChangeTab = (state, { name, type }) => {
     active: type,
     feeds,
     articles: [],
+    currentPage: 0,
     isLoading: true
   };
   return [newState, [preventDefault, FetchArticles(newState)]];
 };
 
 export const LoadHomePage = page => state => [
-  { ...state, page, articles: [], currentPage: 0, tags: [], isLoading: true },
+  {
+    ...state,
+    page,
+    articles: [],
+    articlesCount: 0,
+    currentPage: 0,
+    tags: [],
+    isLoading: true
+  },
   [FetchArticles(state), FetchTags]
 ];
