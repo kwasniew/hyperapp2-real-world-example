@@ -9,6 +9,7 @@ const router = (dispatch, {routes}) => {
         });
     });
 
+    // prevent infinite loop on application startup
     setTimeout(() => {page.start()}, 0);
 
     return () => {
