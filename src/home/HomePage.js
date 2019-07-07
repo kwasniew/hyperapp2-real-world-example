@@ -76,13 +76,31 @@ const ArticleList = ({ articles, articlesCount, currentPage, isLoading }) => {
   `;
 };
 
+const Tags = ({ tags }) => html`
+  <div class="tag-list">
+    ${tags.map(tag => {
+      return html`
+        <a
+          href=""
+          class="tag-pill tag-default"
+          key="${tag}"
+          onClick=${[ChangeTab, tag]}
+        >
+          ${tag}
+        </a>
+      `;
+    })}
+  </div>
+`;
+
 export const HomePage = ({
   user,
   tab,
   articles,
   articlesCount,
   currentPage,
-  isLoading
+  isLoading,
+  tags
 }) =>
   console.log(user) ||
   html`
@@ -98,6 +116,14 @@ export const HomePage = ({
               </ul>
             </div>
             ${ArticleList({ articles, articlesCount, currentPage, isLoading })}
+          </div>
+
+          <div class="col-md-3">
+            <div class="sidebar">
+              <p>Popular Tags</p>
+
+              ${Tags({ tags })}
+            </div>
           </div>
         </div>
       </div>

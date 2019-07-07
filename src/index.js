@@ -6,6 +6,7 @@ import { pages, routes, HOME } from "./routing/pages.js";
 const initialState = {
   page: HOME,
   articles: [],
+  tags: [],
   // user: {
   //   image:
   //     "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
