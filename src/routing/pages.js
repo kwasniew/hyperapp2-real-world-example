@@ -1,21 +1,8 @@
 import { HomePage } from "../home/HomePage.js";
-import { registerPage } from "../register/view.js";
 import { LoadHomePage } from "../home/actions.js";
 import { LoadLoginPage, LoadRegisterPage } from "../auth/actions.js";
 import { LoginPage } from "../auth/LoginPage.js";
 import { RegisterPage } from "../auth/RegisterPage.js";
-
-// export const pages = {
-//   "/": homePage,
-//   "/login": "login",
-//   "/register": registerPage,
-//   "/settings": "settings",
-//   "/editor/:slug": "editor",
-//   "/article/:slug": "article",
-//   "/profile/:username": "userProfile",
-//   "/profile/:username/favorited": "favoriteProfile",
-//   "*": homePage
-// };
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -31,14 +18,14 @@ export const pages = {
   [HOME]: HomePage,
   [LOGIN]: LoginPage,
   [REGISTER]: RegisterPage,
-  [NEW_EDITOR]: registerPage,
-  [SETTINGS]: registerPage
+  // "*": HomePage
 };
 
 export const routes = {
   [HOME]: LoadHomePage(HOME),
   [LOGIN]: LoadLoginPage(LOGIN),
-  [REGISTER]: LoadRegisterPage(REGISTER)
+  [REGISTER]: LoadRegisterPage(REGISTER),
+  // "*": LoadHomePage(HOME)
 };
 
 export const article = slug => ARTICLE.replace(":slug", slug);

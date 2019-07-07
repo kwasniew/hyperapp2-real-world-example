@@ -1,16 +1,17 @@
 import { html } from "../shared/html.js";
 import { REGISTER } from "../routing/pages.js";
+import { ChangeEmail, ChangePassword } from "./actions.js";
+import { targetValue } from "../shared/events.js";
 
-export const LoginPage = ({email, password, inProgress, error}) => html`
+export const LoginPage = ({ email, password, inProgress, error }) => html`
   <div class="auth-page">
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
           <h1 class="text-xs-center">Sign In</h1>
           <p class="text-xs-center">
-            <a href="${REGISTER}">Need an account?</a>
+            <a href=${REGISTER}>Need an account?</a>
           </p>
-
 
           <form>
             <fieldset>
@@ -19,19 +20,25 @@ export const LoginPage = ({email, password, inProgress, error}) => html`
                   class="form-control form-control-lg"
                   type="email"
                   placeholder="Email"
-                  value="${email}"
+                  value=${email}
+                  oninput=${[ChangeEmail, targetValue]}
                 />
               </fieldset>
 
               <fieldset class="form-group">
-                <input class="form-control form-control-lg" type="password"
-                placeholder="Password" value="${password}" />
+                <input
+                  class="form-control form-control-lg"
+                  type="password"
+                  placeholder="Password"
+                  value=${password}
+                  oninput=${[ChangePassword, targetValue]}
+                />
               </fieldset>
 
               <button
                 class="btn btn-lg btn-primary pull-xs-right"
                 type="submit"
-                disabled="${inProgress}"
+                disabled=${inProgress}
               >
                 Sign in
               </button>

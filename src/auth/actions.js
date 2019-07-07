@@ -5,6 +5,9 @@ const defaultAuthFields = {
   errors: {}
 };
 
+export const ChangeEmail = (state, email) => ({...state, email});
+export const ChangePassword = (state, password) => ({...state, password});
+
 export const LoadLoginPage = page => state => {
   return {
     page,

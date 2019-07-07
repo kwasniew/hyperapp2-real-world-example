@@ -36,7 +36,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                     class="form-control form-control-lg"
                     type="password"
                     placeholder="Password"
-                    value={password}
+                    value=${password}
                   />
                 </fieldset>
 
