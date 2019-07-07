@@ -1,9 +1,10 @@
 import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
 import { ChangeTab, ChangePage } from "./actions.js";
-import { GLOBAL_FEED, USER_FEED, TAG_FEED } from "./feeds.js";
+import { TAG_FEED } from "./feeds.js";
 import { profile, article as articleLink } from "../routing/pages.js";
 import { format } from "../shared/date.js";
+import { pages } from "./selectors.js";
 
 const Banner = () =>
   html`
@@ -60,30 +61,26 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
-function pages({ articlesCount, currentPageIndex }) {
-  const range = [];
-  for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
-    range.push({ number: i, isCurrent: i === currentPageIndex });
-  }
-  return range;
-}
-
-const ListPagination = ({ articlesCount, currentPageIndex }) => {
-  if (articlesCount <= 10) {
+const ListPagination = ({pages}) => {
+  if (pages.length < 2) {
     return "";
   }
   return html`
     <nav>
       <ul class="pagination">
-        ${pages({ articlesCount, currentPageIndex }).map(
+        ${pages.map(
           page =>
             html`
               <li
                 class=${page.isCurrent ? "page-item active" : "page-item"}
-                key=${String(page.number)}
+                key=${String(page.index)}
               >
-                <a class="page-link" href="" onClick=${[ChangePage, {currentPageIndex: page.number}]}>
-                  ${page.number + 1}
+                <a
+                  class="page-link"
+                  href=""
+                  onClick=${[ChangePage, { currentPageIndex: page.index }]}
+                >
+                  ${page.humanDisplay}
                 </a>
               </li>
             `
@@ -93,7 +90,7 @@ const ListPagination = ({ articlesCount, currentPageIndex }) => {
   `;
 };
 
-const ArticleList = ({ articles, articlesCount, currentPageIndex, isLoading }) => {
+const ArticleList = ({isLoading, articles, pages}) => {
   if (isLoading) {
     return html`
       <div class="article-preview">Loading...</div>
@@ -107,7 +104,7 @@ const ArticleList = ({ articles, articlesCount, currentPageIndex, isLoading }) =
   return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
-      ${ListPagination({ articlesCount, currentPageIndex })}
+      ${ListPagination({pages})}
     </div>
   `;
 };
@@ -158,7 +155,11 @@ export const HomePage = ({
                 )}
               </ul>
             </div>
-            ${ArticleList({ articles, articlesCount, currentPageIndex, isLoading })}
+            ${ArticleList({
+              articles,
+              isLoading,
+              pages: pages({ articlesCount, currentPageIndex })
+            })}
           </div>
 
           <div class="col-md-3">

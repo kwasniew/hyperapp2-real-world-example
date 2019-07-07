@@ -11,6 +11,7 @@
     "hyperapp": "2.0.0-beta.22",
     "hyperapp-fx": "2.0.0-beta.1",
     "page": "1.11.4",
+    "reselect": "4.0.0",
     "snarkdown": "1.2.2"
   },
   "devDependencies": {

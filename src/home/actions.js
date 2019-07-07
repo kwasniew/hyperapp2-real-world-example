@@ -41,20 +41,21 @@ const FetchArticles = state => {
   }
 };
 
-export const ChangePage = (state, { currentPageIndex }) => {
-  const newState = {
-    ...state,
-    currentPageIndex
-  };
-
-  return [newState, [preventDefault, FetchArticles(newState)]];
-};
-
 const loadingArticles = {
   articles: [],
   articlesCount: 0,
   isLoading: true,
   currentPageIndex: 0
+};
+
+export const ChangePage = (state, { currentPageIndex }) => {
+  const newState = {
+    ...state,
+    ...loadingArticles,
+    currentPageIndex
+  };
+
+  return [newState, [preventDefault, FetchArticles(newState)]];
 };
 
 export const ChangeTab = (state, { name, type }) => {
