@@ -1,8 +1,11 @@
 import { HomePage } from "../home/HomePage.js";
 import { LoadHomePage } from "../home/actions.js";
-import { LoadLoginPage, LoadRegisterPage } from "../auth/actions.js";
-import { LoginPage } from "../auth/LoginPage.js";
-import { RegisterPage } from "../auth/RegisterPage.js";
+import {
+  LoadLoginPage,
+  LoadRegisterPage,
+  LoginPage,
+  RegisterPage
+} from "../auth/index.js";
 import { SettingsPage } from "../settings/SettingsPage.js";
 import { LoadSettingsPage } from "../settings/actions.js";
 

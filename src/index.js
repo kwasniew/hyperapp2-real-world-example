@@ -2,7 +2,7 @@ import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./shared/lib/Router.js";
 import { view } from "./shared/view.js";
 import { routes } from "./shared/pages.js";
-import {ReadUser} from "./auth/actions.js";
+import {ReadUser} from "./auth/index.js";
 
 const initialState = {
   // user: {
