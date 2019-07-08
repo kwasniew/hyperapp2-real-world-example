@@ -1,7 +1,7 @@
 import { Http, WriteToStorage } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../shared/events.js";
-import { Redirect } from "../routing/Router.js";
-import { HOME } from "../routing/pages.js";
+import { preventDefault } from "../shared/lib/events.js";
+import { Redirect } from "../shared/lib/Router.js";
+import { HOME } from "../shared/pages.js";
 import { API_ROOT } from "../config.js";
 
 const SaveUser = user => WriteToStorage({ key: "session", value: user });

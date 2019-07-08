@@ -1,5 +1,5 @@
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../shared/events.js";
+import { preventDefault } from "../shared/lib/events.js";
 import { GLOBAL_FEED, TAG_FEED, USER_FEED } from "./feeds.js";
 import {API_ROOT} from "../config.js";
 

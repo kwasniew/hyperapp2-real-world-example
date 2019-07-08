@@ -1,7 +1,7 @@
 import { app } from "./web_modules/hyperapp.js";
-import { RoutePages } from "./routing/Router.js";
+import { RoutePages } from "./shared/lib/Router.js";
 import { view } from "./shared/view.js";
-import { routes } from "./routing/pages.js";
+import { routes } from "./shared/pages.js";
 
 const initialState = {
   // user: {

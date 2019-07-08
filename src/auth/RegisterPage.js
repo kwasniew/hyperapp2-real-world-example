@@ -1,8 +1,8 @@
 import { html } from "../shared/html.js";
-import {LOGIN} from "../routing/pages.js";
+import {LOGIN} from "../shared/pages.js";
 import {ListErrors} from "./ListErrors.js";
 import {errorsList} from "./selectors.js";
-import {targetValue} from "../shared/events.js";
+import {targetValue} from "../shared/lib/events.js";
 import {ChangeUsername, ChangeEmail, ChangePassword, SubmitRegister} from "./actions.js";
 
 export const RegisterPage = ({ username, password, email, inProgress, errors }) => html`

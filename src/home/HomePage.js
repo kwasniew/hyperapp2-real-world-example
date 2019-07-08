@@ -2,7 +2,7 @@ import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
 import { ChangeTab, ChangePage } from "./actions.js";
 import { TAG_FEED } from "./feeds.js";
-import { profile, article as articleLink } from "../routing/pages.js";
+import { profile, article as articleLink } from "../shared/pages.js";
 import { format } from "../shared/date.js";
 import { pages } from "./selectors.js";
 

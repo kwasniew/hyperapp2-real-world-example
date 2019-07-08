@@ -1,7 +1,7 @@
 import { html } from "../shared/html.js";
-import { REGISTER } from "../routing/pages.js";
+import { REGISTER } from "../shared/pages.js";
 import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
-import { targetValue } from "../shared/events.js";
+import { targetValue } from "../shared/lib/events.js";
 import {errorsList} from "./selectors.js";
 import {ListErrors} from "./ListErrors.js";
 
