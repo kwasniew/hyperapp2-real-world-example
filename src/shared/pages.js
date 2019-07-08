@@ -6,8 +6,7 @@ import {
   LoginPage,
   RegisterPage
 } from "../auth/index.js";
-import { SettingsPage } from "../settings/SettingsPage.js";
-import { LoadSettingsPage } from "../settings/actions.js";
+import { LoadSettingsPage, SettingsPage } from "../settings/index.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";

@@ -2,6 +2,14 @@ import { html } from "../shared/html.js";
 import {ListErrors} from "../shared/ListErrors.js";
 import {errorsList} from "../shared/selectors.js";
 
+export const LoadSettingsPage = page => state => {
+    return {
+        page,
+        user: state.user,
+        errors: {}
+    };
+};
+
 export const SettingsPage = ({user, errors}) => html`
   <div class="settings-page">
     <div class="container page">
