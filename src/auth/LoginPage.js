@@ -2,17 +2,11 @@ import { html } from "../shared/html.js";
 import { REGISTER } from "../routing/pages.js";
 import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
 import { targetValue } from "../shared/events.js";
+import {errorsList} from "./selectors.js";
 
 const ListErrors = ({ errors }) => html`
   <ul class="error-messages">
-    ${Object.keys(errors).map(
-      key =>
-        html`
-          <li key=${key}>
-            ${key} ${errors[key].join(" and ")}
-          </li>
-        `
-    )}
+    ${errors.map(error => html`<li>${error}</li>`)}
   </ul>
 `;
 
@@ -26,7 +20,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
             <a href=${REGISTER}>Need an account?</a>
           </p>
 
-          ${ListErrors({ errors })}
+          ${ListErrors({ errors: errorsList({errors}) })}
 
           <form onsubmit=${SubmitLogin}>
             <fieldset>
