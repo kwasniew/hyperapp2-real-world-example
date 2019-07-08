@@ -18,6 +18,47 @@ const SetArticles = (state, { articles, articlesCount }) => ({
   articlesCount
 });
 
+const UpdateArticle = (state, { article }) => ({
+  ...state,
+  articles: state.articles.map(oldArticle =>
+    oldArticle.slug === article.slug ? article : oldArticle
+  )
+});
+
+const FavoriteArticle = ({ slug, token }) =>
+  Http({
+    url: API_ROOT + `/articles/${slug}/favorite`,
+    options: {
+      method: "POST",
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    },
+    action: UpdateArticle
+  });
+const UnfavoriteArticle = ({ slug, token }) =>
+  Http({
+    url: API_ROOT + `/articles/${slug}/favorite`,
+    options: {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    },
+    action: UpdateArticle
+  });
+
+const ChangeFavorite = (state, slug) => {
+  const article = state.articles.find(a => a.slug === slug);
+  if (!article) {
+    return state;
+  } else if (article.favorited) {
+    return [{ ...state }, UnfavoriteArticle({ slug, token: state.user.token })];
+  } else {
+    return [{ ...state }, FavoriteArticle({ slug, token: state.user.token })];
+  }
+};
+
 export const FetchFeed = (path, token) => {
   const options = token
     ? {
@@ -35,10 +76,10 @@ export const FetchFeed = (path, token) => {
 
 export const FetchUserFeed = ({ page, token }) =>
   FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
-export const FetchGlobalFeed = ({ page }) =>
-  FetchFeed(`/articles?limit=10&offset=${page * 10}`);
-export const FetchTagFeed = ({ tag, page }) =>
-  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`);
+export const FetchGlobalFeed = ({ page, token }) =>
+  FetchFeed(`/articles?limit=10&offset=${page * 10}`, token);
+export const FetchTagFeed = ({ tag, page, token }) =>
+  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`, token);
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -53,9 +94,13 @@ const FetchArticles = state => {
   if (activeFeed.type === USER_FEED) {
     return FetchUserFeed({ page, token: state.user.token });
   } else if (activeFeed.type === GLOBAL_FEED) {
-    return FetchGlobalFeed({ page });
+    return FetchGlobalFeed({ page, token: state.user.token });
   } else if (activeFeed.type === TAG_FEED) {
-    return FetchTagFeed({ tag: activeFeed.name, page });
+    return FetchTagFeed({
+      tag: activeFeed.name,
+      page,
+      token: state.user.token
+    });
   } else {
     return null;
   }
@@ -145,7 +190,10 @@ const FavoriteButton = ({ article }) => {
   const style = article.favorited ? "btn-primary" : "btn-outline-primary";
 
   return html`
-    <button class=${"btn btn-sm btn-primary pull-xs-right " + style}>
+    <button
+      onclick=${[ChangeFavorite, article.slug]}
+      class=${"btn btn-sm btn-primary pull-xs-right " + style}
+    >
       <i class="ion-heart" /> ${article.favoritesCount}
     </button>
   `;
