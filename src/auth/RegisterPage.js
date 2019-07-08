@@ -3,7 +3,7 @@ import {LOGIN} from "../routing/pages.js";
 import {ListErrors} from "./ListErrors.js";
 import {errorsList} from "./selectors.js";
 import {targetValue} from "../shared/events.js";
-import {ChangeUsername, ChangeEmail, ChangePassword} from "./actions.js";
+import {ChangeUsername, ChangeEmail, ChangePassword, SubmitRegister} from "./actions.js";
 
 export const RegisterPage = ({ username, password, email, inProgress, errors }) => html`
 <div class="auth-page">
@@ -17,7 +17,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
             
             ${ListErrors({ errors: errorsList({errors}) })}
 
-            <form>
+            <form onsubmit=${SubmitRegister}>
               <fieldset>
                 <fieldset class="form-group">
                   <input
