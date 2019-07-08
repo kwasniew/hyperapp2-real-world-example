@@ -1,8 +1,7 @@
-import { Http } from "../web_modules/hyperapp-fx.js";
+import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/events.js";
 import { GLOBAL_FEED, TAG_FEED, USER_FEED } from "./feeds.js";
-
-const API_ROOT = "https://conduit.productionready.io/api";
+import {API_ROOT} from "../config.js";
 
 const SetArticles = (state, { articles, articlesCount }) => ({
   ...state,

@@ -3,12 +3,7 @@ import { REGISTER } from "../routing/pages.js";
 import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
 import { targetValue } from "../shared/events.js";
 import {errorsList} from "./selectors.js";
-
-const ListErrors = ({ errors }) => html`
-  <ul class="error-messages">
-    ${errors.map(error => html`<li>${error}</li>`)}
-  </ul>
-`;
+import {ListErrors} from "./ListErrors.js";
 
 export const LoginPage = ({ email, password, inProgress, errors }) => html`
   <div class="auth-page">

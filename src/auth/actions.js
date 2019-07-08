@@ -1,20 +1,12 @@
-import {Http} from "../web_modules/hyperapp-fx.js";
+import {Http, WriteToStorage} from "../web_modules/@kwasniew/hyperapp-fx.js";
 import {preventDefault} from "../shared/events.js";
 import {Redirect} from "../routing/Router.js";
 import {HOME} from "../routing/pages.js";
-import {WriteToStorage} from "../web_modules/hyperapp-fx.js";
-
-const API_ROOT = "https://conduit.productionready.io/api";
-
-const defaultAuthFields = {
-  email: "",
-  password: "",
-  inProgress: false,
-  errors: {}
-};
+import {API_ROOT} from "../config.js";
 
 const SaveUser = user => WriteToStorage({key: "session", value: user});
 
+export const ChangeUsername = (state, username) => ({...state, username});
 export const ChangeEmail = (state, email) => ({...state, email});
 export const ChangePassword = (state, password) => ({...state, password});
 
@@ -35,6 +27,13 @@ const Login = ({email, password}) => Http({
     error: LoginError
 });
 export const SubmitLogin = state => [{...state, inProgress: true}, [preventDefault, Login({email: state.email, password: state.password})]]
+
+const defaultAuthFields = {
+    email: "",
+    password: "",
+    inProgress: false,
+    errors: {}
+};
 
 export const LoadLoginPage = page => state => {
   return {

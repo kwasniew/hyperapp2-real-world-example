@@ -1,5 +1,9 @@
 import { html } from "../shared/html.js";
 import {LOGIN} from "../routing/pages.js";
+import {ListErrors} from "./ListErrors.js";
+import {errorsList} from "./selectors.js";
+import {targetValue} from "../shared/events.js";
+import {ChangeUsername, ChangeEmail, ChangePassword} from "./actions.js";
 
 export const RegisterPage = ({ username, password, email, inProgress, errors }) => html`
 <div class="auth-page">
@@ -10,6 +14,8 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
             <p class="text-xs-center">
               <a href=${LOGIN}>Have an account?</a>
             </p>
+            
+            ${ListErrors({ errors: errorsList({errors}) })}
 
             <form>
               <fieldset>
@@ -19,6 +25,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                     type="text"
                     placeholder="Username"
                     value=${username}
+                    oninput=${[ChangeUsername, targetValue]}
                   />
                 </fieldset>
 
@@ -28,6 +35,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                     type="email"
                     placeholder="Email"
                     value=${email}
+                    oninput=${[ChangeEmail, targetValue]}
                   />
                 </fieldset>
 
@@ -37,6 +45,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                     type="password"
                     placeholder="Password"
                     value=${password}
+                    oninput=${[ChangePassword, targetValue]}
                   />
                 </fieldset>
 
