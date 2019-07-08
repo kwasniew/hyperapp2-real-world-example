@@ -10,6 +10,7 @@ const router = (dispatch, {routes}) => {
     });
 
     // prevent infinite loop on application startup
+    // page.start({hashbang: true})
     setTimeout(() => {page.start({hashbang: true})}, 0);
 
     return () => {

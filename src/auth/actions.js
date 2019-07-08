@@ -19,7 +19,7 @@ export const ChangeEmail = (state, email) => ({...state, email});
 export const ChangePassword = (state, password) => ({...state, password});
 
 const LoginSuccess = (state, {user}) => [{...state, user}, [SaveUser(user), Redirect({path: HOME})]];
-const LoginError = state => state;
+const LoginError = (state, {errors}) => console.log(errors) || ({...state, inProgress: false, errors});
 
 const Login = ({email, password}) => Http({
     url: API_ROOT + "/users/login",
@@ -30,6 +30,7 @@ const Login = ({email, password}) => Http({
         },
         body: JSON.stringify({user: {email, password}})
     },
+    errorResponse: 'json',
     action: LoginSuccess,
     error: LoginError
 });

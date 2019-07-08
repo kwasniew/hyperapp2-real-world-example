@@ -9,9 +9,8 @@
     "classcat": "4.0.2",
     "htm": "2.1.1",
     "hyperapp": "2.0.0-beta.22",
-    "hyperapp-fx": "2.0.0-beta.1",
+    "@kwasniew/hyperapp-fx": "2.0.0-beta.1",
     "page": "1.11.4",
-    "reselect": "4.0.0",
     "snarkdown": "1.2.2"
   },
   "devDependencies": {

@@ -3,7 +3,20 @@ import { REGISTER } from "../routing/pages.js";
 import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
 import { targetValue } from "../shared/events.js";
 
-export const LoginPage = ({ email, password, inProgress, error }) => html`
+const ListErrors = ({ errors }) => html`
+  <ul class="error-messages">
+    ${Object.keys(errors).map(
+      key =>
+        html`
+          <li key=${key}>
+            ${key} ${errors[key].join(" and ")}
+          </li>
+        `
+    )}
+  </ul>
+`;
+
+export const LoginPage = ({ email, password, inProgress, errors }) => html`
   <div class="auth-page">
     <div class="container page">
       <div class="row">
@@ -12,6 +25,8 @@ export const LoginPage = ({ email, password, inProgress, error }) => html`
           <p class="text-xs-center">
             <a href=${REGISTER}>Need an account?</a>
           </p>
+
+          ${ListErrors({ errors })}
 
           <form onsubmit=${SubmitLogin}>
             <fieldset>
