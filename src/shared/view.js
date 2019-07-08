@@ -63,7 +63,7 @@ export const Header = ({ page, user }) =>
         <a class="navbar-brand" href="${HOME}">
           conduit
         </a>
-        ${user ? UserView({ page, user }) : AnonymousView({ page })}
+        ${user.token ? UserView({ page, user }) : AnonymousView({ page })}
       </div>
     </nav>
   `;

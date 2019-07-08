@@ -3,16 +3,52 @@ import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "../shared/selectors.js";
 import { preventDefault, OnEnter } from "../shared/lib/events.js";
+import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { API_ROOT } from "../config.js";
+import {FormError, RedirectAction} from "../shared/formFields.js";
+import {HOME} from "../shared/pages.js";
 
 const AddTag = state => [
-  { ...state, currentTag: "", tags: [...state.tags, state.currentTag] },
+  { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
   preventDefault
 ];
 
 const RemoveTag = tag => state => ({
   ...state,
-  tags: state.tags.filter(t => t !== tag)
+  tagList: state.tagList.filter(t => t !== tag)
 });
+
+const SaveArticle = ({ article, token }) =>
+  Http({
+    url: API_ROOT + "/articles",
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`
+      },
+      body: JSON.stringify({ article })
+    },
+    errorResponse: "json",
+    action: RedirectAction(HOME),
+    error: FormError
+  });
+
+const SubmitArticle = state => [
+  { ...state, inProgress: true },
+  [
+    preventDefault,
+    SaveArticle({
+      article: {
+        title: state.title,
+        description: state.description,
+        body: state.body,
+        tagList: state.tagList
+      },
+      token: state.user.token
+    })
+  ]
+];
 
 export const LoadEditorPage = page => state => {
   return {
@@ -23,7 +59,7 @@ export const LoadEditorPage = page => state => {
     description: "",
     body: "",
     currentTag: "",
-    tags: []
+    tagList: []
   };
 };
 
@@ -32,7 +68,7 @@ export const EditorPage = ({
   description,
   body,
   currentTag,
-  tags,
+  tagList,
   errors,
   inProgress
 }) => html`
@@ -85,7 +121,7 @@ export const EditorPage = ({
                 />
 
                 <div class="tag-list">
-                  ${tags.map(
+                  ${tagList.map(
                     tag =>
                       html`
                         <span class="tag-default tag-pill">
@@ -104,6 +140,7 @@ export const EditorPage = ({
                 class="btn btn-lg pull-xs-right btn-primary"
                 type="button"
                 disabled=${inProgress}
+                onclick=${SubmitArticle}
               >
                 Publish Article
               </button>

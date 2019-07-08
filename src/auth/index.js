@@ -6,8 +6,9 @@ import { html } from "../shared/html.js";
 import { targetValue } from "../shared/lib/events.js";
 import { errorsList } from "../shared/selectors.js";
 import { ListErrors } from "../shared/ListErrors.js";
-import { UserError, UserSuccess } from "../shared/user/index.js";
+import { UserSuccess } from "../shared/user/index.js";
 import { formFields } from "../shared/formFields.js";
+import {FormError} from "../shared/formFields.js";
 
 export const ChangeUsername = (state, username) => ({ ...state, username });
 export const ChangeEmail = (state, email) => ({ ...state, email });
@@ -25,7 +26,7 @@ const Login = ({ email, password }) =>
     },
     errorResponse: "json",
     action: UserSuccess,
-    error: UserError
+    error: FormError
   });
 export const SubmitLogin = state => [
   { ...state, inProgress: true },
@@ -44,7 +45,7 @@ const Register = ({ email, password, username }) =>
     },
     errorResponse: "json",
     action: UserSuccess,
-    error: UserError
+    error: FormError
   });
 export const SubmitRegister = state => [
   { ...state, inProgess: true },

@@ -146,9 +146,9 @@ export const LoadHomePage = page => state => {
   const newState = {
     user: state.user,
     page,
-    active: state.user ? USER_FEED : GLOBAL_FEED,
+    active: state.user.token ? USER_FEED : GLOBAL_FEED,
     feeds: [
-      { visible: !!state.user, type: USER_FEED },
+      { visible: !!state.user.token, type: USER_FEED },
       { visible: true, type: GLOBAL_FEED },
       { visible: false, type: TAG_FEED, name: "" }
     ],

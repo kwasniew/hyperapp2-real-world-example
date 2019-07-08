@@ -5,7 +5,7 @@ import { routes } from "./shared/pages.js";
 import {ReadUser} from "./shared/user/index.js";
 
 const initialState = {
-  user: null
+  user: {}
 };
 
 app({
