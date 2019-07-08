@@ -13,8 +13,7 @@ const initialState = {
 };
 
 app({
-  init: () => [initialState],
+  init: () => [initialState, RoutePages({ routes })],
   view,
-  subscriptions: state => [RoutePages({ routes })],
   node: document.getElementById("app")
 });
