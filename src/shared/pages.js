@@ -1,5 +1,5 @@
-import { HomePage } from "../home/HomePage.js";
-import { LoadHomePage } from "../home/actions.js";
+import { HomePage } from "../home/index.js";
+import { LoadHomePage } from "../home/index.js";
 import {
   LoadLoginPage,
   LoadRegisterPage,
