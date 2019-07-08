@@ -91,19 +91,16 @@ export const FetchTags = Http({
 const FetchArticles = state => {
   const activeFeed = state.feeds.find(feed => feed.type === state.active);
   const page = state.currentPageIndex;
-  if (activeFeed.type === USER_FEED) {
-    return FetchUserFeed({ page, token: state.user.token });
-  } else if (activeFeed.type === GLOBAL_FEED) {
-    return FetchGlobalFeed({ page, token: state.user.token });
-  } else if (activeFeed.type === TAG_FEED) {
-    return FetchTagFeed({
+  const fetches = {
+    [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
+    [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
+    [TAG_FEED]: FetchTagFeed({
       tag: activeFeed.name,
       page,
       token: state.user.token
-    });
-  } else {
-    return null;
-  }
+    })
+  };
+  return fetches[activeFeed.type];
 };
 
 const loadingArticles = {
