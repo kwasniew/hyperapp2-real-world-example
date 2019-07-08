@@ -1,5 +1,5 @@
 import { ListErrors } from "../shared/ListErrors.js";
-import { formFields } from "../shared/formFields.js";
+import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "../shared/selectors.js";
 
@@ -39,6 +39,7 @@ export const EditorPage = ({
                   type="text"
                   placeholder="Article Title"
                   value=${title}
+                  oninput=${ChangeFieldFromTarget("title")}
                 />
               </fieldset>
 
@@ -48,6 +49,7 @@ export const EditorPage = ({
                   type="text"
                   placeholder="What's this article about?"
                   value=${description}
+                  oninput=${ChangeFieldFromTarget("description")}
                 />
               </fieldset>
 
@@ -57,6 +59,7 @@ export const EditorPage = ({
                   rows="8"
                   placeholder="Write your article (in markdown)"
                   value=${body}
+                  oninput=${ChangeFieldFromTarget("body")}
                 />
               </fieldset>
 
@@ -66,6 +69,7 @@ export const EditorPage = ({
                   type="text"
                   placeholder="Enter tags"
                   value=${currentTag}
+                  oninput=${ChangeFieldFromTarget("currentTag")}
                 />
 
                 <div class="tag-list">

@@ -5,9 +5,7 @@ import { targetValue, preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserError, UserSuccess, Logout } from "../shared/user/index.js";
-import { formFields } from "../shared/formFields.js";
-
-const ChangeField = field => (state, value) => ({ ...state, [field]: value });
+import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 
 const UpdateSettings = user => {
   const { password, ...userWithoutPassword } = user;
@@ -69,7 +67,7 @@ const SettingsForm = ({
           type="text"
           placeholder="URL of profile picture"
           value=${image}
-          oninput=${[ChangeField("image"), targetValue]}
+          oninput=${ChangeFieldFromTarget("image")}
         />
       </fieldset>
 
@@ -79,7 +77,7 @@ const SettingsForm = ({
           type="text"
           placeholder="Username"
           value=${username}
-          oninput=${[ChangeField("username"), targetValue]}
+          oninput=${ChangeFieldFromTarget("username")}
         />
       </fieldset>
 
@@ -89,7 +87,7 @@ const SettingsForm = ({
           rows="8"
           placeholder="Short bio about you"
           value=${bio}
-          oninput=${[ChangeField("bio"), targetValue]}
+          oninput=${ChangeFieldFromTarget("bio")}
         />
       </fieldset>
 
@@ -99,7 +97,7 @@ const SettingsForm = ({
           type="email"
           placeholder="Email"
           value=${email}
-          oninput=${[ChangeField("email"), targetValue]}
+          oninput=${ChangeFieldFromTarget("email")}
         />
       </fieldset>
 
@@ -109,7 +107,7 @@ const SettingsForm = ({
           type="password"
           placeholder="New Password"
           value=${password}
-          oninput=${[ChangeField("password"), targetValue]}
+          oninput=${ChangeFieldFromTarget("password")}
         />
       </fieldset>
 
