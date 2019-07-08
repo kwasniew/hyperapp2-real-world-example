@@ -5,7 +5,7 @@ import { format } from "../shared/date.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
-import {pages} from "../shared/selectors.js";
+import { pages } from "../shared/selectors.js";
 
 export const GLOBAL_FEED = "global";
 export const USER_FEED = "user";
@@ -18,12 +18,23 @@ const SetArticles = (state, { articles, articlesCount }) => ({
   articlesCount
 });
 
-export const FetchFeed = path =>
-  Http({
+export const FetchFeed = (path, token) => {
+  const options = token
+    ? {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    : {};
+  return Http({
     url: API_ROOT + path,
+    options,
     action: SetArticles
   });
+};
 
+export const FetchUserFeed = ({ page, token }) =>
+  FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
 export const FetchGlobalFeed = ({ page }) =>
   FetchFeed(`/articles?limit=10&offset=${page * 10}`);
 export const FetchTagFeed = ({ tag, page }) =>
@@ -39,7 +50,9 @@ export const FetchTags = Http({
 const FetchArticles = state => {
   const activeFeed = state.feeds.find(feed => feed.type === state.active);
   const page = state.currentPageIndex;
-  if (activeFeed.type === GLOBAL_FEED) {
+  if (activeFeed.type === USER_FEED) {
+    return FetchUserFeed({ page, token: state.user.token });
+  } else if (activeFeed.type === GLOBAL_FEED) {
     return FetchGlobalFeed({ page });
   } else if (activeFeed.type === TAG_FEED) {
     return FetchTagFeed({ tag: activeFeed.name, page });
@@ -91,9 +104,9 @@ export const LoadHomePage = page => state => {
   const newState = {
     user: state.user,
     page,
-    active: GLOBAL_FEED,
+    active: state.user ? USER_FEED : GLOBAL_FEED,
     feeds: [
-      { visible: false, type: USER_FEED },
+      { visible: !!state.user, type: USER_FEED },
       { visible: true, type: GLOBAL_FEED },
       { visible: false, type: TAG_FEED, name: "" }
     ],
