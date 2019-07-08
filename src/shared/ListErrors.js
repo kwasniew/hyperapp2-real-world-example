@@ -1,4 +1,4 @@
-import { html } from "../shared/html.js";
+import { html } from "./html.js";
 
 export const ListErrors = ({ errors }) => html`
   <ul class="error-messages">

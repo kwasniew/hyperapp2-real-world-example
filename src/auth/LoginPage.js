@@ -2,8 +2,8 @@ import { html } from "../shared/html.js";
 import { REGISTER } from "../shared/pages.js";
 import { ChangeEmail, ChangePassword, SubmitLogin } from "./actions.js";
 import { targetValue } from "../shared/lib/events.js";
-import {errorsList} from "./selectors.js";
-import {ListErrors} from "./ListErrors.js";
+import {errorsList} from "../shared/selectors.js";
+import {ListErrors} from "../shared/ListErrors.js";
 
 export const LoginPage = ({ email, password, inProgress, errors }) => html`
   <div class="auth-page">

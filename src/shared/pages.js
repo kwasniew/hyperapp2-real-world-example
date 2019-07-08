@@ -3,6 +3,8 @@ import { LoadHomePage } from "../home/actions.js";
 import { LoadLoginPage, LoadRegisterPage } from "../auth/actions.js";
 import { LoginPage } from "../auth/LoginPage.js";
 import { RegisterPage } from "../auth/RegisterPage.js";
+import { SettingsPage } from "../settings/SettingsPage.js";
+import { LoadSettingsPage } from "../settings/actions.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -18,6 +20,7 @@ export const pages = {
   [HOME]: HomePage,
   [LOGIN]: LoginPage,
   [REGISTER]: RegisterPage,
+  [SETTINGS]: SettingsPage
   // "*": HomePage
 };
 
@@ -25,6 +28,7 @@ export const routes = {
   [HOME]: LoadHomePage(HOME),
   [LOGIN]: LoadLoginPage(LOGIN),
   [REGISTER]: LoadRegisterPage(REGISTER),
+  [SETTINGS]: LoadSettingsPage(SETTINGS)
   // "*": LoadHomePage(HOME)
 };
 

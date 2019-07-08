@@ -1,7 +1,7 @@
 import { html } from "../shared/html.js";
 import {LOGIN} from "../shared/pages.js";
-import {ListErrors} from "./ListErrors.js";
-import {errorsList} from "./selectors.js";
+import {ListErrors} from "../shared/ListErrors.js";
+import {errorsList} from "../shared/selectors.js";
 import {targetValue} from "../shared/lib/events.js";
 import {ChangeUsername, ChangeEmail, ChangePassword, SubmitRegister} from "./actions.js";
 
