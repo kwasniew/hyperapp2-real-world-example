@@ -9,6 +9,11 @@ const AddTag = state => [
   preventDefault
 ];
 
+const RemoveTag = tag => state => ({
+  ...state,
+  tags: state.tags.filter(t => t !== tag)
+});
+
 export const LoadEditorPage = page => state => {
   return {
     page,
@@ -84,7 +89,11 @@ export const EditorPage = ({
                     tag =>
                       html`
                         <span class="tag-default tag-pill">
-                          <i class="ion-close-round" /> ${tag}
+                          <i
+                            class="ion-close-round"
+                            onclick=${RemoveTag(tag)}
+                          />
+                          ${tag}
                         </span>
                       `
                   )}
