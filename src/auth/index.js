@@ -1,33 +1,16 @@
-import {
-  Http,
-  WriteToStorage,
-  ReadFromStorage
-} from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/lib/events.js";
-import { Redirect } from "../shared/lib/Router.js";
-import { HOME, LOGIN, REGISTER } from "../shared/pages.js";
+import { LOGIN, REGISTER } from "../shared/pages.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
 import { targetValue } from "../shared/lib/events.js";
 import { errorsList } from "../shared/selectors.js";
 import { ListErrors } from "../shared/ListErrors.js";
+import { UserError, UserSuccess } from "../shared/user/index.js";
 
-const SetUser = (state, { value }) => ({ ...state, user: value });
-const SaveUser = user => WriteToStorage({ key: "session", value: user });
-export const ReadUser = ReadFromStorage({ key: "session", action: SetUser });
 export const ChangeUsername = (state, username) => ({ ...state, username });
 export const ChangeEmail = (state, email) => ({ ...state, email });
 export const ChangePassword = (state, password) => ({ ...state, password });
-
-const AuthSuccess = (state, { user }) => [
-  { ...state, user },
-  [SaveUser(user), Redirect({ path: HOME })]
-];
-const AuthError = (state, { errors }) => ({
-  ...state,
-  inProgress: false,
-  errors
-});
 
 const Login = ({ email, password }) =>
   Http({
@@ -40,8 +23,8 @@ const Login = ({ email, password }) =>
       body: JSON.stringify({ user: { email, password } })
     },
     errorResponse: "json",
-    action: AuthSuccess,
-    error: AuthError
+    action: UserSuccess,
+    error: UserError
   });
 export const SubmitLogin = state => [
   { ...state, inProgress: true },
@@ -59,8 +42,8 @@ const Register = ({ email, password, username }) =>
       body: JSON.stringify({ user: { email, password, username } })
     },
     errorResponse: "json",
-    action: AuthSuccess,
-    error: AuthError
+    action: UserSuccess,
+    error: UserError
   });
 export const SubmitRegister = state => [
   { ...state, inProgess: true },
