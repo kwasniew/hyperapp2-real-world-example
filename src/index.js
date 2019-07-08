@@ -5,11 +5,6 @@ import { routes } from "./shared/pages.js";
 import {ReadUser} from "./auth/index.js";
 
 const initialState = {
-  // user: {
-  //   image:
-  //     "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg",
-  //   name: "matt"
-  // },
   user: null
 };
 
