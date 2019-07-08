@@ -2,6 +2,12 @@ import { ListErrors } from "../shared/ListErrors.js";
 import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "../shared/selectors.js";
+import { preventDefault, OnEnter } from "../shared/lib/events.js";
+
+const AddTag = state => [
+  { ...state, currentTag: "", tags: [...state.tags, state.currentTag] },
+  preventDefault
+];
 
 export const LoadEditorPage = page => state => {
   return {
@@ -12,7 +18,7 @@ export const LoadEditorPage = page => state => {
     description: "",
     body: "",
     currentTag: "",
-    tagList: []
+    tags: []
   };
 };
 
@@ -21,7 +27,7 @@ export const EditorPage = ({
   description,
   body,
   currentTag,
-  tagList,
+  tags,
   errors,
   inProgress
 }) => html`
@@ -69,11 +75,12 @@ export const EditorPage = ({
                   type="text"
                   placeholder="Enter tags"
                   value=${currentTag}
+                  onkeyup=${OnEnter(AddTag)}
                   oninput=${ChangeFieldFromTarget("currentTag")}
                 />
 
                 <div class="tag-list">
-                  ${tagList.map(
+                  ${tags.map(
                     tag =>
                       html`
                         <span class="tag-default tag-pill">
