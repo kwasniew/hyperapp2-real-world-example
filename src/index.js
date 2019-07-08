@@ -2,6 +2,7 @@ import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./shared/lib/Router.js";
 import { view } from "./shared/view.js";
 import { routes } from "./shared/pages.js";
+import {ReadUser} from "./auth/actions.js";
 
 const initialState = {
   // user: {
@@ -13,7 +14,7 @@ const initialState = {
 };
 
 app({
-  init: () => [initialState, RoutePages({ routes })],
+  init: () => [initialState, ReadUser, RoutePages({ routes })],
   view,
   node: document.getElementById("app")
 });
