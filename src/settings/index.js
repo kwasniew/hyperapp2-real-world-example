@@ -4,7 +4,7 @@ import { errorsList } from "../shared/selectors.js";
 import { targetValue, preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
-import { UserError, UserSuccess } from "../shared/user/index.js";
+import { UserError, UserSuccess, Logout } from "../shared/user/index.js";
 
 const ChangeField = field => (state, value) => ({ ...state, [field]: value });
 
@@ -143,7 +143,7 @@ export const SettingsPage = ({
 
           <hr />
 
-          <button class="btn btn-outline-danger">
+          <button class="btn btn-outline-danger" onclick=${Logout}>
             Or click here to logout.
           </button>
         </div>
