@@ -7,6 +7,7 @@ import { targetValue } from "../shared/lib/events.js";
 import { errorsList } from "../shared/selectors.js";
 import { ListErrors } from "../shared/ListErrors.js";
 import { UserError, UserSuccess } from "../shared/user/index.js";
+import { formFields } from "../shared/formFields.js";
 
 export const ChangeUsername = (state, username) => ({ ...state, username });
 export const ChangeEmail = (state, email) => ({ ...state, email });
@@ -60,8 +61,7 @@ export const SubmitRegister = state => [
 const defaultAuthFields = {
   email: "",
   password: "",
-  inProgress: false,
-  errors: {}
+  ...formFields
 };
 
 export const LoadLoginPage = page => state => {

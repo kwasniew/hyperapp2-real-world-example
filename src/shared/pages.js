@@ -1,5 +1,4 @@
-import { HomePage } from "../home/index.js";
-import { LoadHomePage } from "../home/index.js";
+import { LoadHomePage, HomePage } from "../home/index.js";
 import {
   LoadLoginPage,
   LoadRegisterPage,
@@ -7,6 +6,7 @@ import {
   RegisterPage
 } from "../auth/index.js";
 import { LoadSettingsPage, SettingsPage } from "../settings/index.js";
+import { EditorPage, LoadEditorPage } from "../editor/index.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -22,7 +22,8 @@ export const pages = {
   [HOME]: HomePage,
   [LOGIN]: LoginPage,
   [REGISTER]: RegisterPage,
-  [SETTINGS]: SettingsPage
+  [SETTINGS]: SettingsPage,
+  [NEW_EDITOR]: EditorPage
   // "*": HomePage
 };
 
@@ -30,7 +31,8 @@ export const routes = {
   [HOME]: LoadHomePage(HOME),
   [LOGIN]: LoadLoginPage(LOGIN),
   [REGISTER]: LoadRegisterPage(REGISTER),
-  [SETTINGS]: LoadSettingsPage(SETTINGS)
+  [SETTINGS]: LoadSettingsPage(SETTINGS),
+  [NEW_EDITOR]: LoadEditorPage(NEW_EDITOR)
   // "*": LoadHomePage(HOME)
 };
 

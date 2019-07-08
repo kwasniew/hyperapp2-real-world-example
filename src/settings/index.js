@@ -5,27 +5,29 @@ import { targetValue, preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserError, UserSuccess, Logout } from "../shared/user/index.js";
+import { formFields } from "../shared/formFields.js";
 
 const ChangeField = field => (state, value) => ({ ...state, [field]: value });
 
 const UpdateSettings = user => {
-    const {password, ...userWithoutPassword} = user;
-    const submitUser = password && password.length > 0 ? user : userWithoutPassword;
-    return Http({
-        url: API_ROOT + "/user",
-        options: {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Token ${user.token}`
-            },
-            body: JSON.stringify({user: submitUser})
-        },
-        errorResponse: "json",
-        action: UserSuccess,
-        error: UserError
-    });
-}
+  const { password, ...userWithoutPassword } = user;
+  const submitUser =
+    password && password.length > 0 ? user : userWithoutPassword;
+  return Http({
+    url: API_ROOT + "/user",
+    options: {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${user.token}`
+      },
+      body: JSON.stringify({ user: submitUser })
+    },
+    errorResponse: "json",
+    action: UserSuccess,
+    error: UserError
+  });
+};
 const SubmitForm = state => [
   { ...state, inProgress: true },
   [
@@ -47,8 +49,7 @@ export const LoadSettingsPage = page => state => {
     user: state.user,
     ...state.user,
     password: "",
-    inProgress: false,
-    errors: {}
+    ...formFields
   };
 };
 
