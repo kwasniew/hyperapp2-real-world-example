@@ -7,6 +7,34 @@ import { profile, editor, LOGIN, REGISTER, HOME } from "../shared/pages.js";
 import { format } from "../shared/date.js";
 import { LogError } from "../shared/errors.js";
 import { RedirectAction } from "../shared/formFields.js";
+import { ChangeFieldFromTarget } from "../shared/formFields.js";
+import { preventDefault } from "../shared/lib/events.js";
+
+const AddComment = (state, { comment }) => ({
+  ...state,
+  commentText: "",
+  comments: [comment, ...state.comments]
+});
+
+const SubmitComment = state => [
+  state,
+  [
+    preventDefault,
+    Http({
+      url: API_ROOT + "/articles/" + state.slug + "/comments",
+      options: {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeader(state.user.token)
+        },
+        body: JSON.stringify({ comment: { body: state.commentText } })
+      },
+      action: AddComment,
+      error: LogError
+    })
+  ]
+];
 
 const DeleteArticle = ({ slug, token }) =>
   Http({
@@ -46,6 +74,7 @@ const FetchComments = ({ slug, token }) => {
 export const LoadArticlePage = page => (state, { slug }) => {
   const newState = {
     page,
+    slug,
     user: state.user,
     body: "",
     author: {},
@@ -118,12 +147,13 @@ const ArticleBanner = ({ state }) =>
   `;
 
 const CommentInput = ({ state }) => html`
-  <form class="card comment-form">
+  <form class="card comment-form" onsubmit=${SubmitComment}>
     <div class="card-block">
       <textarea
         class="form-control"
         placeholder="Write a comment..."
         value=${state.commentText}
+        oninput=${ChangeFieldFromTarget("commentText")}
         rows="3"
       />
     </div>
