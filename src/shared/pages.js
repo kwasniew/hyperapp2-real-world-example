@@ -12,7 +12,7 @@ import {
   LoadEditorPage
 } from "../editor/index.js";
 import { ArticlePage, LoadArticlePage } from "../article/index.js";
-import { LoadProfilePage, ProfilePage } from "../profile/index.js";
+import { LoadProfilePage, LoadProfileFavoritedPage, ProfilePage } from "../profile/index.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -32,7 +32,8 @@ export const pages = {
   [NEW_EDITOR]: EditorPage,
   [EDITOR]: EditorPage,
   [ARTICLE]: ArticlePage,
-  [PROFILE]: ProfilePage
+  [PROFILE]: ProfilePage,
+  [PROFILE_FAVORITED]: ProfilePage
   // "*": HomePage
 };
 
@@ -44,10 +45,12 @@ export const routes = {
   [NEW_EDITOR]: LoadNewEditorPage(NEW_EDITOR),
   [EDITOR]: LoadEditorPage(EDITOR),
   [ARTICLE]: LoadArticlePage(ARTICLE),
-  [PROFILE]: LoadProfilePage(PROFILE)
+  [PROFILE]: LoadProfilePage(PROFILE),
+  [PROFILE_FAVORITED]: LoadProfileFavoritedPage(PROFILE_FAVORITED)
   // "*": LoadHomePage(HOME)
 };
 
 export const article = slug => ARTICLE.replace(":slug", slug);
 export const profile = username => PROFILE.replace(":username", username);
+export const profileFavorited = username => PROFILE_FAVORITED.replace(":username", username);
 export const editor = slug => EDITOR.replace(":slug", slug);
