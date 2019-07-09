@@ -1,8 +1,2 @@
 export const authHeader = token =>
-  token
-    ? {
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      }
-    : {};
+  token ? { Authorization: `Token ${token}` } : {};

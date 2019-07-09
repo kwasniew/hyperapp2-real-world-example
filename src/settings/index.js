@@ -19,7 +19,7 @@ const UpdateSettings = user => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        ...authHeader(user.token).headers
+        ...authHeader(user.token)
       },
       body: JSON.stringify({ user: submitUser })
     },

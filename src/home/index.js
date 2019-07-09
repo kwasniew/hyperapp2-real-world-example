@@ -31,7 +31,7 @@ const FavoriteArticle = ({ slug, token }) =>
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
       method: "POST",
-      ...authHeader(token)
+      headers: authHeader(token)
     },
     action: UpdateArticle
   });
@@ -40,7 +40,7 @@ const UnfavoriteArticle = ({ slug, token }) =>
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
       method: "DELETE",
-      ...authHeader(token)
+      headers: authHeader(token)
     },
     action: UpdateArticle
   });
@@ -59,7 +59,7 @@ const ChangeFavorite = (state, slug) => {
 export const FetchFeed = (path, token) => {
   return Http({
     url: API_ROOT + path,
-    options: authHeader(token),
+    options: { headers: authHeader(token) },
     action: SetArticles
   });
 };

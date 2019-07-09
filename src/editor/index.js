@@ -26,7 +26,7 @@ const SaveArticle = ({ article, token }) =>
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...authHeader(token).headers
+        ...authHeader(token)
       },
       body: JSON.stringify({ article })
     },
