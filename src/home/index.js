@@ -7,6 +7,7 @@ import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
 import { authHeader } from "../shared/authHeader.js";
+import { LogError } from "../shared/errors.js";
 
 export const GLOBAL_FEED = "global";
 export const USER_FEED = "user";
@@ -33,7 +34,8 @@ const FavoriteArticle = ({ slug, token }) =>
       method: "POST",
       headers: authHeader(token)
     },
-    action: UpdateArticle
+    action: UpdateArticle,
+    error: LogError
   });
 const UnfavoriteArticle = ({ slug, token }) =>
   Http({
@@ -42,7 +44,8 @@ const UnfavoriteArticle = ({ slug, token }) =>
       method: "DELETE",
       headers: authHeader(token)
     },
-    action: UpdateArticle
+    action: UpdateArticle,
+    error: LogError
   });
 
 const ChangeFavorite = (state, slug) => {
@@ -60,7 +63,8 @@ export const FetchFeed = (path, token) => {
   return Http({
     url: API_ROOT + path,
     options: { headers: authHeader(token) },
-    action: SetArticles
+    action: SetArticles,
+    error: LogError
   });
 };
 
@@ -75,7 +79,8 @@ const SetTags = (state, { tags }) => ({ ...state, tags });
 
 export const FetchTags = Http({
   url: API_ROOT + "/tags",
-  action: SetTags
+  action: SetTags,
+  error: LogError
 });
 
 const FetchArticles = state => {

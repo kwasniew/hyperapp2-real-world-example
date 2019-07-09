@@ -1,5 +1,5 @@
 import { html } from "./html.js";
-import {Console} from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { Console } from "../web_modules/@kwasniew/hyperapp-fx.js";
 
 export const ListErrors = ({ errors }) => html`
   <ul class="error-messages">
@@ -12,6 +12,4 @@ export const ListErrors = ({ errors }) => html`
   </ul>
 `;
 
-
-
-export const LogError = (state, error) => [state, Console(error)]
+export const LogError = (state, error) => [state, Console(error)];
