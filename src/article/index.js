@@ -36,6 +36,7 @@ export const LoadArticlePage = page => (state, { slug }) => {
     body: "",
     author: {},
     tagList: [],
+      comments: [],
     commentText: ""
   };
   return [
@@ -47,11 +48,11 @@ export const LoadArticlePage = page => (state, { slug }) => {
   ];
 };
 
-const canModifySelector = state =>
-  state.user.token && state.author.username === state.user.username;
+const canModifySelector = author => loggedInUser =>
+  loggedInUser.token && author.username === loggedInUser.username;
 
 const ArticleActions = ({ state }) => {
-  const canModify = canModifySelector(state);
+  const canModify = canModifySelector(state.author)(state.user);
   return canModify
     ? html`
         <span>
@@ -126,7 +127,18 @@ const CommentInput = ({ state }) => html`
   </form>
 `;
 
-const Comment = ({ comment, slug }) =>
+const DeleteButton = ({ comment, slug, user }) => {
+  const canModify = canModifySelector(comment.author)(user);
+  return canModify
+    ? html`
+        <span class="mod-options">
+          <i class="ion-trash-a" />
+        </span>
+      `
+    : "";
+};
+
+const Comment = ({ comment, slug, user }) =>
   html`
     <div class="card">
       <div class="card-block">
@@ -141,21 +153,19 @@ const Comment = ({ comment, slug }) =>
           />
         </a>
         ${" "}
-        <a
-          href="{userArticlesLink(comment.author.username)}"
-          class="comment-author"
-        >
+        <a href=${profile(comment.author.username)} class="comment-author">
           ${comment.author.username}
         </a>
         <span class="date-posted">${format(comment.createdAt)}</span>
+        ${DeleteButton({ comment, slug, user })}
       </div>
     </div>
   `;
 
-const CommentList = ({ comments, slug }) => {
+const CommentList = ({ comments, user, slug }) => {
   return html`
     <div>
-      ${comments.map(comment => Comment({ comment, slug }))}
+      ${comments.map(comment => Comment({ comment, slug, user }))}
     </div>
   `;
 };
@@ -176,7 +186,11 @@ const CommentContainer = ({ state }) => html`
             &nbsp;to add comments on this article.
           </p>
         `}
-    ${CommentList({ comments: state.comments, slug: state.slug })}
+    ${CommentList({
+      comments: state.comments,
+      user: state.user,
+      slug: state.slug
+    })}
   </div>
 `;
 
