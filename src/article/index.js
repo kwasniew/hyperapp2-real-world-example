@@ -9,6 +9,7 @@ import { LogError } from "../shared/errors.js";
 import { RedirectAction } from "../shared/formFields.js";
 import { ChangeFieldFromTarget } from "../shared/formFields.js";
 import { preventDefault } from "../shared/lib/events.js";
+import {FetchArticle} from "../shared/article/index.js";
 
 const DeleteComment = id => state => ({
   ...state,
@@ -68,17 +69,6 @@ const SubmitDeleteArticle = state => [
   { ...state },
   DeleteArticle({ slug: state.slug, token: state.user.token })
 ];
-
-const SetArticle = (state, { article }) => ({ ...state, ...article });
-
-export const FetchArticle = ({ slug, token }) => {
-  return Http({
-    url: API_ROOT + "/articles/" + slug,
-    options: { headers: authHeader(token) },
-    action: SetArticle,
-    error: LogError
-  });
-};
 
 const SetComments = (state, { comments }) => ({ ...state, comments });
 

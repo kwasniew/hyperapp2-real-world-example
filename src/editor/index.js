@@ -8,7 +8,7 @@ import { API_ROOT } from "../config.js";
 import { FormError, RedirectAction } from "../shared/formFields.js";
 import { HOME } from "../shared/pages.js";
 import { authHeader } from "../shared/authHeader.js";
-import {FetchArticle} from "../article/index.js";
+import {FetchArticle} from "../shared/article/index.js";
 
 const AddTag = state => [
   { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
