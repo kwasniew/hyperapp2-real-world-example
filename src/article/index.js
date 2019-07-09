@@ -1,13 +1,27 @@
 import { html } from "../shared/html.js";
 import markdown from "../web_modules/snarkdown.js";
+import {Http} from "../web_modules/@kwasniew/hyperapp-fx.js";
+import {API_ROOT} from "../config.js";
+import {authHeader} from "../shared/authHeader.js";
 
-export const LoadArticlePage = page => state => {
-  return {
+const SetArticle = (state, {article}) => ({...state, ...article});
+
+const FetchArticle = ({slug, token}) => {
+  return Http({
+      url: API_ROOT + "/articles/" + slug,
+      options: authHeader(token),
+      action: SetArticle
+  })
+};
+
+export const LoadArticlePage = page => (state, {slug}) => {
+  const newState = {
     page,
     user: state.user,
-    body: "test",
+    body: "# test",
     tagList: ["test"]
   };
+  return [newState, FetchArticle({slug, token: state.user.token})];
 };
 
 export const ArticlePage = ({ body, tagList }) => html`
