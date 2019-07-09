@@ -3,9 +3,22 @@ import markdown from "../web_modules/snarkdown.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
-import { profile, editor, LOGIN, REGISTER } from "../shared/pages.js";
+import { profile, editor, LOGIN, REGISTER, HOME } from "../shared/pages.js";
 import { format } from "../shared/date.js";
 import { LogError } from "../shared/errors.js";
+import { RedirectAction } from "../shared/formFields.js";
+
+const DeleteArticle = ({ slug, token }) =>
+  Http({
+    url: API_ROOT + "/articles/" + slug,
+    options: { method: "DELETE", headers: authHeader(token) },
+    action: RedirectAction(HOME),
+    error: LogError
+  });
+
+const SubmitDeleteArticle = state => (
+  { ...state }, DeleteArticle({ slug: state.slug, token: state.user.token })
+);
 
 const SetArticle = (state, { article }) => ({ ...state, ...article });
 
@@ -36,7 +49,7 @@ export const LoadArticlePage = page => (state, { slug }) => {
     body: "",
     author: {},
     tagList: [],
-      comments: [],
+    comments: [],
     commentText: ""
   };
   return [
@@ -63,7 +76,10 @@ const ArticleActions = ({ state }) => {
             <i class="ion-edit" /> Edit Article
           </a>
 
-          <button class="btn btn-outline-danger btn-sm">
+          <button
+            class="btn btn-outline-danger btn-sm"
+            onclick=${SubmitDeleteArticle}
+          >
             <i class="ion-trash-a" /> Delete Article
           </button>
         </span>

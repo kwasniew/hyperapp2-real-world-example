@@ -12,4 +12,6 @@ export const ListErrors = ({ errors }) => html`
   </ul>
 `;
 
-export const LogError = (state, error) => ({...state, Console})
+
+
+export const LogError = (state, error) => [state, Console(error)]
