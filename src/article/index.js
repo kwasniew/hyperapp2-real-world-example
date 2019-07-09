@@ -180,10 +180,10 @@ const CommentContainer = ({ state }) => html`
         `
       : html`
           <p>
-            <a href=${LOGIN}>Sign in</a>
-            &nbsp;or&nbsp;
-            <a href=${REGISTER}>sign up</a>
-            &nbsp;to add comments on this article.
+            <a href=${LOGIN}>Sign in </a>
+            or
+            <a href=${REGISTER}> sign up </a>
+            to add comments on this article.
           </p>
         `}
     ${CommentList({
