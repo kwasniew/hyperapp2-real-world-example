@@ -10,6 +10,26 @@ import { RedirectAction } from "../shared/formFields.js";
 import { ChangeFieldFromTarget } from "../shared/formFields.js";
 import { preventDefault } from "../shared/lib/events.js";
 
+const DeleteComment = id => state => ({
+  ...state,
+  comments: state.comments.filter(comment => comment.id !== id)
+});
+
+const SubmitDeleteComment = id => state => [
+  state,
+  Http({
+    url: API_ROOT + "/articles/" + state.slug + "/comments/" + id,
+    options: {
+      method: "DELETE",
+      headers: {
+        ...authHeader(state.user.token)
+      }
+    },
+    action: DeleteComment(id),
+    error: LogError
+  })
+];
+
 const AddComment = (state, { comment }) => ({
   ...state,
   commentText: "",
@@ -179,7 +199,7 @@ const DeleteButton = ({ comment, slug, user }) => {
   return canModify
     ? html`
         <span class="mod-options">
-          <i class="ion-trash-a" />
+          <i class="ion-trash-a" onclick=${SubmitDeleteComment(comment.id)} />
         </span>
       `
     : "";
