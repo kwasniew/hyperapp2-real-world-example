@@ -8,7 +8,7 @@ import { API_ROOT } from "../config.js";
 import { FormError, RedirectAction } from "../shared/formFields.js";
 import { HOME } from "../shared/pages.js";
 import { authHeader } from "../shared/authHeader.js";
-import {FetchArticle} from "../shared/article/index.js";
+import { FetchArticle } from "../shared/article/index.js";
 
 const AddTag = state => [
   { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
@@ -52,22 +52,20 @@ const SubmitArticle = state => [
   ]
 ];
 
-export const LoadNewEditorPage = page => state => {
-  return {
-    page,
-    user: state.user,
-    ...formFields,
-    title: "",
-    description: "",
-    body: "",
-    currentTag: "",
-    tagList: []
-  };
-};
+export const LoadNewEditorPage = page => state => ({
+  page,
+  user: state.user,
+  ...formFields,
+  title: "",
+  description: "",
+  body: "",
+  currentTag: "",
+  tagList: []
+});
 
-export const LoadEditorPage = page => (state, {slug}) => {
+export const LoadEditorPage = page => (state, { slug }) => {
   const newState = LoadNewEditorPage(page)(state);
-  return [newState, FetchArticle({slug, token: state.user.token})];
+  return [newState, FetchArticle({ slug, token: state.user.token })];
 };
 
 export const EditorPage = ({

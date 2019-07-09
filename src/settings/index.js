@@ -1,7 +1,7 @@
 import { html } from "../shared/html.js";
 import { ListErrors } from "../shared/errors.js";
 import { errorsList } from "../shared/selectors.js";
-import { targetValue, preventDefault } from "../shared/lib/events.js";
+import { preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "../shared/user/index.js";

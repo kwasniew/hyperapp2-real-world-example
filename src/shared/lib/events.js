@@ -1,9 +1,7 @@
 export const targetValue = event => event.target.value;
 export const keyCode = event => event.keyCode;
 
-const preventDefaultEffect = (dispatch, props, event) => {
-  event.preventDefault();
-};
+const preventDefaultEffect = (dispatch, props, event) => event.preventDefault();
 
 export const preventDefault = [preventDefaultEffect];
 

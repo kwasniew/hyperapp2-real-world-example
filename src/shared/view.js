@@ -68,11 +68,9 @@ export const Header = ({ page, user }) =>
     </nav>
   `;
 
-export const view = state =>
-  // console.log(JSON.stringify(state, null, 4)) ||
-  html`
-    <div>
-      ${Header({ page: state.page, user: state.user })}
-      ${state.page ? pages[state.page](state) : ""}
-    </div>
-  `;
+export const view = state => html`
+  <div>
+    ${Header({ page: state.page, user: state.user })}
+    ${state.page ? pages[state.page](state) : ""}
+  </div>
+`;
