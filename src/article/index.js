@@ -126,12 +126,46 @@ const CommentInput = ({ state }) => html`
   </form>
 `;
 
+const Comment = ({ comment, slug }) =>
+  html`
+    <div class="card">
+      <div class="card-block">
+        <p class="card-text">${comment.body}</p>
+      </div>
+      <div class="card-footer">
+        <a href=${profile(comment.author.username)} class="comment-author">
+          <img
+            src=${comment.author.image}
+            class="comment-author-img"
+            alt=${comment.author.username}
+          />
+        </a>
+        ${" "}
+        <a
+          href="{userArticlesLink(comment.author.username)}"
+          class="comment-author"
+        >
+          ${comment.author.username}
+        </a>
+        <span class="date-posted">${format(comment.createdAt)}</span>
+      </div>
+    </div>
+  `;
+
+const CommentList = ({ comments, slug }) => {
+  return html`
+    <div>
+      ${comments.map(comment => Comment({ comment, slug }))}
+    </div>
+  `;
+};
+
 const CommentContainer = ({ state }) => html`
   <div class="col-xs-12 col-md-8 offset-md-2">
     ${state.user.token
       ? html`
           <div>
-            ${CommentInput({state})}
+            ${CommentInput({ state })}
           </div>
         `
       : html`
@@ -142,7 +176,7 @@ const CommentContainer = ({ state }) => html`
             &nbsp;to add comments on this article.
           </p>
         `}
-
+    ${CommentList({ comments: state.comments, slug: state.slug })}
   </div>
 `;
 
