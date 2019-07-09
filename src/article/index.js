@@ -18,8 +18,8 @@ export const LoadArticlePage = page => (state, {slug}) => {
   const newState = {
     page,
     user: state.user,
-    body: "# test",
-    tagList: ["test"]
+    body: "",
+    tagList: []
   };
   return [newState, FetchArticle({slug, token: state.user.token})];
 };
