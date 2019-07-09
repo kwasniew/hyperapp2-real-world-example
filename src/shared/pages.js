@@ -7,6 +7,7 @@ import {
 } from "../auth/index.js";
 import { LoadSettingsPage, SettingsPage } from "../settings/index.js";
 import { EditorPage, LoadEditorPage } from "../editor/index.js";
+import { ArticlePage, LoadArticlePage } from "../article/index.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -23,7 +24,8 @@ export const pages = {
   [LOGIN]: LoginPage,
   [REGISTER]: RegisterPage,
   [SETTINGS]: SettingsPage,
-  [NEW_EDITOR]: EditorPage
+  [NEW_EDITOR]: EditorPage,
+  [ARTICLE]: ArticlePage
   // "*": HomePage
 };
 
@@ -32,7 +34,8 @@ export const routes = {
   [LOGIN]: LoadLoginPage(LOGIN),
   [REGISTER]: LoadRegisterPage(REGISTER),
   [SETTINGS]: LoadSettingsPage(SETTINGS),
-  [NEW_EDITOR]: LoadEditorPage(NEW_EDITOR)
+  [NEW_EDITOR]: LoadEditorPage(NEW_EDITOR),
+  [ARTICLE]: LoadArticlePage(ARTICLE)
   // "*": LoadHomePage(HOME)
 };
 
