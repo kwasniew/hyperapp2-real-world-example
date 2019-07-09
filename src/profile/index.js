@@ -1,11 +1,24 @@
 import { html } from "../shared/html.js";
+import {Http} from "../web_modules/@kwasniew/hyperapp-fx.js";
+import {API_ROOT} from "../config.js";
+import {authHeader} from "../shared/authHeader.js";
+import {LogError} from "../shared/errors.js";
+
+const SetProfile = (state, {profile}) => ({...state, ...profile});
+
+const FetchProfile = ({username, token}) => Http({
+    url: API_ROOT + "/profiles/" + encodeURIComponent(username),
+    options: { headers: authHeader(token) },
+    action: SetProfile,
+    error: LogError
+});
 
 export const LoadProfilePage = page => (state, { username }) => {
     const newState = {
         page,
         user: state.user
     };
-    return newState;
+    return [newState, FetchProfile({username, token: state.user.token})];
 };
 
 export const ProfilePage = ({username, image, bio}) => html`
