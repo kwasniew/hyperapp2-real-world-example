@@ -16,9 +16,10 @@ const DeleteArticle = ({ slug, token }) =>
     error: LogError
   });
 
-const SubmitDeleteArticle = state => (
-  { ...state }, DeleteArticle({ slug: state.slug, token: state.user.token })
-);
+const SubmitDeleteArticle = state => [
+  { ...state },
+  DeleteArticle({ slug: state.slug, token: state.user.token })
+];
 
 const SetArticle = (state, { article }) => ({ ...state, ...article });
 
