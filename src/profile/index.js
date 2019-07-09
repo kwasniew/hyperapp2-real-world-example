@@ -18,15 +18,12 @@ const FetchProfile = ({ username, token }) =>
 const OWN = "own";
 const FAVORITED = "favorited";
 
-export const LoadProfilePage = page => (state, { username }) => {
-  const newState = { page, user: state.user, mode: OWN };
+export const LoadPage = mode => page => (state, { username }) => {
+  const newState = { page, user: state.user, mode };
   return [newState, FetchProfile({ username, token: state.user.token })];
 };
-
-export const LoadProfileFavoritedPage = page => (state, { username }) => {
-  const newState = { page, user: state.user, mode: FAVORITED };
-  return [newState, FetchProfile({ username, token: state.user.token })];
-};
+export const LoadProfilePage = LoadPage(OWN);
+export const LoadProfileFavoritedPage = LoadPage(FAVORITED);
 
 const ChangeFollow = method => state => [
   state,
@@ -76,7 +73,14 @@ const Tabs = ({ username, mode }) =>
     </ul>
   `;
 
-export const ProfilePage = ({ user, username, image, bio, following, mode }) => html`
+export const ProfilePage = ({
+  user,
+  username,
+  image,
+  bio,
+  following,
+  mode
+}) => html`
   <div class="profile-page">
     ${username
       ? html`
