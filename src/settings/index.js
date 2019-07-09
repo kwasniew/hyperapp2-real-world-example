@@ -6,7 +6,8 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "../shared/user/index.js";
 import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
-import {FormError} from "../shared/formFields.js";
+import { FormError } from "../shared/formFields.js";
+import { authHeader } from "../shared/authHeader.js";
 
 const UpdateSettings = user => {
   const { password, ...userWithoutPassword } = user;
@@ -18,7 +19,7 @@ const UpdateSettings = user => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${user.token}`
+        ...authHeader(user.token).headers
       },
       body: JSON.stringify({ user: submitUser })
     },

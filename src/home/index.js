@@ -6,6 +6,7 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
+import { authHeader } from "../shared/authHeader.js";
 
 export const GLOBAL_FEED = "global";
 export const USER_FEED = "user";
@@ -30,9 +31,7 @@ const FavoriteArticle = ({ slug, token }) =>
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
       method: "POST",
-      headers: {
-        Authorization: `Token ${token}`
-      }
+      ...authHeader(token)
     },
     action: UpdateArticle
   });
@@ -41,9 +40,7 @@ const UnfavoriteArticle = ({ slug, token }) =>
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
       method: "DELETE",
-      headers: {
-        Authorization: `Token ${token}`
-      }
+      ...authHeader(token)
     },
     action: UpdateArticle
   });
@@ -60,16 +57,9 @@ const ChangeFavorite = (state, slug) => {
 };
 
 export const FetchFeed = (path, token) => {
-  const options = token
-    ? {
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      }
-    : {};
   return Http({
     url: API_ROOT + path,
-    options,
+    options: authHeader(token),
     action: SetArticles
   });
 };

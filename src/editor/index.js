@@ -5,8 +5,9 @@ import { errorsList } from "../shared/selectors.js";
 import { preventDefault, OnEnter } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
-import {FormError, RedirectAction} from "../shared/formFields.js";
-import {HOME} from "../shared/pages.js";
+import { FormError, RedirectAction } from "../shared/formFields.js";
+import { HOME } from "../shared/pages.js";
+import { authHeader } from "../shared/authHeader.js";
 
 const AddTag = state => [
   { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
@@ -25,7 +26,7 @@ const SaveArticle = ({ article, token }) =>
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`
+        ...authHeader(token).headers
       },
       body: JSON.stringify({ article })
     },
