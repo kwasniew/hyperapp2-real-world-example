@@ -71,7 +71,7 @@ const SubmitDeleteArticle = state => [
 
 const SetArticle = (state, { article }) => ({ ...state, ...article });
 
-const FetchArticle = ({ slug, token }) => {
+export const FetchArticle = ({ slug, token }) => {
   return Http({
     url: API_ROOT + "/articles/" + slug,
     options: { headers: authHeader(token) },
