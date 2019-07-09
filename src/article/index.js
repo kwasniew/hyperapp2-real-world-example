@@ -3,30 +3,30 @@ import markdown from "../web_modules/snarkdown.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
-import { profile, editor } from "../shared/pages.js";
+import { profile, editor, LOGIN, REGISTER } from "../shared/pages.js";
 import { format } from "../shared/date.js";
-import {LogError} from "../shared/errors.js";
+import { LogError } from "../shared/errors.js";
 
 const SetArticle = (state, { article }) => ({ ...state, ...article });
 
 const FetchArticle = ({ slug, token }) => {
-    return Http({
-        url: API_ROOT + "/articles/" + slug,
-        options: { headers: authHeader(token) },
-        action: SetArticle,
-        error: LogError
-    });
+  return Http({
+    url: API_ROOT + "/articles/" + slug,
+    options: { headers: authHeader(token) },
+    action: SetArticle,
+    error: LogError
+  });
 };
 
-const SetComments = (state, {comments}) => ({...state, comments});
+const SetComments = (state, { comments }) => ({ ...state, comments });
 
 const FetchComments = ({ slug, token }) => {
-    return Http({
-        url: API_ROOT + "/articles/" + slug + "/comments",
-        options: { headers: authHeader(token) },
-        action: SetComments,
-        error: LogError
-    });
+  return Http({
+    url: API_ROOT + "/articles/" + slug + "/comments",
+    options: { headers: authHeader(token) },
+    action: SetComments,
+    error: LogError
+  });
 };
 
 export const LoadArticlePage = page => (state, { slug }) => {
@@ -35,9 +35,16 @@ export const LoadArticlePage = page => (state, { slug }) => {
     user: state.user,
     body: "",
     author: {},
-    tagList: []
+    tagList: [],
+    commentText: ""
   };
-  return [newState, [FetchArticle({ slug, token: state.user.token }), FetchComments({slug, token: state.user.token})]];
+  return [
+    newState,
+    [
+      FetchArticle({ slug, token: state.user.token }),
+      FetchComments({ slug, token: state.user.token })
+    ]
+  ];
 };
 
 const canModifySelector = state =>
@@ -91,6 +98,54 @@ const ArticleBanner = ({ state }) =>
       </div>
     </div>
   `;
+
+const CommentInput = ({ state }) => html`
+  <form class="card comment-form">
+    <div class="card-block">
+      <textarea
+        class="form-control"
+        placeholder="Write a comment..."
+        value=${state.commentText}
+        rows="3"
+      />
+    </div>
+    <div class="card-footer">
+      ${state.user.image
+        ? html`
+            <img
+              src=${state.user.image}
+              class="comment-author-img"
+              alt=${state.user.username}
+            />
+          `
+        : ""}
+      <button class="btn btn-sm btn-primary" type="submit">
+        Post Comment
+      </button>
+    </div>
+  </form>
+`;
+
+const CommentContainer = ({ state }) => html`
+  <div class="col-xs-12 col-md-8 offset-md-2">
+    ${state.user.token
+      ? html`
+          <div>
+            ${CommentInput({state})}
+          </div>
+        `
+      : html`
+          <p>
+            <a href=${LOGIN}>Sign in</a>
+            &nbsp;or&nbsp;
+            <a href=${REGISTER}>sign up</a>
+            &nbsp;to add comments on this article.
+          </p>
+        `}
+
+  </div>
+`;
+
 export const ArticlePage = state =>
   state.title
     ? html`
@@ -117,6 +172,10 @@ export const ArticlePage = state =>
             <hr />
 
             <div class="article-actions" />
+
+            <div class="row">
+              ${CommentContainer({ state })}
+            </div>
           </div>
         </div>
       `
