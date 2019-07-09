@@ -15,33 +15,23 @@ const FetchProfile = ({ username, token }) =>
   });
 
 export const LoadProfilePage = page => (state, { username }) => {
-  const newState = {
-    page,
-    user: state.user
-  };
+  const newState = { page, user: state.user };
   return [newState, FetchProfile({ username, token: state.user.token })];
 };
 
-const Follow = state => [
+const ChangeFollow = method => state => [
   state,
   Http({
     url:
       API_ROOT + "/profiles/" + encodeURIComponent(state.username) + "/follow",
-    options: { method: "POST", headers: authHeader(state.user.token) },
+    options: { method, headers: authHeader(state.user.token) },
     action: SetProfile,
     error: LogError
   })
 ];
 
-const Unfollow = state => [
-  state,
-  Http({
-    url: API_ROOT + "/profiles/" + encodeURIComponent(state.username) + "/follow",
-    options: { method: "DELETE", headers: authHeader(state.user.token) },
-    action: SetProfile,
-    error: LogError
-  })
-];
+const Follow = ChangeFollow("POST");
+const Unfollow = ChangeFollow("DELETE");
 
 const FollowUserButton = ({ username, following }) => html`
   <button
