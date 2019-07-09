@@ -1,5 +1,5 @@
 import { html } from "../shared/html.js";
-import { ListErrors } from "../shared/ListErrors.js";
+import { ListErrors } from "../shared/errors.js";
 import { errorsList } from "../shared/selectors.js";
 import { targetValue, preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";

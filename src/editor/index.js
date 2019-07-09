@@ -1,4 +1,4 @@
-import { ListErrors } from "../shared/ListErrors.js";
+import { ListErrors } from "../shared/errors.js";
 import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "../shared/selectors.js";

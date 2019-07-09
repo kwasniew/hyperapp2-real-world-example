@@ -5,15 +5,28 @@ import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { profile, editor } from "../shared/pages.js";
 import { format } from "../shared/date.js";
+import {LogError} from "../shared/errors.js";
 
 const SetArticle = (state, { article }) => ({ ...state, ...article });
 
 const FetchArticle = ({ slug, token }) => {
-  return Http({
-    url: API_ROOT + "/articles/" + slug,
-    options: { headers: authHeader(token) },
-    action: SetArticle
-  });
+    return Http({
+        url: API_ROOT + "/articles/" + slug,
+        options: { headers: authHeader(token) },
+        action: SetArticle,
+        error: LogError
+    });
+};
+
+const SetComments = (state, {comments}) => ({...state, comments});
+
+const FetchComments = ({ slug, token }) => {
+    return Http({
+        url: API_ROOT + "/articles/" + slug + "/comments",
+        options: { headers: authHeader(token) },
+        action: SetComments,
+        error: LogError
+    });
 };
 
 export const LoadArticlePage = page => (state, { slug }) => {
@@ -24,7 +37,7 @@ export const LoadArticlePage = page => (state, { slug }) => {
     author: {},
     tagList: []
   };
-  return [newState, FetchArticle({ slug, token: state.user.token })];
+  return [newState, [FetchArticle({ slug, token: state.user.token }), FetchComments({slug, token: state.user.token})]];
 };
 
 const canModifySelector = state =>
