@@ -4,11 +4,12 @@ import { errorsList } from "../shared/selectors.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
-import { UserSuccess, Logout } from "./fragments/auth.js";
+import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { FormError } from "../shared/formFields.js";
 import { authHeader } from "../shared/authHeader.js";
 
+// Actions & Effects
 const UpdateSettings = user => {
     const { password, ...userWithoutPassword } = user;
     const submitUser =
@@ -28,6 +29,7 @@ const UpdateSettings = user => {
         error: FormError
     });
 };
+
 const SubmitForm = state => [
     { ...state, inProgress: true },
     [
@@ -53,6 +55,7 @@ export const LoadSettingsPage = page => state => {
     };
 };
 
+// Views
 const SettingsForm = ({
                           image,
                           username,

@@ -1,5 +1,5 @@
-import { html } from "./html.js";
-import { pages } from "../pages/index.js";
+import { html } from "../shared/html.js";
+import { pages } from "./index.js";
 import cc from "../web_modules/classcat.js";
 import {
   HOME,
@@ -8,8 +8,9 @@ import {
   REGISTER,
   SETTINGS,
   profile
-} from "../pages/links.js";
+} from "./links.js";
 
+// Views
 const NavItem = ({ page, path }, children) => html`
   <li class="nav-item">
     <a

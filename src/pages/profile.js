@@ -12,6 +12,7 @@ import { pages } from "../shared/selectors.js";
 import { FetchArticles } from "./fragments/articles.js";
 import {profileFavorited, SETTINGS} from "./links.js";
 
+// Actions & Effects
 const SetProfile = (state, { profile }) => ({ ...state, profile });
 
 const FetchProfile = ({ username, token }) =>
@@ -24,6 +25,7 @@ const FetchProfile = ({ username, token }) =>
 
 export const AUTHOR_FEED = "author";
 export const FAVORITED_FEED = "favorited";
+
 const FetchAuthorFeed = ({ page, username, token }) =>
     FetchArticles(
         `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
@@ -36,6 +38,7 @@ const FetchFavoritedFeed = ({ page, username, token }) =>
         5}`,
         token
     );
+
 const fetches = {
     [AUTHOR_FEED]: FetchAuthorFeed,
     [FAVORITED_FEED]: FetchFavoritedFeed
@@ -74,6 +77,7 @@ const ChangeFollow = method => state => [
 const Follow = ChangeFollow("POST");
 const Unfollow = ChangeFollow("DELETE");
 
+// Views
 const FollowUserButton = ({ username, following }) => html`
   <button
     onclick=${following ? Unfollow : Follow}

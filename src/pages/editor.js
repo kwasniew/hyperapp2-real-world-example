@@ -10,6 +10,7 @@ import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 
+// Actions & Effects
 const AddTag = state => [
     { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
     preventDefault
@@ -68,6 +69,7 @@ export const LoadEditorPage = page => (state, { slug }) => {
     return [newState, FetchArticle({ slug, token: state.user.token })];
 };
 
+// Views
 export const EditorPage = ({
                                title,
                                description,

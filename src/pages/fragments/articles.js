@@ -7,6 +7,7 @@ import { authHeader } from "../../shared/authHeader.js";
 import { LogError } from "../../shared/errors.js";
 import {profile} from "../links.js";
 
+// Actions & Effects
 const UpdateArticle = (state, { article }) => ({
   ...state,
   articles: state.articles.map(oldArticle =>
@@ -52,6 +53,7 @@ const SetArticles = (state, { articles, articlesCount }) => ({
   articlesCount
 });
 
+// Views
 export const FetchArticles = (path, token) => {
   return Http({
     url: API_ROOT + path,
