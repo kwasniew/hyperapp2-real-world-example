@@ -114,6 +114,7 @@ Raw source size: < 1300 LOC
 Minified+gzipped bundle: 16.5kB
 Lighthouse score: 100
 
+
 It makes it one of the smallest and fastest to load versions of RealWorld app.
 
 When comparing different implementations remember that:
