@@ -51,7 +51,7 @@ I find it easier to reason about and refactor functional code.
 * Try to move your logic to the actions
 * If there's some derived state to compute, create selector functions
 
-Additionally this project uses functions with explicit input parameters. Tradeoff: more boilerplate but
+Additionally this project uses functions with explicit input parameters destructuring. Tradeoff: more boilerplate but
 no magic.
 
 ### Navigation pattern
