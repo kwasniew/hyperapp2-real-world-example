@@ -94,7 +94,7 @@ export const FetchArticles = state => {
     [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
     [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
     [TAG_FEED]: FetchTagFeed({
-      tag: state.tag,
+      tag: state.activeFeedName,
       page,
       token: state.user.token
     }),
@@ -156,7 +156,7 @@ const ArticlePreview = ({ article }) => html`
       <ul class="tag-list">
         ${article.tagList.map(tag => {
           return html`
-            <li class="tag-default tag-pill tag-outline" key=${tag}>
+            <li class="tag-default tag-pill tag-outline">
               ${tag}
             </li>
           `;

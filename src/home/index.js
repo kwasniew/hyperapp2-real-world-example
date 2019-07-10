@@ -22,7 +22,7 @@ export const FetchTags = Http({
   error: LogError
 });
 
-export const ChangeTab = (state, { activeFeedName, activeFeedType }) => {
+export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
     state.user.token ? USER_FEED : null,
     GLOBAL_FEED,
@@ -31,7 +31,7 @@ export const ChangeTab = (state, { activeFeedName, activeFeedType }) => {
   const newState = {
     ...state,
     activeFeedType,
-    activeFeedName,
+    activeFeedName: activeFeedName ? activeFeedName : activeFeedType,
     feeds,
     tag: name,
     ...loadingArticles
@@ -114,10 +114,10 @@ export const HomePage = ({
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
                 ${feeds[0]
-                  ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED, name: activeFeedType }, "Your Feed")
+                  ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed")
                   : ""}
                 ${feeds[1]
-                  ? FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED, name: activeFeedType }, "Global Feed")
+                  ? FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed")
                   : ""}
                 ${feeds[2]
                   ? FeedTab(
