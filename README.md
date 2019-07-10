@@ -5,10 +5,10 @@
 ### Zero-dependency micro libraries
 
 For production dependencies prefer tiny zero-dependency libraries because:
-* the app loads fast by default
 * you can reason about their sources w/o being a core contributor
 * they provide more stable abstraction and do one thing well
 * they are easier to compose
+* the app loads fast by default
 * they don't bring their whole family to the party :)
 
 
