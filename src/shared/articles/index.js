@@ -7,21 +7,6 @@ import { authHeader } from "../authHeader.js";
 import { LogError } from "../errors.js";
 import { preventDefault } from "../lib/events.js";
 
-const SetArticles = (state, { articles, articlesCount }) => ({
-  ...state,
-  isLoading: false,
-  articles,
-  articlesCount
-});
-
-export const FetchFeed = (path, token) => {
-  return Http({
-    url: API_ROOT + path,
-    options: { headers: authHeader(token) },
-    action: SetArticles,
-    error: LogError
-  });
-};
 
 const UpdateArticle = (state, { article }) => ({
   ...state,
@@ -67,6 +52,22 @@ export const USER_FEED = "user";
 export const TAG_FEED = "tag";
 export const AUTHOR_FEED = "author";
 export const FAVORITED_FEED = "favorited";
+
+const SetArticles = (state, { articles, articlesCount }) => ({
+    ...state,
+    isLoading: false,
+    articles,
+    articlesCount
+});
+
+export const FetchFeed = (path, token) => {
+    return Http({
+        url: API_ROOT + path,
+        options: { headers: authHeader(token) },
+        action: SetArticles,
+        error: LogError
+    });
+};
 
 const FetchUserFeed = ({ page, token }) =>
   FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
@@ -183,7 +184,7 @@ const ListPagination = ({ pages }) => {
                 <a
                   class="page-link"
                   href=""
-                  onClick=${[ChangePage, { currentPageIndex: page.index }]}
+                  onclick=${[ChangePage, { currentPageIndex: page.index }]}
                 >
                   ${page.humanDisplay}
                 </a>
@@ -196,17 +197,17 @@ const ListPagination = ({ pages }) => {
 };
 
 export const ArticleList = ({ isLoading, articles, pages }) => {
-  if (isLoading) {
-    return html`
+    if (isLoading) {
+        return html`
       <div class="article-preview">Loading...</div>
     `;
-  }
-  if (articles.length === 0) {
-    return html`
+    }
+    if (articles.length === 0) {
+        return html`
       <div class="article-preview">No articles are here... yet.</div>
     `;
-  }
-  return html`
+    }
+    return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
       ${ListPagination({ pages })}
