@@ -6,7 +6,7 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
-import { FormError } from "./fragments/forms.js";
+import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
 
 // Actions & Effects
@@ -31,7 +31,7 @@ const UpdateSettings = user => {
 };
 
 const SubmitForm = state => [
-  { ...state, inProgress: true },
+  Submitting(state),
   [
     preventDefault,
     UpdateSettings({

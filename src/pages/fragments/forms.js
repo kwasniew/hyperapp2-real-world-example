@@ -13,6 +13,7 @@ export const ChangeFieldFromTarget = field => [ChangeField(field), targetValue];
 // Form Errors
 // Actions & Effects
 export const LogError = (state, error) => [state, Console(error)];
+export const Submitting = (state) => ({ ...state, inProgress: true });
 export const FormError = (state, { errors }) => ({
   ...state,
   inProgress: false,

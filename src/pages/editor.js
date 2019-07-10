@@ -5,7 +5,7 @@ import { errorsList } from "./fragments/forms.js";
 import { preventDefault, OnEnter } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
-import { FormError } from "./fragments/forms.js";
+import { FormError, Submitting } from "./fragments/forms.js";
 import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
@@ -39,7 +39,7 @@ const SaveArticle = ({ article, token }) =>
   });
 
 const SubmitArticle = state => [
-  { ...state, inProgress: true },
+  Submitting(state),
   [
     preventDefault,
     SaveArticle({

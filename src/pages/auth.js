@@ -7,7 +7,7 @@ import { errorsList } from "./fragments/forms.js";
 import { ListErrors } from "./fragments/forms.js";
 import { UserSuccess } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
-import { FormError } from "./fragments/forms.js";
+import { FormError, Submitting } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
 
 // Actions & Effects
@@ -30,7 +30,7 @@ const Login = ({ email, password }) =>
     error: FormError
   });
 const SubmitLogin = state => [
-  { ...state, inProgress: true },
+  Submitting(state),
   [preventDefault, Login({ email: state.email, password: state.password })]
 ];
 
