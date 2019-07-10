@@ -20,20 +20,18 @@ export const GLOBAL_FEED = "global";
 export const USER_FEED = "user";
 export const TAG_FEED = "tag";
 
-const FetchUserFeed = ({ page, token }) =>
-  FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
-const FetchGlobalFeed = ({ page, token }) =>
-  FetchFeed(`/articles?limit=10&offset=${page * 10}`, token);
-const FetchTagFeed = ({ tag, page, token }) =>
-  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`, token);
+const FetchUserFeed = ({ pageIndex, token }) =>
+  FetchFeed(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
+const FetchGlobalFeed = ({ pageIndex, token }) =>
+  FetchFeed(`/articles?limit=10&offset=${pageIndex * 10}`, token);
+const FetchTagFeed = ({ tag, pageIndex, token }) =>
+  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`, token);
 
 const fetches = {
   [GLOBAL_FEED]: FetchGlobalFeed,
   [USER_FEED]: FetchUserFeed,
   [TAG_FEED]: FetchTagFeed
 };
-
-const pagination = {};
 
 export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
@@ -53,10 +51,10 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     newState,
     [
       preventDefault,
-      fetches[activeFeedType]({
-        page: state.page,
-        token: state.user.token,
-        tag: activeFeedName
+      fetches[newState.activeFeedType]({
+        pageIndex: newState.currentPageIndex,
+        token: newState.user.token,
+        tag: newState.activeFeedName
       })
     ]
   ];
@@ -73,10 +71,10 @@ export const ChangePage = (state, { currentPageIndex }) => {
     newState,
     [
       preventDefault,
-      fetches[state.activeFeedType]({
-        page: currentPageIndex,
-        token: state.user.token,
-        tag: state.activeFeedName
+      fetches[newState.activeFeedType]({
+          pageIndex: newState.currentPageIndex,
+        token: newState.user.token,
+        tag: newState.activeFeedName
       })
     ]
   ];
@@ -99,10 +97,10 @@ export const LoadHomePage = page => state => {
   return [
     newState,
     [
-      fetches[activeFeedType]({
-        page,
-        token: state.user.token,
-        tag: activeFeedName
+      fetches[newState.activeFeedType]({
+          pageIndex: newState.currentPageIndex,
+        token: newState.user.token,
+        tag: newState.activeFeedName
       }),
       FetchTags
     ]
