@@ -4,7 +4,6 @@ import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, loadingArticles } from "./fragments/articles.js";
-import { pages } from "../shared/selectors.js";
 import { FetchArticles } from "./fragments/articles.js";
 import { profile, profileFavorited, SETTINGS } from "./links.js";
 
@@ -167,8 +166,7 @@ export const ProfilePage = ({
             </div>
             ${ArticleList({
               articles,
-              isLoading,
-              pages: pages({ count: articlesCount, currentPageIndex })
+              isLoading
             })}
           </div>
         </div>

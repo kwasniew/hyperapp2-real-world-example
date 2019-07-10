@@ -1,12 +1,10 @@
-import { html } from "../shared/html.js";
+import {html} from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
-import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../shared/lib/events.js";
-import { API_ROOT } from "../config.js";
-import { pages } from "../shared/selectors.js";
-import { LogError } from "./fragments/forms.js";
-import { ArticleList, loadingArticles } from "./fragments/articles.js";
-import { FetchArticles } from "./fragments/articles.js";
+import {Http} from "../web_modules/@kwasniew/hyperapp-fx.js";
+import {preventDefault} from "../shared/lib/events.js";
+import {API_ROOT} from "../config.js";
+import {LogError} from "./fragments/forms.js";
+import {ArticleList, FetchArticles, loadingArticles} from "./fragments/articles.js";
 
 // Actions & Effects
 const SetTags = (state, { tags }) => ({ ...state, tags });
@@ -162,6 +160,12 @@ const ListPagination = ({ pages }) => {
   `;
 };
 
+export const pages = ({count, currentPageIndex}) =>
+    Array.from({length: Math.ceil(count / 10)}).map((e, i) => ({
+        index: i,
+        isCurrent: i === currentPageIndex,
+        humanDisplay: i + 1
+    }));
 export const HomePage = ({
   page,
   user,

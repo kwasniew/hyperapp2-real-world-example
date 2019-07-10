@@ -107,7 +107,7 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
-export const ArticleList = ({ isLoading, articles, pages }, children) => {
+export const ArticleList = ({ isLoading, articles }, children) => {
   if (isLoading) {
     return html`
       <div class="article-preview">Loading...</div>
