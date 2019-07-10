@@ -12,7 +12,11 @@ import {
   LoadEditorPage
 } from "../editor/index.js";
 import { ArticlePage, LoadArticlePage } from "../article/index.js";
-import { LoadProfilePage, LoadProfileFavoritedPage, ProfilePage } from "../profile/index.js";
+import {
+  LoadProfilePage,
+  LoadProfileFavoritedPage,
+  ProfilePage
+} from "../profile/index.js";
 
 export const HOME = "/";
 export const LOGIN = "/login";
@@ -24,29 +28,20 @@ export const ARTICLE = "/article/:slug";
 export const PROFILE = "/profile/:username";
 export const PROFILE_FAVORITED = "/profile/:username/favorited";
 
-export const pages = {
-  [HOME]: HomePage,
-  [LOGIN]: LoginPage,
-  [REGISTER]: RegisterPage,
-  [SETTINGS]: SettingsPage,
-  [NEW_EDITOR]: EditorPage,
-  [EDITOR]: EditorPage,
-  [ARTICLE]: ArticlePage,
-  [PROFILE]: ProfilePage,
-  [PROFILE_FAVORITED]: ProfilePage
-};
+const pageStructure = [
+  [HOME, HomePage, LoadHomePage],
+  [LOGIN, LoginPage, LoadLoginPage],
+  [REGISTER, RegisterPage, LoadRegisterPage],
+  [SETTINGS, SettingsPage, LoadSettingsPage],
+  [NEW_EDITOR, EditorPage, LoadNewEditorPage],
+  [EDITOR, EditorPage, LoadEditorPage],
+  [ARTICLE, ArticlePage, LoadArticlePage],
+  [PROFILE, ProfilePage, LoadProfilePage],
+  [PROFILE_FAVORITED, ProfilePage, LoadProfileFavoritedPage]
+];
 
-export const routes = {
-  [HOME]: LoadHomePage(HOME),
-  [LOGIN]: LoadLoginPage(LOGIN),
-  [REGISTER]: LoadRegisterPage(REGISTER),
-  [SETTINGS]: LoadSettingsPage(SETTINGS),
-  [NEW_EDITOR]: LoadNewEditorPage(NEW_EDITOR),
-  [EDITOR]: LoadEditorPage(EDITOR),
-  [ARTICLE]: LoadArticlePage(ARTICLE),
-  [PROFILE]: LoadProfilePage(PROFILE),
-  [PROFILE_FAVORITED]: LoadProfileFavoritedPage(PROFILE_FAVORITED)
-};
+export const pages = Object.fromEntries(pageStructure);
+export const routes = Object.fromEntries(pageStructure.map(([path, _, initAction]) => [path, initAction(path)]));
 
 export const article = slug => ARTICLE.replace(":slug", slug);
 export const profile = username => PROFILE.replace(":username", username);
