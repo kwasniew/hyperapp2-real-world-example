@@ -25,14 +25,14 @@ const GLOBAL_FEED = "global";
 const USER_FEED = "user";
 const TAG_FEED = "tag";
 
-const feeds = {
+const backendFeeds = {
   [GLOBAL_FEED]: FetchGlobalFeed,
   [USER_FEED]: FetchUserFeed,
   [TAG_FEED]: FetchTagFeed
 };
 
 const FetchFeed = ({ activeFeedType, currentPageIndex, user, activeFeedName }) =>
-  feeds[activeFeedType]({
+  backendFeeds[activeFeedType]({
     pageIndex: currentPageIndex,
     token: user.token,
     tag: activeFeedName
@@ -144,12 +144,32 @@ const ListPagination = ({ pages }) => {
   `;
 };
 
-export const pages = ({ count, currentPageIndex }) =>
+const pages = ({ count, currentPageIndex }) =>
   Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
     index: i,
     isCurrent: i === currentPageIndex,
     humanDisplay: i + 1
   }));
+const UserFeed = ({ activeFeedType }) =>
+  FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed");
+const GlobalFeed = ({ activeFeedType }) =>
+  FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed");
+const TagFeed = ({ activeFeedType, activeFeedName }) =>
+  FeedTab(
+    {
+      active: activeFeedType === TAG_FEED,
+      type: TAG_FEED,
+      name: activeFeedName
+    },
+    html`
+      <i class="ion-pound" /> ${activeFeedName}
+    `
+  );
+const uiFeeds = {
+    [USER_FEED]: UserFeed,
+    [GLOBAL_FEED]: GlobalFeed,
+    [TAG_FEED]: TagFeed
+};
 export const HomePage = ({
   page,
   user,
@@ -171,28 +191,7 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${feeds[0] ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed") : ""}
-                ${feeds[1]
-                  ? FeedTab(
-                      {
-                        active: activeFeedType === GLOBAL_FEED,
-                        type: GLOBAL_FEED
-                      },
-                      "Global Feed"
-                    )
-                  : ""}
-                ${feeds[2]
-                  ? FeedTab(
-                      {
-                        active: activeFeedType === TAG_FEED,
-                        type: TAG_FEED,
-                        name: activeFeedName
-                      },
-                      html`
-                        <i class="ion-pound" /> ${activeFeedName}
-                      `
-                    )
-                  : ""}
+                ${feeds.map(name => uiFeeds[name]({activeFeedType, activeFeedName}))}
               </ul>
             </div>
             ${ArticleList(
