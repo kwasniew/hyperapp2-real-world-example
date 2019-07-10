@@ -10,9 +10,7 @@ import { profile } from "../links.js";
 // Actions & Effects
 const UpdateArticle = (state, { article }) => ({
   ...state,
-  articles: state.articles.map(oldArticle =>
-    oldArticle.slug === article.slug ? article : oldArticle
-  )
+  articles: state.articles.map(oldArticle => (oldArticle.slug === article.slug ? article : oldArticle))
 });
 
 const Favorite = method => ({ slug, token }) =>
@@ -67,10 +65,7 @@ const FavoriteButton = ({ article }) => {
   const style = article.favorited ? "btn-primary" : "btn-outline-primary";
 
   return html`
-    <button
-      onclick=${[ChangeFavoriteStatus, article.slug]}
-      class=${"btn btn-sm btn-primary pull-xs-right " + style}
-    >
+    <button onclick=${[ChangeFavoriteStatus, article.slug]} class=${"btn btn-sm btn-primary pull-xs-right " + style}>
       <i class="ion-heart" /> ${article.favoritesCount}
     </button>
   `;

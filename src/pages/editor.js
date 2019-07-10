@@ -12,10 +12,7 @@ import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../shared/lib/Router.js";
 
 // Actions & Effects
-const AddTag = state => [
-  { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
-  preventDefault
-];
+const AddTag = state => [{ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] }, preventDefault];
 
 const RemoveTag = tag => state => ({
   ...state,
@@ -71,15 +68,7 @@ export const LoadEditorPage = page => (state, { slug }) => {
 };
 
 // Views
-export const EditorPage = ({
-  title,
-  description,
-  body,
-  currentTag,
-  tagList,
-  errors,
-  inProgress
-}) => html`
+export const EditorPage = ({ title, description, body, currentTag, tagList, errors, inProgress }) => html`
   <div class="editor-page">
     <div class="container page">
       <div class="row">
@@ -133,10 +122,7 @@ export const EditorPage = ({
                     tag =>
                       html`
                         <span class="tag-default tag-pill">
-                          <i
-                            class="ion-close-round"
-                            onclick=${RemoveTag(tag)}
-                          />
+                          <i class="ion-close-round" onclick=${RemoveTag(tag)} />
                           ${tag}
                         </span>
                       `

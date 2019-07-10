@@ -22,17 +22,9 @@ const AUTHOR_FEED = "author";
 const FAVORITED_FEED = "favorited";
 
 const FetchAuthorFeed = ({ page, username, token }) =>
-  FetchArticles(
-    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
-    token
-  );
+  FetchArticles(`/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page * 5}`, token);
 const FetchFavoritedFeed = ({ page, username, token }) =>
-  FetchArticles(
-    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
-    token
-  );
+  FetchArticles(`/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page * 5}`, token);
 
 const fetches = {
   [AUTHOR_FEED]: FetchAuthorFeed,
@@ -61,8 +53,7 @@ export const LoadProfileFavoritedPage = LoadPage(FAVORITED_FEED);
 const ChangeFollow = method => state => [
   state,
   Http({
-    url:
-      API_ROOT + "/profiles/" + encodeURIComponent(state.username) + "/follow",
+    url: API_ROOT + "/profiles/" + encodeURIComponent(state.username) + "/follow",
     options: { method, headers: authHeader(state.user.token) },
     action: SetProfile,
     error: LogError
@@ -76,8 +67,7 @@ const Unfollow = ChangeFollow("DELETE");
 const FollowUserButton = ({ username, following }) => html`
   <button
     onclick=${following ? Unfollow : Follow}
-    class=${"btn btn-sm action-btn" +
-      (following ? " btn-secondary" : " btn-outline-secondary")}
+    class=${"btn btn-sm action-btn" + (following ? " btn-secondary" : " btn-outline-secondary")}
   >
     <i class="ion-plus-round" />
     ${" "} ${following ? "Unfollow" : "Follow"} ${username}
@@ -94,21 +84,14 @@ const Tabs = ({ username, activeFeedType }) =>
   html`
     <ul class="nav nav-pills outline-active">
       <li class="nav-item">
-        <a
-          class=${activeFeedType === AUTHOR_FEED
-            ? "nav-link active"
-            : "nav-link"}
-          href=${profile(username)}
-        >
+        <a class=${activeFeedType === AUTHOR_FEED ? "nav-link active" : "nav-link"} href=${profile(username)}>
           My Articles
         </a>
       </li>
 
       <li class="nav-item">
         <a
-          class=${activeFeedType === FAVORITED_FEED
-            ? "nav-link active"
-            : "nav-link"}
+          class=${activeFeedType === FAVORITED_FEED ? "nav-link active" : "nav-link"}
           href=${profileFavorited(username)}
         >
           Favorited Articles
@@ -117,19 +100,7 @@ const Tabs = ({ username, activeFeedType }) =>
     </ul>
   `;
 
-export const ProfilePage = ({
-  user,
-  profile,
-  // username,
-  // image,
-  // bio,
-  // following,
-  activeFeedType,
-  articles,
-  isLoading,
-  articlesCount,
-  currentPageIndex
-}) => html`
+export const ProfilePage = ({ user, profile, activeFeedType, articles, isLoading }) => html`
   <div class="profile-page">
     <div>
       <div class="user-info">
@@ -138,11 +109,7 @@ export const ProfilePage = ({
             <div class="col-xs-12 col-md-10 offset-md-1">
               ${profile.image
                 ? html`
-                    <img
-                      class="user-img"
-                      src=${profile.image}
-                      alt=${profile.username}
-                    />
+                    <img class="user-img" src=${profile.image} alt=${profile.username} />
                   `
                 : ""}
               <h4>${profile.username}</h4>
@@ -150,10 +117,7 @@ export const ProfilePage = ({
 
               ${user.username === profile.username
                 ? EditProfileSettings()
-                : FollowUserButton({
-                    username: profile.username,
-                    following: profile.following
-                  })}
+                : FollowUserButton({ username: profile.username, following: profile.following })}
             </div>
           </div>
         </div>
@@ -164,10 +128,7 @@ export const ProfilePage = ({
             <div class="articles-toggle">
               ${Tabs({ username: profile.username, activeFeedType })}
             </div>
-            ${ArticleList({
-              articles,
-              isLoading
-            })}
+            ${ArticleList({ articles, isLoading })}
           </div>
         </div>
       </div>

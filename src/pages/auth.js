@@ -118,11 +118,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
                 />
               </fieldset>
 
-              <button
-                class="btn btn-lg btn-primary pull-xs-right"
-                type="submit"
-                disabled=${inProgress}
-              >
+              <button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled=${inProgress}>
                 Sign in
               </button>
             </fieldset>
@@ -133,13 +129,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
   </div>
 `;
 
-export const RegisterPage = ({
-  username,
-  password,
-  email,
-  inProgress,
-  errors
-}) => html`
+export const RegisterPage = ({ username, password, email, inProgress, errors }) => html`
   <div class="auth-page">
     <div class="container page">
       <div class="row">
@@ -183,11 +173,7 @@ export const RegisterPage = ({
                 />
               </fieldset>
 
-              <button
-                class="btn btn-lg btn-primary pull-xs-right"
-                type="submit"
-                disabled=${inProgress}
-              >
+              <button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled=${inProgress}>
                 Sign up
               </button>
             </fieldset>

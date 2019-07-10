@@ -1,10 +1,10 @@
-import {html} from "../shared/html.js";
+import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
-import {Http} from "../web_modules/@kwasniew/hyperapp-fx.js";
-import {preventDefault} from "../shared/lib/events.js";
-import {API_ROOT} from "../config.js";
-import {LogError} from "./fragments/forms.js";
-import {ArticleList, FetchArticles, loadingArticles} from "./fragments/articles.js";
+import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { preventDefault } from "../shared/lib/events.js";
+import { API_ROOT } from "../config.js";
+import { LogError } from "./fragments/forms.js";
+import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
 
 // Actions & Effects
 const SetTags = (state, { tags }) => ({ ...state, tags });
@@ -17,13 +17,9 @@ const FetchTags = Http({
 
 const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
-const FetchGlobalFeed = ({ pageIndex, token }) =>
-  FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
+const FetchGlobalFeed = ({ pageIndex, token }) => FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
 const FetchTagFeed = ({ tag, pageIndex, token }) =>
-  FetchArticles(
-    `/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`,
-    token
-  );
+  FetchArticles(`/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`, token);
 
 const GLOBAL_FEED = "global";
 const USER_FEED = "user";
@@ -35,12 +31,7 @@ const feeds = {
   [TAG_FEED]: FetchTagFeed
 };
 
-const FetchFeed = ({
-  activeFeedType,
-  currentPageIndex,
-  user,
-  activeFeedName
-}) =>
+const FetchFeed = ({ activeFeedType, currentPageIndex, user, activeFeedName }) =>
   feeds[activeFeedType]({
     pageIndex: currentPageIndex,
     token: user.token,
@@ -122,10 +113,7 @@ const Tags = ({ tags }) => html`
         <a
           href=""
           class="tag-pill tag-default"
-          onclick=${[
-            ChangeTab,
-            { activeFeedType: TAG_FEED, activeFeedName: tag }
-          ]}
+          onclick=${[ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}
         >
           ${tag}
         </a>
@@ -145,11 +133,7 @@ const ListPagination = ({ pages }) => {
           page =>
             html`
               <li class=${page.isCurrent ? "page-item active" : "page-item"}>
-                <a
-                  class="page-link"
-                  href=""
-                  onclick=${[ChangePage, { currentPageIndex: page.index }]}
-                >
+                <a class="page-link" href="" onclick=${[ChangePage, { currentPageIndex: page.index }]}>
                   ${page.humanDisplay}
                 </a>
               </li>
@@ -160,12 +144,12 @@ const ListPagination = ({ pages }) => {
   `;
 };
 
-export const pages = ({count, currentPageIndex}) =>
-    Array.from({length: Math.ceil(count / 10)}).map((e, i) => ({
-        index: i,
-        isCurrent: i === currentPageIndex,
-        humanDisplay: i + 1
-    }));
+export const pages = ({ count, currentPageIndex }) =>
+  Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
+    index: i,
+    isCurrent: i === currentPageIndex,
+    humanDisplay: i + 1
+  }));
 export const HomePage = ({
   page,
   user,
@@ -187,12 +171,7 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${feeds[0]
-                  ? FeedTab(
-                      { active: activeFeedType === USER_FEED, type: USER_FEED },
-                      "Your Feed"
-                    )
-                  : ""}
+                ${feeds[0] ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed") : ""}
                 ${feeds[1]
                   ? FeedTab(
                       {

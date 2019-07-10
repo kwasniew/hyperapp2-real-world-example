@@ -1,22 +1,12 @@
 import { html } from "../shared/html.js";
 import { pages } from "./index.js";
 import cc from "../web_modules/classcat.js";
-import {
-  HOME,
-  LOGIN,
-  NEW_EDITOR,
-  REGISTER,
-  SETTINGS,
-  profile
-} from "./links.js";
+import { HOME, LOGIN, NEW_EDITOR, REGISTER, SETTINGS, profile } from "./links.js";
 
 // Views
 const NavItem = ({ page, path }, children) => html`
   <li class="nav-item">
-    <a
-      href="${path}"
-      class="${cc({ "nav-link": true, active: page === path })}"
-    >
+    <a href="${path}" class="${cc({ "nav-link": true, active: page === path })}">
       ${children}
     </a>
   </li>
@@ -51,8 +41,7 @@ const UserView = ({ page, user }) => html`
 
 const AnonymousView = ({ page }) => html`
   <ul class="nav navbar-nav pull-xs-right">
-    ${NavItem({ page, path: HOME }, "Home")}
-    ${NavItem({ page, path: LOGIN }, "Sign in")}
+    ${NavItem({ page, path: HOME }, "Home")} ${NavItem({ page, path: LOGIN }, "Sign in")}
     ${NavItem({ page, path: REGISTER }, "Sign up")}
   </ul>
 `;
@@ -71,7 +60,6 @@ const Header = ({ page, user }) =>
 
 export const view = state => html`
   <div>
-    ${Header({ page: state.page, user: state.user })}
-    ${state.page ? pages[state.page](state) : ""}
+    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : ""}
   </div>
 `;

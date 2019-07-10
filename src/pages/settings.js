@@ -12,8 +12,7 @@ import { authHeader } from "../shared/authHeader.js";
 // Actions & Effects
 const UpdateSettings = user => {
   const { password, ...userWithoutPassword } = user;
-  const submitUser =
-    password && password.length > 0 ? user : userWithoutPassword;
+  const submitUser = password && password.length > 0 ? user : userWithoutPassword;
   return Http({
     url: API_ROOT + "/user",
     options: {
@@ -56,14 +55,7 @@ export const LoadSettingsPage = page => state => {
 };
 
 // Views
-const SettingsForm = ({
-  image,
-  username,
-  bio,
-  email,
-  password,
-  inProgress
-}) => html`
+const SettingsForm = ({ image, username, bio, email, password, inProgress }) => html`
   <form onsubmit=${SubmitForm}>
     <fieldset>
       <fieldset class="form-group">
@@ -116,26 +108,14 @@ const SettingsForm = ({
         />
       </fieldset>
 
-      <button
-        class="btn btn-lg btn-primary pull-xs-right"
-        type="submit"
-        disabled=${!!inProgress}
-      >
+      <button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled=${!!inProgress}>
         Update Settings
       </button>
     </fieldset>
   </form>
 `;
 
-export const SettingsPage = ({
-  image,
-  username,
-  bio,
-  email,
-  password,
-  inProgress,
-  errors
-}) => html`
+export const SettingsPage = ({ image, username, bio, email, password, inProgress, errors }) => html`
   <div class="settings-page">
     <div class="container page">
       <div class="row">

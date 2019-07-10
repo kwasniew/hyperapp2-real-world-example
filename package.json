@@ -2,6 +2,7 @@
   "scripts": {
     "postinstall": "pika-web --dest src/web_modules",
     "build": "parcel build src/index.html",
+    "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
     "test": "tape -r esm test/unit/*Test.js | faucet",
     "start": "http-server src"
   },

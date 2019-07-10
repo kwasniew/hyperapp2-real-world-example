@@ -66,10 +66,7 @@ const DeleteArticle = ({ slug, token }) =>
     error: LogError
   });
 
-const SubmitDeleteArticle = state => [
-  { ...state },
-  DeleteArticle({ slug: state.slug, token: state.user.token })
-];
+const SubmitDeleteArticle = state => [{ ...state }, DeleteArticle({ slug: state.slug, token: state.user.token })];
 
 const SetComments = (state, { comments }) => ({ ...state, comments });
 
@@ -95,16 +92,12 @@ export const LoadArticlePage = page => (state, { slug }) => {
   };
   return [
     newState,
-    [
-      FetchArticle({ slug, token: state.user.token }),
-      FetchComments({ slug, token: state.user.token })
-    ]
+    [FetchArticle({ slug, token: state.user.token }), FetchComments({ slug, token: state.user.token })]
   ];
 };
 
 // Selectors
-const canModifySelector = author => loggedInUser =>
-  loggedInUser.token && author.username === loggedInUser.username;
+const canModifySelector = author => loggedInUser => loggedInUser.token && author.username === loggedInUser.username;
 
 // Views
 const ArticleActions = ({ state }) => {
@@ -112,17 +105,11 @@ const ArticleActions = ({ state }) => {
   return canModify
     ? html`
         <span>
-          <a
-            href=${editor(state.slug)}
-            class="btn btn-outline-secondary btn-sm"
-          >
+          <a href=${editor(state.slug)} class="btn btn-outline-secondary btn-sm">
             <i class="ion-edit" /> Edit Article
           </a>
 
-          <button
-            class="btn btn-outline-danger btn-sm"
-            onclick=${SubmitDeleteArticle}
-          >
+          <button class="btn btn-outline-danger btn-sm" onclick=${SubmitDeleteArticle}>
             <i class="ion-trash-a" /> Delete Article
           </button>
         </span>
@@ -173,11 +160,7 @@ const CommentInput = ({ state }) => html`
     <div class="card-footer">
       ${state.user.image
         ? html`
-            <img
-              src=${state.user.image}
-              class="comment-author-img"
-              alt=${state.user.username}
-            />
+            <img src=${state.user.image} class="comment-author-img" alt=${state.user.username} />
           `
         : ""}
       <button class="btn btn-sm btn-primary" type="submit">
@@ -206,11 +189,7 @@ const Comment = ({ comment, slug, user }) =>
       </div>
       <div class="card-footer">
         <a href=${profile(comment.author.username)} class="comment-author">
-          <img
-            src=${comment.author.image}
-            class="comment-author-img"
-            alt=${comment.author.username}
-          />
+          <img src=${comment.author.image} class="comment-author-img" alt=${comment.author.username} />
         </a>
         ${" "}
         <a href=${profile(comment.author.username)} class="comment-author">
