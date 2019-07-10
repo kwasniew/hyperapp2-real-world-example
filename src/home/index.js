@@ -33,6 +33,13 @@ const fetches = {
   [TAG_FEED]: FetchTagFeed
 };
 
+const FETCH = state =>
+  fetches[state.activeFeedType]({
+    pageIndex: state.currentPageIndex,
+    token: state.user.token,
+    tag: state.activeFeedName
+  });
+
 export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
     state.user.token ? USER_FEED : null,
@@ -47,17 +54,7 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     currentPageIndex: 0,
     ...loadingArticles
   };
-  return [
-    newState,
-    [
-      preventDefault,
-      fetches[newState.activeFeedType]({
-        pageIndex: newState.currentPageIndex,
-        token: newState.user.token,
-        tag: newState.activeFeedName
-      })
-    ]
-  ];
+  return [newState, [preventDefault, FETCH(newState)]];
 };
 
 export const ChangePage = (state, { currentPageIndex }) => {
@@ -67,17 +64,7 @@ export const ChangePage = (state, { currentPageIndex }) => {
     currentPageIndex
   };
 
-  return [
-    newState,
-    [
-      preventDefault,
-      fetches[newState.activeFeedType]({
-          pageIndex: newState.currentPageIndex,
-        token: newState.user.token,
-        tag: newState.activeFeedName
-      })
-    ]
-  ];
+  return [newState, [preventDefault, FETCH(newState)]];
 };
 
 export const LoadHomePage = page => state => {
@@ -94,17 +81,7 @@ export const LoadHomePage = page => state => {
     currentPageIndex: 0,
     ...loadingArticles
   };
-  return [
-    newState,
-    [
-      fetches[newState.activeFeedType]({
-          pageIndex: newState.currentPageIndex,
-        token: newState.user.token,
-        tag: newState.activeFeedName
-      }),
-      FetchTags
-    ]
-  ];
+  return [newState, [FETCH(newState), FetchTags]];
 };
 
 const Banner = () =>
