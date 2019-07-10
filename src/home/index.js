@@ -39,6 +39,7 @@ export const ChangeTab = (state, { name, type }) => {
     ...state,
     active: type,
     feeds,
+    tag: name,
     ...loadingArticles
   };
   return [newState, [preventDefault, FetchArticles(newState)]];
@@ -76,8 +77,8 @@ const FeedTab = ({ active, visible, type, name }, children) =>
         <li class="nav-item">
           <a
             href=""
-            class="${cc({ "nav-link": true, active: active === type })}"
-            onClick=${[ChangeTab, { name, type }]}
+            class=${cc({ "nav-link": true, active: active === type })}
+            onclick=${[ChangeTab, { name, type }]}
           >
             ${children}
           </a>
@@ -92,8 +93,7 @@ const Tags = ({ tags }) => html`
         <a
           href=""
           class="tag-pill tag-default"
-          key="${tag}"
-          onClick=${[ChangeTab, { type: TAG_FEED, name: tag }]}
+          onclick=${[ChangeTab, { type: TAG_FEED, name: tag }]}
         >
           ${tag}
         </a>

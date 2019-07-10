@@ -4,6 +4,12 @@ import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "../shared/errors.js";
 import { profile, profileFavorited } from "../shared/pages.js";
+import {
+  FetchArticles,
+  loadingArticles,
+  AUTHOR_FEED,
+  FAVORITED_FEED
+} from "../shared/articles/index.js";
 
 const SetProfile = (state, { profile }) => ({ ...state, ...profile });
 
@@ -15,15 +21,18 @@ const FetchProfile = ({ username, token }) =>
     error: LogError
   });
 
-const OWN = "own";
-const FAVORITED = "favorited";
-
-export const LoadPage = mode => page => (state, { username }) => {
-  const newState = { page, user: state.user, mode };
-  return [newState, FetchProfile({ username, token: state.user.token })];
+export const LoadPage = active => page => (state, { username }) => {
+  const newState = { page, username, user: state.user, active, ...loadingArticles };
+  return [
+    newState,
+    [
+      FetchProfile({ username, token: state.user.token }),
+      FetchArticles(newState)
+    ]
+  ];
 };
-export const LoadProfilePage = LoadPage(OWN);
-export const LoadProfileFavoritedPage = LoadPage(FAVORITED);
+export const LoadProfilePage = LoadPage(AUTHOR_FEED);
+export const LoadProfileFavoritedPage = LoadPage(FAVORITED_FEED);
 
 const ChangeFollow = method => state => [
   state,
@@ -50,12 +59,12 @@ const FollowUserButton = ({ username, following }) => html`
   </button>
 `;
 
-const Tabs = ({ username, mode }) =>
+const Tabs = ({ username, active }) =>
   html`
     <ul class="nav nav-pills outline-active">
       <li class="nav-item">
         <a
-          class=${mode === OWN ? "nav-link active" : "nav-link"}
+          class=${active === AUTHOR_FEED ? "nav-link active" : "nav-link"}
           href=${profile(username)}
         >
           My Articles
@@ -64,7 +73,7 @@ const Tabs = ({ username, mode }) =>
 
       <li class="nav-item">
         <a
-          class=${mode === FAVORITED ? "nav-link active" : "nav-link"}
+          class=${active === FAVORITED_FEED ? "nav-link active" : "nav-link"}
           href=${profileFavorited(username)}
         >
           Favorited Articles
@@ -79,7 +88,7 @@ export const ProfilePage = ({
   image,
   bio,
   following,
-  mode
+  active
 }) => html`
   <div class="profile-page">
     ${username
@@ -104,7 +113,7 @@ export const ProfilePage = ({
               <div class="row">
                 <div class="col-xs-12 col-md-10 offset-md-1">
                   <div class="articles-toggle">
-                    ${Tabs({ username, mode })}
+                    ${Tabs({ username, active })}
                   </div>
                 </div>
               </div>
