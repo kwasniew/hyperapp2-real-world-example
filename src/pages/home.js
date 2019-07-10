@@ -84,24 +84,24 @@ export const LoadHomePage = page => state => {
 
 // Views
 const UserFeed = ({ activeFeedType }) =>
-    FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed");
+  FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed");
 const GlobalFeed = ({ activeFeedType }) =>
-    FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed");
+  FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed");
 const TagFeed = ({ activeFeedType, activeFeedName }) =>
-    FeedTab(
-        {
-            active: activeFeedType === TAG_FEED,
-            type: TAG_FEED,
-            name: activeFeedName
-        },
-        html`
+  FeedTab(
+    {
+      active: activeFeedType === TAG_FEED,
+      type: TAG_FEED,
+      name: activeFeedName
+    },
+    html`
       <i class="ion-pound" /> ${activeFeedName}
     `
-    );
+  );
 const uiFeeds = {
-    [USER_FEED]: UserFeed,
-    [GLOBAL_FEED]: GlobalFeed,
-    [TAG_FEED]: TagFeed
+  [USER_FEED]: UserFeed,
+  [GLOBAL_FEED]: GlobalFeed,
+  [TAG_FEED]: TagFeed
 };
 
 const FeedTab = ({ active, type, name }, children) =>
@@ -155,14 +155,14 @@ const ListPagination = ({ pages }) => {
   `;
 };
 const pages = ({ count, currentPageIndex }) =>
-    Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
-        index: i,
-        isCurrent: i === currentPageIndex,
-        humanDisplay: i + 1
-    }));
+  Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
+    index: i,
+    isCurrent: i === currentPageIndex,
+    humanDisplay: i + 1
+  }));
 
 const Banner = () =>
-    html`
+  html`
     <div class="banner">
       <div class="container">
         <h1 class="logo-font">conduit</h1>
@@ -170,7 +170,6 @@ const Banner = () =>
       </div>
     </div>
   `;
-
 
 export const HomePage = ({
   page,
@@ -193,7 +192,7 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${feeds.map(name => uiFeeds[name]({activeFeedType, activeFeedName}))}
+                ${feeds.map(name => uiFeeds[name]({ activeFeedType, activeFeedName }))}
               </ul>
             </div>
             ${ArticleList(
