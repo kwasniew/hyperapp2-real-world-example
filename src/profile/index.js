@@ -6,10 +6,12 @@ import { LogError } from "../shared/errors.js";
 import { profile, profileFavorited } from "../shared/pages.js";
 import {
   FetchArticles,
+  ArticleList,
   loadingArticles,
   AUTHOR_FEED,
   FAVORITED_FEED
 } from "../shared/articles/index.js";
+import { pages } from "../shared/selectors.js";
 
 const SetProfile = (state, { profile }) => ({ ...state, ...profile });
 
@@ -22,7 +24,13 @@ const FetchProfile = ({ username, token }) =>
   });
 
 export const LoadPage = active => page => (state, { username }) => {
-  const newState = { page, username, user: state.user, active, ...loadingArticles };
+  const newState = {
+    page,
+    username,
+    user: state.user,
+    active,
+    ...loadingArticles
+  };
   return [
     newState,
     [
@@ -88,7 +96,11 @@ export const ProfilePage = ({
   image,
   bio,
   following,
-  active
+  active,
+  articles,
+  isLoading,
+  articlesCount,
+  currentPageIndex
 }) => html`
   <div class="profile-page">
     ${username
@@ -115,6 +127,11 @@ export const ProfilePage = ({
                   <div class="articles-toggle">
                     ${Tabs({ username, active })}
                   </div>
+                  ${ArticleList({
+                    articles,
+                    isLoading,
+                    pages: pages({ count: articlesCount, currentPageIndex })
+                  })}
                 </div>
               </div>
             </div>
