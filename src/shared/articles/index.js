@@ -30,28 +30,21 @@ const UpdateArticle = (state, { article }) => ({
   )
 });
 
-const FavoriteArticle = ({ slug, token }) =>
+const Favorite = method => ({ slug, token }) =>
   Http({
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
-      method: "POST",
-      headers: authHeader(token)
-    },
-    action: UpdateArticle,
-    error: LogError
-  });
-const UnfavoriteArticle = ({ slug, token }) =>
-  Http({
-    url: API_ROOT + `/articles/${slug}/favorite`,
-    options: {
-      method: "DELETE",
+      method,
       headers: authHeader(token)
     },
     action: UpdateArticle,
     error: LogError
   });
 
-const ChangeFavorite = (state, slug) => {
+const FavoriteArticle = Favorite("POST");
+const UnfavoriteArticle = Favorite("DELETE");
+
+const ChangeFavoriteStatus = (state, slug) => {
   const article = state.articles.find(a => a.slug === slug);
   if (!article) {
     return state;
@@ -134,7 +127,7 @@ const FavoriteButton = ({ article }) => {
 
   return html`
     <button
-      onclick=${[ChangeFavorite, article.slug]}
+      onclick=${[ChangeFavoriteStatus, article.slug]}
       class=${"btn btn-sm btn-primary pull-xs-right " + style}
     >
       <i class="ion-heart" /> ${article.favoritesCount}
