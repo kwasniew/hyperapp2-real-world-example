@@ -11,15 +11,11 @@ import { FetchArticles } from "./fragments/articles.js";
 // Actions & Effects
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
-export const FetchTags = Http({
+const FetchTags = Http({
   url: API_ROOT + "/tags",
   action: SetTags,
   error: LogError
 });
-
-export const GLOBAL_FEED = "global";
-export const USER_FEED = "user";
-export const TAG_FEED = "tag";
 
 const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
@@ -30,6 +26,11 @@ const FetchTagFeed = ({ tag, pageIndex, token }) =>
     `/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`,
     token
   );
+
+
+const GLOBAL_FEED = "global";
+const USER_FEED = "user";
+const TAG_FEED = "tag";
 
 const feeds = {
   [GLOBAL_FEED]: FetchGlobalFeed,
@@ -49,7 +50,7 @@ const FetchFeed = ({
     tag: activeFeedName
   });
 
-export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
+const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
     state.user.token ? USER_FEED : null,
     GLOBAL_FEED,
@@ -66,7 +67,7 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   return [newState, [preventDefault, FetchFeed(newState)]];
 };
 
-export const ChangePage = (state, { currentPageIndex }) => {
+const ChangePage = (state, { currentPageIndex }) => {
   const newState = {
     ...state,
     ...loadingArticles,

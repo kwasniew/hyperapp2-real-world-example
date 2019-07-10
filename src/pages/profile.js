@@ -23,8 +23,8 @@ const FetchProfile = ({ username, token }) =>
         error: LogError
     });
 
-export const AUTHOR_FEED = "author";
-export const FAVORITED_FEED = "favorited";
+const AUTHOR_FEED = "author";
+const FAVORITED_FEED = "favorited";
 
 const FetchAuthorFeed = ({ page, username, token }) =>
     FetchArticles(

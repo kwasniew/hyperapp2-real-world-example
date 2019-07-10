@@ -11,9 +11,9 @@ import { FormError } from "../shared/formFields.js";
 import { REGISTER, LOGIN } from "./links.js";
 
 // Actions & Effects
-export const ChangeUsername = (state, username) => ({ ...state, username });
-export const ChangeEmail = (state, email) => ({ ...state, email });
-export const ChangePassword = (state, password) => ({ ...state, password });
+const ChangeUsername = (state, username) => ({ ...state, username });
+const ChangeEmail = (state, email) => ({ ...state, email });
+const ChangePassword = (state, password) => ({ ...state, password });
 
 const Login = ({ email, password }) =>
   Http({
@@ -29,7 +29,7 @@ const Login = ({ email, password }) =>
     action: UserSuccess,
     error: FormError
   });
-export const SubmitLogin = state => [
+const SubmitLogin = state => [
   { ...state, inProgress: true },
   [preventDefault, Login({ email: state.email, password: state.password })]
 ];
@@ -48,7 +48,7 @@ const Register = ({ email, password, username }) =>
     action: UserSuccess,
     error: FormError
   });
-export const SubmitRegister = state => [
+const SubmitRegister = state => [
   { ...state, inProgess: true },
   [
     preventDefault,

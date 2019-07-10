@@ -57,7 +57,7 @@ const AnonymousView = ({ page }) => html`
   </ul>
 `;
 
-export const Header = ({ page, user }) =>
+const Header = ({ page, user }) =>
   html`
     <nav class="navbar navbar-light">
       <div class="container">
