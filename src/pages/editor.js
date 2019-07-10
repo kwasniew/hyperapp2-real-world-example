@@ -2,14 +2,14 @@ import { ListErrors } from "./fragments/forms.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
-import { preventDefault, OnEnter } from "../shared/lib/events.js";
+import { preventDefault, OnEnter } from "../lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
-import { RedirectAction } from "../shared/lib/Router.js";
+import { RedirectAction } from "../lib/Router.js";
 
 // Actions & Effects
 const AddTag = state => [{ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] }, preventDefault];

@@ -1,4 +1,4 @@
-import { targetValue } from "../../shared/lib/events.js";
+import { targetValue } from "../../lib/events.js";
 import { html } from "../../shared/html.js";
 import { Console } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 

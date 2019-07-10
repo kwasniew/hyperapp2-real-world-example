@@ -1,8 +1,8 @@
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../shared/lib/events.js";
+import { preventDefault } from "../lib/events.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
-import { targetValue } from "../shared/lib/events.js";
+import { targetValue } from "../lib/events.js";
 import { errorsList } from "./fragments/forms.js";
 import { ListErrors } from "./fragments/forms.js";
 import { UserSuccess } from "./fragments/user.js";

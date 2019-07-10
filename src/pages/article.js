@@ -6,9 +6,9 @@ import { authHeader } from "../shared/authHeader.js";
 import { profile, editor, HOME, LOGIN, REGISTER } from "./links.js";
 import { format } from "../shared/date.js";
 import { LogError } from "./fragments/forms.js";
-import { RedirectAction } from "../shared/lib/Router.js";
+import { RedirectAction } from "../lib/Router.js";
 import { ChangeFieldFromTarget } from "./fragments/forms.js";
-import { preventDefault } from "../shared/lib/events.js";
+import { preventDefault } from "../lib/events.js";
 import { FetchArticle } from "./fragments/article.js";
 
 // Actions & Effects
