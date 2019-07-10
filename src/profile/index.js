@@ -3,7 +3,7 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "../shared/errors.js";
-import { profile, profileFavorited } from "../shared/pages.js";
+import { profile, profileFavorited, SETTINGS } from "../shared/pages.js";
 import {
   FetchArticles,
   ArticleList,
@@ -67,6 +67,12 @@ const FollowUserButton = ({ username, following }) => html`
   </button>
 `;
 
+const EditProfileSettings = () => html`
+  <a href=${SETTINGS} class="btn btn-sm btn-outline-secondary action-btn">
+    <i class="ion-gear-a" /> Edit Profile Settings
+  </a>
+`;
+
 const Tabs = ({ username, activeFeedType }) =>
   html`
     <ul class="nav nav-pills outline-active">
@@ -107,40 +113,40 @@ export const ProfilePage = ({
   currentPageIndex
 }) => html`
   <div class="profile-page">
-    ${username
-      ? html`
-          <div>
-            <div class="user-info">
-              <div class="container">
-                <div class="row">
-                  <div class="col-xs-12 col-md-10 offset-md-1">
+    <div>
+      <div class="user-info">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-md-10 offset-md-1">
+              ${image
+                ? html`
                     <img class="user-img" src=${image} alt=${username} />
-                    <h4>${username}</h4>
-                    <p>${bio}</p>
+                  `
+                : ""}
+              <h4>${username}</h4>
+              <p>${bio}</p>
 
-                    ${user.username === username
-                      ? ""
-                      : FollowUserButton({ username, following })}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-xs-12 col-md-10 offset-md-1">
-                  <div class="articles-toggle">
-                    ${Tabs({ username, activeFeedType })}
-                  </div>
-                  ${ArticleList({
-                    articles,
-                    isLoading,
-                    pages: pages({ count: articlesCount, currentPageIndex })
-                  })}
-                </div>
-              </div>
+              ${user.username === username
+                ? EditProfileSettings()
+                : FollowUserButton({ username, following })}
             </div>
           </div>
-        `
-      : ""}
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-10 offset-md-1">
+            <div class="articles-toggle">
+              ${Tabs({ username, activeFeedType })}
+            </div>
+            ${ArticleList({
+              articles,
+              isLoading,
+              pages: pages({ count: articlesCount, currentPageIndex })
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 `;

@@ -34,7 +34,6 @@ export const pages = {
   [ARTICLE]: ArticlePage,
   [PROFILE]: ProfilePage,
   [PROFILE_FAVORITED]: ProfilePage
-  // "*": HomePage
 };
 
 export const routes = {
@@ -47,7 +46,6 @@ export const routes = {
   [ARTICLE]: LoadArticlePage(ARTICLE),
   [PROFILE]: LoadProfilePage(PROFILE),
   [PROFILE_FAVORITED]: LoadProfileFavoritedPage(PROFILE_FAVORITED)
-  // "*": LoadHomePage(HOME)
 };
 
 export const article = slug => ARTICLE.replace(":slug", slug);
