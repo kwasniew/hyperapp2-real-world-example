@@ -8,6 +8,10 @@ import { logger } from "./lib/logger.js";
 const initialState = { user: {} };
 
 app(
-  { init: () => [initialState, ReadUser, RoutePages({ routes })], view, node: document.getElementById("app") },
+  {
+    init: () => [initialState, ReadUser, RoutePages({ routes })],
+    view,
+    node: document.getElementById("app")
+  },
   logger(true, console.log)
 );
