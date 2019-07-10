@@ -5,18 +5,14 @@ import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
 import { LogError } from "../shared/errors.js";
-import {ArticleList, FetchFeed} from "../shared/articles/index.js";
-
-export const GLOBAL_FEED = "global";
-export const USER_FEED = "user";
-export const TAG_FEED = "tag";
-
-export const FetchUserFeed = ({ page, token }) =>
-  FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
-export const FetchGlobalFeed = ({ page, token }) =>
-  FetchFeed(`/articles?limit=10&offset=${page * 10}`, token);
-export const FetchTagFeed = ({ tag, page, token }) =>
-  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`, token);
+import {
+  ArticleList,
+  FetchArticles,
+  loadingArticles,
+  USER_FEED,
+  GLOBAL_FEED,
+  TAG_FEED
+} from "../shared/articles/index.js";
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -25,28 +21,6 @@ export const FetchTags = Http({
   action: SetTags,
   error: LogError
 });
-
-const FetchArticles = state => {
-  const activeFeed = state.feeds.find(feed => feed.type === state.active);
-  const page = state.currentPageIndex;
-  const fetches = {
-    [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
-    [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
-    [TAG_FEED]: FetchTagFeed({
-      tag: activeFeed.name,
-      page,
-      token: state.user.token
-    })
-  };
-  return fetches[activeFeed.type];
-};
-
-const loadingArticles = {
-  articles: [],
-  articlesCount: 0,
-  isLoading: true,
-  currentPageIndex: 0
-};
 
 export const ChangeTab = (state, { name, type }) => {
   const updateFeed = feed => {
