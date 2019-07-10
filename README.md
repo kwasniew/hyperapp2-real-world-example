@@ -22,8 +22,8 @@ Examples (minified+gzipped):
 
 ### Development without tooling
 
-Point your static web server to your src directory and you're ready to go in milliseconds.
-No bundler, no transpiler, no file watcher etc. Just your web server, static files and a refresh button.
+Point your static web server to your src directory and you're ready to go. Startup time in milliseconds.
+No bundler, no transpiler, no file watcher needed. Just your web server, static files and a refresh button.
 View-source driven development in its finest form.
 
 Common obstacles:
