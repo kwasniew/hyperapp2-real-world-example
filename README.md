@@ -108,7 +108,7 @@ Things I don't use and what is used instead:
 
 ### Build tools as a production optimisation step
 
-Parcel is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even better load time perf).
+Parcel is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even faster load time).
 
 Raw source size: < 1300 LOC
 Minified+gzipped bundle: 16.5kB
