@@ -8,7 +8,7 @@ import { ListErrors } from "../shared/errors.js";
 import { UserSuccess } from "../shared/user/index.js";
 import { formFields } from "../shared/formFields.js";
 import {FormError} from "../shared/formFields.js";
-import {REGISTER, LOGIN} from "../shared/links.js";
+import {REGISTER, LOGIN} from "./links.js";
 
 export const ChangeUsername = (state, username) => ({ ...state, username });
 export const ChangeEmail = (state, email) => ({ ...state, email });

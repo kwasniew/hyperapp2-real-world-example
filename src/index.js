@@ -1,7 +1,7 @@
 import { app } from "./web_modules/hyperapp.js";
 import { RoutePages } from "./shared/lib/Router.js";
 import { view } from "./shared/view.js";
-import { routes } from "./shared/pages.js";
+import { routes } from "./pages/index.js";
 import { ReadUser } from "./shared/user/index.js";
 import { logger } from "./shared/lib/logger.js";
 

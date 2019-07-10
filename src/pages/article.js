@@ -3,7 +3,7 @@ import markdown from "../web_modules/snarkdown.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
-import { profile, editor, HOME, LOGIN, REGISTER } from "../shared/links.js";
+import { profile, editor, HOME, LOGIN, REGISTER } from "./links.js";
 import { format } from "../shared/date.js";
 import { LogError } from "../shared/errors.js";
 import { RedirectAction } from "../shared/formFields.js";

@@ -6,7 +6,7 @@ import { preventDefault, OnEnter } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { FormError, RedirectAction } from "../shared/formFields.js";
-import { HOME } from "../shared/links.js";
+import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "../shared/article/index.js";
 

@@ -1,9 +1,14 @@
 import { html } from "./html.js";
-import { pages } from "./pages.js";
-import {
-  profile} from "./links.js";
+import { pages } from "../pages/index.js";
 import cc from "../web_modules/classcat.js";
-import {HOME, LOGIN, NEW_EDITOR, REGISTER, SETTINGS} from "./links.js";
+import {
+  HOME,
+  LOGIN,
+  NEW_EDITOR,
+  REGISTER,
+  SETTINGS,
+  profile
+} from "../pages/links.js";
 
 const NavItem = ({ page, path }, children) => html`
   <li class="nav-item">
