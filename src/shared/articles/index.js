@@ -7,7 +7,6 @@ import { authHeader } from "../authHeader.js";
 import { LogError } from "../errors.js";
 import { preventDefault } from "../lib/events.js";
 
-
 const UpdateArticle = (state, { article }) => ({
   ...state,
   articles: state.articles.map(oldArticle =>
@@ -54,19 +53,19 @@ export const AUTHOR_FEED = "author";
 export const FAVORITED_FEED = "favorited";
 
 const SetArticles = (state, { articles, articlesCount }) => ({
-    ...state,
-    isLoading: false,
-    articles,
-    articlesCount
+  ...state,
+  isLoading: false,
+  articles,
+  articlesCount
 });
 
 export const FetchFeed = (path, token) => {
-    return Http({
-        url: API_ROOT + path,
-        options: { headers: authHeader(token) },
-        action: SetArticles,
-        error: LogError
-    });
+  return Http({
+    url: API_ROOT + path,
+    options: { headers: authHeader(token) },
+    action: SetArticles,
+    error: LogError
+  });
 };
 
 const FetchUserFeed = ({ page, token }) =>
@@ -110,7 +109,7 @@ export const FetchArticles = state => {
       token: state.user.token
     })
   };
-  return fetches[state.active];
+  return fetches[state.activeFeedType];
 };
 
 export const ChangePage = (state, { currentPageIndex }) => {
@@ -197,17 +196,17 @@ const ListPagination = ({ pages }) => {
 };
 
 export const ArticleList = ({ isLoading, articles, pages }) => {
-    if (isLoading) {
-        return html`
+  if (isLoading) {
+    return html`
       <div class="article-preview">Loading...</div>
     `;
-    }
-    if (articles.length === 0) {
-        return html`
+  }
+  if (articles.length === 0) {
+    return html`
       <div class="article-preview">No articles are here... yet.</div>
     `;
-    }
-    return html`
+  }
+  return html`
     <div>
       ${articles.map(article => ArticlePreview({ article }))}
       ${ListPagination({ pages })}

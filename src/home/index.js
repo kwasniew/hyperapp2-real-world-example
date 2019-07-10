@@ -22,22 +22,16 @@ export const FetchTags = Http({
   error: LogError
 });
 
-export const ChangeTab = (state, { name, type }) => {
-  const updateFeed = feed => {
-    if (feed.type === type) {
-      feed.visible = true;
-    } else if (feed.type === TAG_FEED) {
-      feed.visible = false;
-    }
-    if (name) {
-      feed.name = name;
-    }
-    return feed;
-  };
-  const feeds = state.feeds.map(updateFeed);
+export const ChangeTab = (state, { activeFeedName, activeFeedType }) => {
+  const feeds = [
+    state.user.token ? USER_FEED : null,
+    GLOBAL_FEED,
+    activeFeedType === TAG_FEED ? TAG_FEED : null
+  ].filter(x => x);
   const newState = {
     ...state,
-    active: type,
+    activeFeedType,
+    activeFeedName,
     feeds,
     tag: name,
     ...loadingArticles
@@ -46,15 +40,15 @@ export const ChangeTab = (state, { name, type }) => {
 };
 
 export const LoadHomePage = page => state => {
+  const feeds = state.user.token ? [USER_FEED, GLOBAL_FEED] : [GLOBAL_FEED];
+  const activeFeedType = state.user.token ? USER_FEED : GLOBAL_FEED;
+  const activeFeedName = activeFeedType;
   const newState = {
     user: state.user,
     page,
-    active: state.user.token ? USER_FEED : GLOBAL_FEED,
-    feeds: [
-      { visible: !!state.user.token, type: USER_FEED },
-      { visible: true, type: GLOBAL_FEED },
-      { visible: false, type: TAG_FEED, name: "" }
-    ],
+    activeFeedName,
+    activeFeedType,
+    feeds,
     tags: [],
     ...loadingArticles
   };
@@ -71,21 +65,18 @@ const Banner = () =>
     </div>
   `;
 
-const FeedTab = ({ active, visible, type, name }, children) =>
-  visible
-    ? html`
-        <li class="nav-item">
-          <a
-            href=""
-            class=${cc({ "nav-link": true, active: active === type })}
-            onclick=${[ChangeTab, { name, type }]}
-          >
-            ${children}
-          </a>
-        </li>
-      `
-    : "";
-
+const FeedTab = ({ active, type, name }, children) =>
+  html`
+    <li class="nav-item">
+      <a
+        href=""
+        class=${cc({ "nav-link": true, active })}
+        onclick=${[ChangeTab, { activeFeedName: name, activeFeedType: type }]}
+      >
+        ${children}
+      </a>
+    </li>
+  `;
 const Tags = ({ tags }) => html`
   <div class="tag-list">
     ${tags.map(tag => {
@@ -93,7 +84,7 @@ const Tags = ({ tags }) => html`
         <a
           href=""
           class="tag-pill tag-default"
-          onclick=${[ChangeTab, { type: TAG_FEED, name: tag }]}
+          onclick=${[ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}
         >
           ${tag}
         </a>
@@ -110,7 +101,8 @@ export const HomePage = ({
   isLoading,
   tags,
   feeds,
-  active
+  activeFeedName,
+  activeFeedType
 }) =>
   html`
     <div class="home-page" key="home-page">
@@ -121,14 +113,20 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-                ${FeedTab({ ...feeds[0], active }, "Your Feed")}
-                ${FeedTab({ ...feeds[1], active }, "Global Feed")}
-                ${FeedTab(
-                  { ...feeds[2], active },
-                  html`
-                    <i class="ion-pound" /> ${feeds[2].name}
-                  `
-                )}
+                ${feeds[0]
+                  ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED, name: activeFeedType }, "Your Feed")
+                  : ""}
+                ${feeds[1]
+                  ? FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED, name: activeFeedType }, "Global Feed")
+                  : ""}
+                ${feeds[2]
+                  ? FeedTab(
+                      { active: activeFeedType === TAG_FEED, type: TAG_FEED, name: activeFeedName },
+                      html`
+                        <i class="ion-pound" /> ${activeFeedName}
+                      `
+                    )
+                  : ""}
               </ul>
             </div>
             ${ArticleList({
