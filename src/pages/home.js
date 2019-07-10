@@ -83,15 +83,26 @@ export const LoadHomePage = page => state => {
 };
 
 // Views
-const Banner = () =>
-  html`
-    <div class="banner">
-      <div class="container">
-        <h1 class="logo-font">conduit</h1>
-        <p>A place to share your knowledge.</p>
-      </div>
-    </div>
-  `;
+const UserFeed = ({ activeFeedType }) =>
+    FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed");
+const GlobalFeed = ({ activeFeedType }) =>
+    FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed");
+const TagFeed = ({ activeFeedType, activeFeedName }) =>
+    FeedTab(
+        {
+            active: activeFeedType === TAG_FEED,
+            type: TAG_FEED,
+            name: activeFeedName
+        },
+        html`
+      <i class="ion-pound" /> ${activeFeedName}
+    `
+    );
+const uiFeeds = {
+    [USER_FEED]: UserFeed,
+    [GLOBAL_FEED]: GlobalFeed,
+    [TAG_FEED]: TagFeed
+};
 
 const FeedTab = ({ active, type, name }, children) =>
   html`
@@ -143,33 +154,24 @@ const ListPagination = ({ pages }) => {
     </nav>
   `;
 };
-
 const pages = ({ count, currentPageIndex }) =>
-  Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
-    index: i,
-    isCurrent: i === currentPageIndex,
-    humanDisplay: i + 1
-  }));
-const UserFeed = ({ activeFeedType }) =>
-  FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed");
-const GlobalFeed = ({ activeFeedType }) =>
-  FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed");
-const TagFeed = ({ activeFeedType, activeFeedName }) =>
-  FeedTab(
-    {
-      active: activeFeedType === TAG_FEED,
-      type: TAG_FEED,
-      name: activeFeedName
-    },
+    Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
+        index: i,
+        isCurrent: i === currentPageIndex,
+        humanDisplay: i + 1
+    }));
+
+const Banner = () =>
     html`
-      <i class="ion-pound" /> ${activeFeedName}
-    `
-  );
-const uiFeeds = {
-    [USER_FEED]: UserFeed,
-    [GLOBAL_FEED]: GlobalFeed,
-    [TAG_FEED]: TagFeed
-};
+    <div class="banner">
+      <div class="container">
+        <h1 class="logo-font">conduit</h1>
+        <p>A place to share your knowledge.</p>
+      </div>
+    </div>
+  `;
+
+
 export const HomePage = ({
   page,
   user,
