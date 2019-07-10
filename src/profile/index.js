@@ -3,13 +3,14 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "../shared/errors.js";
-import { profile, profileFavorited, SETTINGS } from "../shared/pages.js";
+import { profile} from "../shared/links.js";
 import {
   ArticleList,
   loadingArticles
 } from "../shared/articles/index.js";
 import { pages } from "../shared/selectors.js";
 import { FetchArticles } from "../shared/articles/index.js";
+import {profileFavorited, SETTINGS} from "../shared/links.js";
 
 const SetProfile = (state, { profile }) => ({ ...state, profile });
 

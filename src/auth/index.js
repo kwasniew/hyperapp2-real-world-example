@@ -1,6 +1,5 @@
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/lib/events.js";
-import { LOGIN, REGISTER } from "../shared/pages.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
 import { targetValue } from "../shared/lib/events.js";
@@ -9,6 +8,7 @@ import { ListErrors } from "../shared/errors.js";
 import { UserSuccess } from "../shared/user/index.js";
 import { formFields } from "../shared/formFields.js";
 import {FormError} from "../shared/formFields.js";
+import {REGISTER, LOGIN} from "../shared/links.js";
 
 export const ChangeUsername = (state, username) => ({ ...state, username });
 export const ChangeEmail = (state, email) => ({ ...state, email });

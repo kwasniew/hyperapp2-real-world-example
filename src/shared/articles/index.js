@@ -1,10 +1,11 @@
 import { html } from "../html.js";
-import { article as articleLink, profile } from "../pages.js";
+import { article as articleLink} from "../links.js";
 import { format } from "../date.js";
 import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../../config.js";
 import { authHeader } from "../authHeader.js";
 import { LogError } from "../errors.js";
+import {profile} from "../links";
 
 const UpdateArticle = (state, { article }) => ({
   ...state,

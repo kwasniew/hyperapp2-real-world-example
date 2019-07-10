@@ -1,6 +1,6 @@
 import {ReadFromStorage, RemoveFromStorage, WriteToStorage} from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import {Redirect} from "../lib/Router.js";
-import {HOME} from "../pages.js";
+import {HOME} from "../links.js";
 
 const SESSION = "session";
 
