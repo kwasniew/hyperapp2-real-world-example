@@ -9,7 +9,7 @@ import {
   loadingArticles
 } from "../shared/articles/index.js";
 import { pages } from "../shared/selectors.js";
-import { FetchFeed } from "../shared/articles/index.js";
+import { FetchArticles } from "../shared/articles/index.js";
 
 const SetProfile = (state, { profile }) => ({ ...state, profile });
 
@@ -24,13 +24,13 @@ const FetchProfile = ({ username, token }) =>
 export const AUTHOR_FEED = "author";
 export const FAVORITED_FEED = "favorited";
 const FetchAuthorFeed = ({ page, username, token }) =>
-  FetchFeed(
+  FetchArticles(
     `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
       5}`,
     token
   );
 const FetchFavoritedFeed = ({ page, username, token }) =>
-  FetchFeed(
+  FetchArticles(
     `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page *
       5}`,
     token

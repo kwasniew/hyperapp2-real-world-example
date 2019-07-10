@@ -51,7 +51,7 @@ const SetArticles = (state, { articles, articlesCount }) => ({
   articlesCount
 });
 
-export const FetchFeed = (path, token) => {
+export const FetchArticles = (path, token) => {
   return Http({
     url: API_ROOT + path,
     options: { headers: authHeader(token) },
@@ -59,30 +59,6 @@ export const FetchFeed = (path, token) => {
     error: LogError
   });
 };
-
-// export const FetchArticles = state => {
-//   const page = state.currentPageIndex;
-//   const fetches = {
-//     [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
-//     [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
-//     [TAG_FEED]: FetchTagFeed({
-//       tag: state.activeFeedName,
-//       page,
-//       token: state.user.token
-//     }),
-//     [AUTHOR_FEED]: FetchAuthorFeed({
-//       page,
-//       username: state.profile.username,
-//       token: state.user.token
-//     }),
-//     [FAVORITED_FEED]: FetchFavoritedFeed({
-//       page,
-//       username: state.profile.username,
-//       token: state.user.token
-//     })
-//   };
-//   return fetches[state.activeFeedType];
-// };
 
 const FavoriteButton = ({ article }) => {
   const style = article.favorited ? "btn-primary" : "btn-outline-primary";

@@ -6,7 +6,7 @@ import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
 import { LogError } from "../shared/errors.js";
 import { ArticleList, loadingArticles } from "../shared/articles/index.js";
-import { FetchFeed } from "../shared/articles/index.js";
+import { FetchArticles } from "../shared/articles/index.js";
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -21,23 +21,31 @@ export const USER_FEED = "user";
 export const TAG_FEED = "tag";
 
 const FetchUserFeed = ({ pageIndex, token }) =>
-  FetchFeed(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
+  FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
 const FetchGlobalFeed = ({ pageIndex, token }) =>
-  FetchFeed(`/articles?limit=10&offset=${pageIndex * 10}`, token);
+  FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
 const FetchTagFeed = ({ tag, pageIndex, token }) =>
-  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`, token);
+  FetchArticles(
+    `/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`,
+    token
+  );
 
-const fetches = {
+const feeds = {
   [GLOBAL_FEED]: FetchGlobalFeed,
   [USER_FEED]: FetchUserFeed,
   [TAG_FEED]: FetchTagFeed
 };
 
-const FETCH = state =>
-  fetches[state.activeFeedType]({
-    pageIndex: state.currentPageIndex,
-    token: state.user.token,
-    tag: state.activeFeedName
+const FetchFeed = ({
+  activeFeedType,
+  currentPageIndex,
+  user,
+  activeFeedName
+}) =>
+  feeds[activeFeedType]({
+    pageIndex: currentPageIndex,
+    token: user.token,
+    tag: activeFeedName
   });
 
 export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
@@ -54,7 +62,7 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     currentPageIndex: 0,
     ...loadingArticles
   };
-  return [newState, [preventDefault, FETCH(newState)]];
+  return [newState, [preventDefault, FetchFeed(newState)]];
 };
 
 export const ChangePage = (state, { currentPageIndex }) => {
@@ -64,7 +72,7 @@ export const ChangePage = (state, { currentPageIndex }) => {
     currentPageIndex
   };
 
-  return [newState, [preventDefault, FETCH(newState)]];
+  return [newState, [preventDefault, FetchFeed(newState)]];
 };
 
 export const LoadHomePage = page => state => {
@@ -81,7 +89,7 @@ export const LoadHomePage = page => state => {
     currentPageIndex: 0,
     ...loadingArticles
   };
-  return [newState, [FETCH(newState), FetchTags]];
+  return [newState, [FetchFeed(newState), FetchTags]];
 };
 
 const Banner = () =>
@@ -135,10 +143,7 @@ const ListPagination = ({ pages }) => {
         ${pages.map(
           page =>
             html`
-              <li
-                class=${page.isCurrent ? "page-item active" : "page-item"}
-                key=${String(page.index)}
-              >
+              <li class=${page.isCurrent ? "page-item active" : "page-item"}>
                 <a
                   class="page-link"
                   href=""
@@ -205,10 +210,7 @@ export const HomePage = ({
               </ul>
             </div>
             ${ArticleList(
-              {
-                articles,
-                isLoading
-              },
+              { articles, isLoading },
               ListPagination({
                 pages: pages({ count: articlesCount, currentPageIndex })
               })
