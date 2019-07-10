@@ -9,7 +9,7 @@ import { LogError } from "../shared/errors.js";
 import { RedirectAction } from "../shared/formFields.js";
 import { ChangeFieldFromTarget } from "../shared/formFields.js";
 import { preventDefault } from "../shared/lib/events.js";
-import { FetchArticle } from "../shared/article/index.js";
+import { FetchArticle } from "./fragments/article.js";
 
 const DeleteComment = id => state => ({
     ...state,

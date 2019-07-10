@@ -1,11 +1,11 @@
-import { html } from "../html.js";
-import { article as articleLink} from "../../pages/links.js";
-import { format } from "../date.js";
+import { html } from "../../shared/html.js";
+import { article as articleLink} from "../links.js";
+import { format } from "../../shared/date.js";
 import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../../config.js";
-import { authHeader } from "../authHeader.js";
-import { LogError } from "../errors.js";
-import {profile} from "../../pages/links.js";
+import { authHeader } from "../../shared/authHeader.js";
+import { LogError } from "../../shared/errors.js";
+import {profile} from "../links.js";
 
 const UpdateArticle = (state, { article }) => ({
   ...state,

@@ -5,7 +5,7 @@ import { html } from "../shared/html.js";
 import { targetValue } from "../shared/lib/events.js";
 import { errorsList } from "../shared/selectors.js";
 import { ListErrors } from "../shared/errors.js";
-import { UserSuccess } from "../shared/user/index.js";
+import { UserSuccess } from "./fragments/auth.js";
 import { formFields } from "../shared/formFields.js";
 import {FormError} from "../shared/formFields.js";
 import {REGISTER, LOGIN} from "./links.js";

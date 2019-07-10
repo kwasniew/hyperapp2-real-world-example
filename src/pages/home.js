@@ -5,8 +5,8 @@ import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
 import { LogError } from "../shared/errors.js";
-import { ArticleList, loadingArticles } from "../shared/articles/index.js";
-import { FetchArticles } from "../shared/articles/index.js";
+import { ArticleList, loadingArticles } from "./fragments/articles.js";
+import { FetchArticles } from "./fragments/articles.js";
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 

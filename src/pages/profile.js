@@ -7,9 +7,9 @@ import { profile} from "./links.js";
 import {
     ArticleList,
     loadingArticles
-} from "../shared/articles/index.js";
+} from "./fragments/articles.js";
 import { pages } from "../shared/selectors.js";
-import { FetchArticles } from "../shared/articles/index.js";
+import { FetchArticles } from "./fragments/articles.js";
 import {profileFavorited, SETTINGS} from "./links.js";
 
 const SetProfile = (state, { profile }) => ({ ...state, profile });

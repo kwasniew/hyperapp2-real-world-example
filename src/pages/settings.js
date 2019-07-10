@@ -4,7 +4,7 @@ import { errorsList } from "../shared/selectors.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
-import { UserSuccess, Logout } from "../shared/user/index.js";
+import { UserSuccess, Logout } from "./fragments/auth.js";
 import { formFields, ChangeFieldFromTarget } from "../shared/formFields.js";
 import { FormError } from "../shared/formFields.js";
 import { authHeader } from "../shared/authHeader.js";
