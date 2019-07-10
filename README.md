@@ -110,7 +110,7 @@ Things I don't use and what is used instead:
 
 Parcel is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even faster load time).
 
-Raw source size: < 1300 LOC
+Raw source size: < 1300 LOC (60% of the Hyperapp v1 version)
 
 Minified+gzipped bundle: 16.5kB
 
