@@ -23,12 +23,12 @@ const FetchProfile = ({ username, token }) =>
     error: LogError
   });
 
-export const LoadPage = active => page => (state, { username }) => {
+export const LoadPage = activeFeedType => page => (state, { username }) => {
   const newState = {
     page,
     username,
     user: state.user,
-    active,
+    activeFeedType,
     ...loadingArticles
   };
   return [
@@ -67,12 +67,14 @@ const FollowUserButton = ({ username, following }) => html`
   </button>
 `;
 
-const Tabs = ({ username, active }) =>
+const Tabs = ({ username, activeFeedType }) =>
   html`
     <ul class="nav nav-pills outline-active">
       <li class="nav-item">
         <a
-          class=${active === AUTHOR_FEED ? "nav-link active" : "nav-link"}
+          class=${activeFeedType === AUTHOR_FEED
+            ? "nav-link active"
+            : "nav-link"}
           href=${profile(username)}
         >
           My Articles
@@ -81,7 +83,9 @@ const Tabs = ({ username, active }) =>
 
       <li class="nav-item">
         <a
-          class=${active === FAVORITED_FEED ? "nav-link active" : "nav-link"}
+          class=${activeFeedType === FAVORITED_FEED
+            ? "nav-link active"
+            : "nav-link"}
           href=${profileFavorited(username)}
         >
           Favorited Articles
@@ -96,7 +100,7 @@ export const ProfilePage = ({
   image,
   bio,
   following,
-  active,
+  activeFeedType,
   articles,
   isLoading,
   articlesCount,
@@ -125,7 +129,7 @@ export const ProfilePage = ({
               <div class="row">
                 <div class="col-xs-12 col-md-10 offset-md-1">
                   <div class="articles-toggle">
-                    ${Tabs({ username, active })}
+                    ${Tabs({ username, activeFeedType })}
                   </div>
                   ${ArticleList({
                     articles,

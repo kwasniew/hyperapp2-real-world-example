@@ -33,7 +33,6 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     activeFeedType,
     activeFeedName: activeFeedName ? activeFeedName : activeFeedType,
     feeds,
-    tag: name,
     ...loadingArticles
   };
   return [newState, [preventDefault, FetchArticles(newState)]];

@@ -88,7 +88,6 @@ const FetchFavoritedFeed = ({ page, username, token }) =>
   );
 
 export const FetchArticles = state => {
-  // const activeFeed = state.feeds.find(feed => feed.type === state.active);
   const page = state.currentPageIndex;
   const fetches = {
     [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
