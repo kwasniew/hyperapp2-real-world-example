@@ -10,57 +10,57 @@ import { FormError } from "../shared/formFields.js";
 import { authHeader } from "../shared/authHeader.js";
 
 const UpdateSettings = user => {
-  const { password, ...userWithoutPassword } = user;
-  const submitUser =
-    password && password.length > 0 ? user : userWithoutPassword;
-  return Http({
-    url: API_ROOT + "/user",
-    options: {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeader(user.token)
-      },
-      body: JSON.stringify({ user: submitUser })
-    },
-    errorResponse: "json",
-    action: UserSuccess,
-    error: FormError
-  });
+    const { password, ...userWithoutPassword } = user;
+    const submitUser =
+        password && password.length > 0 ? user : userWithoutPassword;
+    return Http({
+        url: API_ROOT + "/user",
+        options: {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                ...authHeader(user.token)
+            },
+            body: JSON.stringify({ user: submitUser })
+        },
+        errorResponse: "json",
+        action: UserSuccess,
+        error: FormError
+    });
 };
 const SubmitForm = state => [
-  { ...state, inProgress: true },
-  [
-    preventDefault,
-    UpdateSettings({
-      image: state.image,
-      username: state.username,
-      bio: state.bio,
-      email: state.email,
-      password: state.password,
-      token: state.user.token
-    })
-  ]
+    { ...state, inProgress: true },
+    [
+        preventDefault,
+        UpdateSettings({
+            image: state.image,
+            username: state.username,
+            bio: state.bio,
+            email: state.email,
+            password: state.password,
+            token: state.user.token
+        })
+    ]
 ];
 
 export const LoadSettingsPage = page => state => {
-  return {
-    page,
-    user: state.user,
-    ...state.user,
-    password: "",
-    ...formFields
-  };
+    return {
+        page,
+        user: state.user,
+        ...state.user,
+        password: "",
+        ...formFields
+    };
 };
 
 const SettingsForm = ({
-  image,
-  username,
-  bio,
-  email,
-  password,
-  inProgress
-}) => html`
+                          image,
+                          username,
+                          bio,
+                          email,
+                          password,
+                          inProgress
+                      }) => html`
   <form onsubmit=${SubmitForm}>
     <fieldset>
       <fieldset class="form-group">
@@ -125,14 +125,14 @@ const SettingsForm = ({
 `;
 
 export const SettingsPage = ({
-  image,
-  username,
-  bio,
-  email,
-  password,
-  inProgress,
-  errors
-}) => html`
+                                 image,
+                                 username,
+                                 bio,
+                                 email,
+                                 password,
+                                 inProgress,
+                                 errors
+                             }) => html`
   <div class="settings-page">
     <div class="container page">
       <div class="row">

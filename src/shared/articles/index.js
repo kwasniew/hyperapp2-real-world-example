@@ -5,7 +5,7 @@ import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../../config.js";
 import { authHeader } from "../authHeader.js";
 import { LogError } from "../errors.js";
-import {profile} from "../links";
+import {profile} from "../links.js";
 
 const UpdateArticle = (state, { article }) => ({
   ...state,

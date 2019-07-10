@@ -11,72 +11,72 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "../shared/article/index.js";
 
 const AddTag = state => [
-  { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
-  preventDefault
+    { ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] },
+    preventDefault
 ];
 
 const RemoveTag = tag => state => ({
-  ...state,
-  tagList: state.tagList.filter(t => t !== tag)
+    ...state,
+    tagList: state.tagList.filter(t => t !== tag)
 });
 
 const SaveArticle = ({ article, token }) =>
-  Http({
-    url: API_ROOT + "/articles",
-    options: {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeader(token)
-      },
-      body: JSON.stringify({ article })
-    },
-    errorResponse: "json",
-    action: RedirectAction(HOME),
-    error: FormError
-  });
+    Http({
+        url: API_ROOT + "/articles",
+        options: {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...authHeader(token)
+            },
+            body: JSON.stringify({ article })
+        },
+        errorResponse: "json",
+        action: RedirectAction(HOME),
+        error: FormError
+    });
 
 const SubmitArticle = state => [
-  { ...state, inProgress: true },
-  [
-    preventDefault,
-    SaveArticle({
-      article: {
-        title: state.title,
-        description: state.description,
-        body: state.body,
-        tagList: state.tagList
-      },
-      token: state.user.token
-    })
-  ]
+    { ...state, inProgress: true },
+    [
+        preventDefault,
+        SaveArticle({
+            article: {
+                title: state.title,
+                description: state.description,
+                body: state.body,
+                tagList: state.tagList
+            },
+            token: state.user.token
+        })
+    ]
 ];
 
 export const LoadNewEditorPage = page => state => ({
-  page,
-  user: state.user,
-  ...formFields,
-  title: "",
-  description: "",
-  body: "",
-  currentTag: "",
-  tagList: []
+    page,
+    user: state.user,
+    ...formFields,
+    title: "",
+    description: "",
+    body: "",
+    currentTag: "",
+    tagList: []
 });
 
 export const LoadEditorPage = page => (state, { slug }) => {
-  const newState = LoadNewEditorPage(page)(state);
-  return [newState, FetchArticle({ slug, token: state.user.token })];
+    const newState = LoadNewEditorPage(page)(state);
+    return [newState, FetchArticle({ slug, token: state.user.token })];
 };
 
 export const EditorPage = ({
-  title,
-  description,
-  body,
-  currentTag,
-  tagList,
-  errors,
-  inProgress
-}) => html`
+                               title,
+                               description,
+                               body,
+                               currentTag,
+                               tagList,
+                               errors,
+                               inProgress
+                           }) => html`
   <div class="editor-page">
     <div class="container page">
       <div class="row">
@@ -127,8 +127,8 @@ export const EditorPage = ({
 
                 <div class="tag-list">
                   ${tagList.map(
-                    tag =>
-                      html`
+    tag =>
+        html`
                         <span class="tag-default tag-pill">
                           <i
                             class="ion-close-round"
@@ -137,7 +137,7 @@ export const EditorPage = ({
                           ${tag}
                         </span>
                       `
-                  )}
+)}
                 </div>
               </fieldset>
 

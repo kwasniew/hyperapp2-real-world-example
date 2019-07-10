@@ -15,71 +15,71 @@ export const ChangeEmail = (state, email) => ({ ...state, email });
 export const ChangePassword = (state, password) => ({ ...state, password });
 
 const Login = ({ email, password }) =>
-  Http({
-    url: API_ROOT + "/users/login",
-    options: {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ user: { email, password } })
-    },
-    errorResponse: "json",
-    action: UserSuccess,
-    error: FormError
-  });
+    Http({
+        url: API_ROOT + "/users/login",
+        options: {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ user: { email, password } })
+        },
+        errorResponse: "json",
+        action: UserSuccess,
+        error: FormError
+    });
 export const SubmitLogin = state => [
-  { ...state, inProgress: true },
-  [preventDefault, Login({ email: state.email, password: state.password })]
+    { ...state, inProgress: true },
+    [preventDefault, Login({ email: state.email, password: state.password })]
 ];
 
 const Register = ({ email, password, username }) =>
-  Http({
-    url: API_ROOT + "/users",
-    options: {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ user: { email, password, username } })
-    },
-    errorResponse: "json",
-    action: UserSuccess,
-    error: FormError
-  });
+    Http({
+        url: API_ROOT + "/users",
+        options: {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ user: { email, password, username } })
+        },
+        errorResponse: "json",
+        action: UserSuccess,
+        error: FormError
+    });
 export const SubmitRegister = state => [
-  { ...state, inProgess: true },
-  [
-    preventDefault,
-    Register({
-      email: state.email,
-      password: state.password,
-      username: state.username
-    })
-  ]
+    { ...state, inProgess: true },
+    [
+        preventDefault,
+        Register({
+            email: state.email,
+            password: state.password,
+            username: state.username
+        })
+    ]
 ];
 
 const defaultAuthFields = {
-  email: "",
-  password: "",
-  ...formFields
+    email: "",
+    password: "",
+    ...formFields
 };
 
 export const LoadLoginPage = page => state => {
-  return {
-    page,
-    user: state.user,
-    ...defaultAuthFields
-  };
+    return {
+        page,
+        user: state.user,
+        ...defaultAuthFields
+    };
 };
 
 export const LoadRegisterPage = page => state => {
-  return {
-    page,
-    ...defaultAuthFields,
-    user: state.user,
-    username: ""
-  };
+    return {
+        page,
+        ...defaultAuthFields,
+        user: state.user,
+        username: ""
+    };
 };
 
 export const LoginPage = ({ email, password, inProgress, errors }) => html`
@@ -132,12 +132,12 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
 `;
 
 export const RegisterPage = ({
-  username,
-  password,
-  email,
-  inProgress,
-  errors
-}) => html`
+                                 username,
+                                 password,
+                                 email,
+                                 inProgress,
+                                 errors
+                             }) => html`
   <div class="auth-page">
     <div class="container page">
       <div class="row">

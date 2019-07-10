@@ -12,102 +12,102 @@ import { preventDefault } from "../shared/lib/events.js";
 import { FetchArticle } from "../shared/article/index.js";
 
 const DeleteComment = id => state => ({
-  ...state,
-  comments: state.comments.filter(comment => comment.id !== id)
+    ...state,
+    comments: state.comments.filter(comment => comment.id !== id)
 });
 
 const SubmitDeleteComment = id => state => [
-  state,
-  Http({
-    url: API_ROOT + "/articles/" + state.slug + "/comments/" + id,
-    options: {
-      method: "DELETE",
-      headers: {
-        ...authHeader(state.user.token)
-      }
-    },
-    action: DeleteComment(id),
-    error: LogError
-  })
+    state,
+    Http({
+        url: API_ROOT + "/articles/" + state.slug + "/comments/" + id,
+        options: {
+            method: "DELETE",
+            headers: {
+                ...authHeader(state.user.token)
+            }
+        },
+        action: DeleteComment(id),
+        error: LogError
+    })
 ];
 
 const AddComment = (state, { comment }) => ({
-  ...state,
-  commentText: "",
-  comments: [comment, ...state.comments]
+    ...state,
+    commentText: "",
+    comments: [comment, ...state.comments]
 });
 
 const SubmitComment = state => [
-  state,
-  [
-    preventDefault,
-    Http({
-      url: API_ROOT + "/articles/" + state.slug + "/comments",
-      options: {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...authHeader(state.user.token)
-        },
-        body: JSON.stringify({ comment: { body: state.commentText } })
-      },
-      action: AddComment,
-      error: LogError
-    })
-  ]
+    state,
+    [
+        preventDefault,
+        Http({
+            url: API_ROOT + "/articles/" + state.slug + "/comments",
+            options: {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...authHeader(state.user.token)
+                },
+                body: JSON.stringify({ comment: { body: state.commentText } })
+            },
+            action: AddComment,
+            error: LogError
+        })
+    ]
 ];
 
 const DeleteArticle = ({ slug, token }) =>
-  Http({
-    url: API_ROOT + "/articles/" + slug,
-    options: { method: "DELETE", headers: authHeader(token) },
-    action: RedirectAction(HOME),
-    error: LogError
-  });
+    Http({
+        url: API_ROOT + "/articles/" + slug,
+        options: { method: "DELETE", headers: authHeader(token) },
+        action: RedirectAction(HOME),
+        error: LogError
+    });
 
 const SubmitDeleteArticle = state => [
-  { ...state },
-  DeleteArticle({ slug: state.slug, token: state.user.token })
+    { ...state },
+    DeleteArticle({ slug: state.slug, token: state.user.token })
 ];
 
 const SetComments = (state, { comments }) => ({ ...state, comments });
 
 const FetchComments = ({ slug, token }) => {
-  return Http({
-    url: API_ROOT + "/articles/" + slug + "/comments",
-    options: { headers: authHeader(token) },
-    action: SetComments,
-    error: LogError
-  });
+    return Http({
+        url: API_ROOT + "/articles/" + slug + "/comments",
+        options: { headers: authHeader(token) },
+        action: SetComments,
+        error: LogError
+    });
 };
 
 export const LoadArticlePage = page => (state, { slug }) => {
-  const newState = {
-    page,
-    slug,
-    user: state.user,
-    body: "",
-    author: {},
-    tagList: [],
-    comments: [],
-    commentText: ""
-  };
-  return [
-    newState,
-    [
-      FetchArticle({ slug, token: state.user.token }),
-      FetchComments({ slug, token: state.user.token })
-    ]
-  ];
+    const newState = {
+        page,
+        slug,
+        user: state.user,
+        body: "",
+        author: {},
+        tagList: [],
+        comments: [],
+        commentText: ""
+    };
+    return [
+        newState,
+        [
+            FetchArticle({ slug, token: state.user.token }),
+            FetchComments({ slug, token: state.user.token })
+        ]
+    ];
 };
 
 const canModifySelector = author => loggedInUser =>
-  loggedInUser.token && author.username === loggedInUser.username;
+    loggedInUser.token && author.username === loggedInUser.username;
 
 const ArticleActions = ({ state }) => {
-  const canModify = canModifySelector(state.author)(state.user);
-  return canModify
-    ? html`
+    const canModify = canModifySelector(state.author)(state.user);
+    return canModify
+        ? html`
         <span>
           <a
             href=${editor(state.slug)}
@@ -124,7 +124,7 @@ const ArticleActions = ({ state }) => {
           </button>
         </span>
       `
-    : html`
+        : html`
         <span />
       `;
 };
@@ -147,7 +147,7 @@ const ArticleMeta = ({ state }) => html`
 `;
 
 const ArticleBanner = ({ state }) =>
-  html`
+    html`
     <div class="banner">
       <div class="container">
         <h1>${state.title}</h1>
@@ -169,14 +169,14 @@ const CommentInput = ({ state }) => html`
     </div>
     <div class="card-footer">
       ${state.user.image
-        ? html`
+    ? html`
             <img
               src=${state.user.image}
               class="comment-author-img"
               alt=${state.user.username}
             />
           `
-        : ""}
+    : ""}
       <button class="btn btn-sm btn-primary" type="submit">
         Post Comment
       </button>
@@ -185,18 +185,18 @@ const CommentInput = ({ state }) => html`
 `;
 
 const DeleteButton = ({ comment, slug, user }) => {
-  const canModify = canModifySelector(comment.author)(user);
-  return canModify
-    ? html`
+    const canModify = canModifySelector(comment.author)(user);
+    return canModify
+        ? html`
         <span class="mod-options">
           <i class="ion-trash-a" onclick=${SubmitDeleteComment(comment.id)} />
         </span>
       `
-    : "";
+        : "";
 };
 
 const Comment = ({ comment, slug, user }) =>
-  html`
+    html`
     <div class="card">
       <div class="card-block">
         <p class="card-text">${comment.body}</p>
@@ -220,7 +220,7 @@ const Comment = ({ comment, slug, user }) =>
   `;
 
 const CommentList = ({ comments, user, slug }) => {
-  return html`
+    return html`
     <div>
       ${comments.map(comment => Comment({ comment, slug, user }))}
     </div>
@@ -230,12 +230,12 @@ const CommentList = ({ comments, user, slug }) => {
 const CommentContainer = ({ state }) => html`
   <div class="col-xs-12 col-md-8 offset-md-2">
     ${state.user.token
-      ? html`
+    ? html`
           <div>
             ${CommentInput({ state })}
           </div>
         `
-      : html`
+    : html`
           <p>
             <a href=${LOGIN}>Sign in </a>
             or
@@ -244,16 +244,16 @@ const CommentContainer = ({ state }) => html`
           </p>
         `}
     ${CommentList({
-      comments: state.comments,
-      user: state.user,
-      slug: state.slug
-    })}
+    comments: state.comments,
+    user: state.user,
+    slug: state.slug
+})}
   </div>
 `;
 
 export const ArticlePage = state =>
-  state.title
-    ? html`
+    state.title
+        ? html`
         <div class="article-page">
           ${ArticleBanner({ state })}
 
@@ -264,12 +264,12 @@ export const ArticlePage = state =>
 
                 <ul class="tag-list">
                   ${state.tagList.map(
-                    tag => html`
+        tag => html`
                       <li class="tag-default tag-pill tag-outline">
                         ${tag}
                       </li>
                     `
-                  )}
+        )}
                 </ul>
               </div>
             </div>
@@ -284,4 +284,4 @@ export const ArticlePage = state =>
           </div>
         </div>
       `
-    : "";
+        : "";
