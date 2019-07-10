@@ -118,4 +118,5 @@ It makes it one of the smallest and fastest to load versions of RealWorld app.
 
 When comparing different implementations remember that:
 * code formatting matters
-* not all versions are equal (some are very buggy and lack features)
+* some versions are more buggy than the others and do less error handling
+* some version lack features
