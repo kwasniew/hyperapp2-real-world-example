@@ -5,15 +5,13 @@ import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "../shared/errors.js";
 import { profile, profileFavorited, SETTINGS } from "../shared/pages.js";
 import {
-  FetchArticles,
   ArticleList,
-  loadingArticles,
-  AUTHOR_FEED,
-  FAVORITED_FEED
+  loadingArticles
 } from "../shared/articles/index.js";
 import { pages } from "../shared/selectors.js";
+import { FetchFeed } from "../shared/articles/index.js";
 
-const SetProfile = (state, { profile }) => ({ ...state, ...profile });
+const SetProfile = (state, { profile }) => ({ ...state, profile });
 
 const FetchProfile = ({ username, token }) =>
   Http({
@@ -23,11 +21,30 @@ const FetchProfile = ({ username, token }) =>
     error: LogError
   });
 
+export const AUTHOR_FEED = "author";
+export const FAVORITED_FEED = "favorited";
+const FetchAuthorFeed = ({ page, username, token }) =>
+  FetchFeed(
+    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
+      5}`,
+    token
+  );
+const FetchFavoritedFeed = ({ page, username, token }) =>
+  FetchFeed(
+    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page *
+      5}`,
+    token
+  );
+const fetches = {
+  [AUTHOR_FEED]: FetchAuthorFeed,
+  [FAVORITED_FEED]: FetchFavoritedFeed
+};
+
 export const LoadPage = activeFeedType => page => (state, { username }) => {
   const newState = {
     page,
-    username,
     user: state.user,
+    profile: state.profile || { username },
     activeFeedType,
     ...loadingArticles
   };
@@ -35,7 +52,7 @@ export const LoadPage = activeFeedType => page => (state, { username }) => {
     newState,
     [
       FetchProfile({ username, token: state.user.token }),
-      FetchArticles(newState)
+      fetches[activeFeedType]({page, username, token: state.user.token})
     ]
   ];
 };
@@ -102,10 +119,11 @@ const Tabs = ({ username, activeFeedType }) =>
 
 export const ProfilePage = ({
   user,
-  username,
-  image,
-  bio,
-  following,
+  profile,
+  // username,
+  // image,
+  // bio,
+  // following,
   activeFeedType,
   articles,
   isLoading,
@@ -118,17 +136,24 @@ export const ProfilePage = ({
         <div class="container">
           <div class="row">
             <div class="col-xs-12 col-md-10 offset-md-1">
-              ${image
+              ${profile.image
                 ? html`
-                    <img class="user-img" src=${image} alt=${username} />
+                    <img
+                      class="user-img"
+                      src=${profile.image}
+                      alt=${profile.username}
+                    />
                   `
                 : ""}
-              <h4>${username}</h4>
-              <p>${bio}</p>
+              <h4>${profile.username}</h4>
+              <p>${profile.bio}</p>
 
-              ${user.username === username
+              ${user.username === profile.username
                 ? EditProfileSettings()
-                : FollowUserButton({ username, following })}
+                : FollowUserButton({
+                    username: profile.username,
+                    following: profile.following
+                  })}
             </div>
           </div>
         </div>
@@ -137,7 +162,7 @@ export const ProfilePage = ({
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
             <div class="articles-toggle">
-              ${Tabs({ username, activeFeedType })}
+              ${Tabs({ username: profile.username, activeFeedType })}
             </div>
             ${ArticleList({
               articles,

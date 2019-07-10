@@ -5,7 +5,6 @@ import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../../config.js";
 import { authHeader } from "../authHeader.js";
 import { LogError } from "../errors.js";
-import { preventDefault } from "../lib/events.js";
 
 const UpdateArticle = (state, { article }) => ({
   ...state,
@@ -42,15 +41,8 @@ const ChangeFavoriteStatus = (state, slug) => {
 export const loadingArticles = {
   articles: [],
   articlesCount: 0,
-  isLoading: true,
-  currentPageIndex: 0
+  isLoading: true
 };
-
-export const GLOBAL_FEED = "global";
-export const USER_FEED = "user";
-export const TAG_FEED = "tag";
-export const AUTHOR_FEED = "author";
-export const FAVORITED_FEED = "favorited";
 
 const SetArticles = (state, { articles, articlesCount }) => ({
   ...state,
@@ -68,58 +60,29 @@ export const FetchFeed = (path, token) => {
   });
 };
 
-const FetchUserFeed = ({ page, token }) =>
-  FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
-const FetchGlobalFeed = ({ page, token }) =>
-  FetchFeed(`/articles?limit=10&offset=${page * 10}`, token);
-const FetchTagFeed = ({ tag, page, token }) =>
-  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`, token);
-const FetchAuthorFeed = ({ page, username, token }) =>
-  FetchFeed(
-    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
-    token
-  );
-const FetchFavoritedFeed = ({ page, username, token }) =>
-  FetchFeed(
-    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
-    token
-  );
-
-export const FetchArticles = state => {
-  const page = state.currentPageIndex;
-  const fetches = {
-    [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
-    [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
-    [TAG_FEED]: FetchTagFeed({
-      tag: state.activeFeedName,
-      page,
-      token: state.user.token
-    }),
-    [AUTHOR_FEED]: FetchAuthorFeed({
-      page,
-      username: state.username,
-      token: state.user.token
-    }),
-    [FAVORITED_FEED]: FetchFavoritedFeed({
-      page,
-      username: state.username,
-      token: state.user.token
-    })
-  };
-  return fetches[state.activeFeedType];
-};
-
-export const ChangePage = (state, { currentPageIndex }) => {
-  const newState = {
-    ...state,
-    ...loadingArticles,
-    currentPageIndex
-  };
-
-  return [newState, [preventDefault, FetchArticles(newState)]];
-};
+// export const FetchArticles = state => {
+//   const page = state.currentPageIndex;
+//   const fetches = {
+//     [USER_FEED]: FetchUserFeed({ page, token: state.user.token }),
+//     [GLOBAL_FEED]: FetchGlobalFeed({ page, token: state.user.token }),
+//     [TAG_FEED]: FetchTagFeed({
+//       tag: state.activeFeedName,
+//       page,
+//       token: state.user.token
+//     }),
+//     [AUTHOR_FEED]: FetchAuthorFeed({
+//       page,
+//       username: state.profile.username,
+//       token: state.user.token
+//     }),
+//     [FAVORITED_FEED]: FetchFavoritedFeed({
+//       page,
+//       username: state.profile.username,
+//       token: state.user.token
+//     })
+//   };
+//   return fetches[state.activeFeedType];
+// };
 
 const FavoriteButton = ({ article }) => {
   const style = article.favorited ? "btn-primary" : "btn-outline-primary";
@@ -165,36 +128,7 @@ const ArticlePreview = ({ article }) => html`
   </div>
 `;
 
-const ListPagination = ({ pages }) => {
-  if (pages.length < 2) {
-    return "";
-  }
-  return html`
-    <nav>
-      <ul class="pagination">
-        ${pages.map(
-          page =>
-            html`
-              <li
-                class=${page.isCurrent ? "page-item active" : "page-item"}
-                key=${String(page.index)}
-              >
-                <a
-                  class="page-link"
-                  href=""
-                  onclick=${[ChangePage, { currentPageIndex: page.index }]}
-                >
-                  ${page.humanDisplay}
-                </a>
-              </li>
-            `
-        )}
-      </ul>
-    </nav>
-  `;
-};
-
-export const ArticleList = ({ isLoading, articles, pages }) => {
+export const ArticleList = ({ isLoading, articles, pages }, children) => {
   if (isLoading) {
     return html`
       <div class="article-preview">Loading...</div>
@@ -207,8 +141,7 @@ export const ArticleList = ({ isLoading, articles, pages }) => {
   }
   return html`
     <div>
-      ${articles.map(article => ArticlePreview({ article }))}
-      ${ListPagination({ pages })}
+      ${articles.map(article => ArticlePreview({ article }))} ${children}
     </div>
   `;
 };

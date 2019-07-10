@@ -5,14 +5,8 @@ import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
 import { LogError } from "../shared/errors.js";
-import {
-  ArticleList,
-  FetchArticles,
-  loadingArticles,
-  USER_FEED,
-  GLOBAL_FEED,
-  TAG_FEED
-} from "../shared/articles/index.js";
+import { ArticleList, loadingArticles } from "../shared/articles/index.js";
+import { FetchFeed } from "../shared/articles/index.js";
 
 const SetTags = (state, { tags }) => ({ ...state, tags });
 
@@ -21,6 +15,25 @@ export const FetchTags = Http({
   action: SetTags,
   error: LogError
 });
+
+export const GLOBAL_FEED = "global";
+export const USER_FEED = "user";
+export const TAG_FEED = "tag";
+
+const FetchUserFeed = ({ page, token }) =>
+  FetchFeed(`/articles/feed?limit=10&offset=${page * 10}`, token);
+const FetchGlobalFeed = ({ page, token }) =>
+  FetchFeed(`/articles?limit=10&offset=${page * 10}`, token);
+const FetchTagFeed = ({ tag, page, token }) =>
+  FetchFeed(`/articles?limit=10&tag=${tag}&offset=${page * 10}`, token);
+
+const fetches = {
+  [GLOBAL_FEED]: FetchGlobalFeed,
+  [USER_FEED]: FetchUserFeed,
+  [TAG_FEED]: FetchTagFeed
+};
+
+const pagination = {};
 
 export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
@@ -33,9 +46,40 @@ export const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     activeFeedType,
     activeFeedName: activeFeedName ? activeFeedName : activeFeedType,
     feeds,
+    currentPageIndex: 0,
     ...loadingArticles
   };
-  return [newState, [preventDefault, FetchArticles(newState)]];
+  return [
+    newState,
+    [
+      preventDefault,
+      fetches[activeFeedType]({
+        page: state.page,
+        token: state.user.token,
+        tag: activeFeedName
+      })
+    ]
+  ];
+};
+
+export const ChangePage = (state, { currentPageIndex }) => {
+  const newState = {
+    ...state,
+    ...loadingArticles,
+    currentPageIndex
+  };
+
+  return [
+    newState,
+    [
+      preventDefault,
+      fetches[state.activeFeedType]({
+        page: currentPageIndex,
+        token: state.user.token,
+        tag: state.activeFeedName
+      })
+    ]
+  ];
 };
 
 export const LoadHomePage = page => state => {
@@ -49,9 +93,20 @@ export const LoadHomePage = page => state => {
     activeFeedType,
     feeds,
     tags: [],
+    currentPageIndex: 0,
     ...loadingArticles
   };
-  return [newState, [FetchArticles(newState), FetchTags]];
+  return [
+    newState,
+    [
+      fetches[activeFeedType]({
+        page,
+        token: state.user.token,
+        tag: activeFeedName
+      }),
+      FetchTags
+    ]
+  ];
 };
 
 const Banner = () =>
@@ -83,7 +138,10 @@ const Tags = ({ tags }) => html`
         <a
           href=""
           class="tag-pill tag-default"
-          onclick=${[ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}
+          onclick=${[
+            ChangeTab,
+            { activeFeedType: TAG_FEED, activeFeedName: tag }
+          ]}
         >
           ${tag}
         </a>
@@ -92,7 +150,37 @@ const Tags = ({ tags }) => html`
   </div>
 `;
 
+const ListPagination = ({ pages }) => {
+  if (pages.length < 2) {
+    return "";
+  }
+  return html`
+    <nav>
+      <ul class="pagination">
+        ${pages.map(
+          page =>
+            html`
+              <li
+                class=${page.isCurrent ? "page-item active" : "page-item"}
+                key=${String(page.index)}
+              >
+                <a
+                  class="page-link"
+                  href=""
+                  onclick=${[ChangePage, { currentPageIndex: page.index }]}
+                >
+                  ${page.humanDisplay}
+                </a>
+              </li>
+            `
+        )}
+      </ul>
+    </nav>
+  `;
+};
+
 export const HomePage = ({
+  page,
   user,
   articles,
   articlesCount,
@@ -113,14 +201,27 @@ export const HomePage = ({
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
                 ${feeds[0]
-                  ? FeedTab({ active: activeFeedType === USER_FEED, type: USER_FEED }, "Your Feed")
+                  ? FeedTab(
+                      { active: activeFeedType === USER_FEED, type: USER_FEED },
+                      "Your Feed"
+                    )
                   : ""}
                 ${feeds[1]
-                  ? FeedTab({ active: activeFeedType === GLOBAL_FEED, type: GLOBAL_FEED }, "Global Feed")
+                  ? FeedTab(
+                      {
+                        active: activeFeedType === GLOBAL_FEED,
+                        type: GLOBAL_FEED
+                      },
+                      "Global Feed"
+                    )
                   : ""}
                 ${feeds[2]
                   ? FeedTab(
-                      { active: activeFeedType === TAG_FEED, type: TAG_FEED, name: activeFeedName },
+                      {
+                        active: activeFeedType === TAG_FEED,
+                        type: TAG_FEED,
+                        name: activeFeedName
+                      },
                       html`
                         <i class="ion-pound" /> ${activeFeedName}
                       `
@@ -128,11 +229,15 @@ export const HomePage = ({
                   : ""}
               </ul>
             </div>
-            ${ArticleList({
-              articles,
-              isLoading,
-              pages: pages({ count: articlesCount, currentPageIndex })
-            })}
+            ${ArticleList(
+              {
+                articles,
+                isLoading
+              },
+              ListPagination({
+                pages: pages({ count: articlesCount, currentPageIndex })
+              })
+            )}
           </div>
 
           <div class="col-md-3">
