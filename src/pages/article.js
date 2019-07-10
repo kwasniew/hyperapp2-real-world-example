@@ -5,9 +5,9 @@ import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { profile, editor, HOME, LOGIN, REGISTER } from "./links.js";
 import { format } from "../shared/date.js";
-import { LogError } from "../shared/errors.js";
-import { RedirectAction } from "../shared/formFields.js";
-import { ChangeFieldFromTarget } from "../shared/formFields.js";
+import { LogError } from "./fragments/forms.js";
+import { RedirectAction } from "../shared/lib/Router.js";
+import { ChangeFieldFromTarget } from "./fragments/forms.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { FetchArticle } from "./fragments/article.js";
 
@@ -105,7 +105,6 @@ export const LoadArticlePage = page => (state, { slug }) => {
 // Selectors
 const canModifySelector = author => loggedInUser =>
   loggedInUser.token && author.username === loggedInUser.username;
-
 
 // Views
 const ArticleActions = ({ state }) => {

@@ -20,3 +20,4 @@ export const RoutePages = ({ routes }) => [router, { routes }];
 
 const redirectEffect = (dispatch, props) => page.redirect(props.path);
 export const Redirect = props => [redirectEffect, props];
+export const RedirectAction = path => state => [state, Redirect({ path })];

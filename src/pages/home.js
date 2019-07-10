@@ -4,7 +4,7 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { pages } from "../shared/selectors.js";
-import { LogError } from "../shared/errors.js";
+import { LogError } from "./fragments/forms.js";
 import { ArticleList, loadingArticles } from "./fragments/articles.js";
 import { FetchArticles } from "./fragments/articles.js";
 
@@ -26,7 +26,6 @@ const FetchTagFeed = ({ tag, pageIndex, token }) =>
     `/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`,
     token
   );
-
 
 const GLOBAL_FEED = "global";
 const USER_FEED = "user";

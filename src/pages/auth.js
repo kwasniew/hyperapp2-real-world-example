@@ -3,11 +3,11 @@ import { preventDefault } from "../shared/lib/events.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
 import { targetValue } from "../shared/lib/events.js";
-import { errorsList } from "../shared/selectors.js";
-import { ListErrors } from "../shared/errors.js";
+import { errorsList } from "./fragments/forms.js";
+import { ListErrors } from "./fragments/forms.js";
 import { UserSuccess } from "./fragments/user.js";
-import { formFields } from "../shared/formFields.js";
-import { FormError } from "../shared/formFields.js";
+import { formFields } from "./fragments/forms.js";
+import { FormError } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
 
 // Actions & Effects
