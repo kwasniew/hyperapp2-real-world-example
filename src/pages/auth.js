@@ -149,6 +149,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                 <input
                   class="form-control form-control-lg"
                   type="text"
+                  data-test="username"
                   placeholder="Username"
                   value=${username}
                   oninput=${[ChangeUsername, targetValue]}
@@ -159,6 +160,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                 <input
                   class="form-control form-control-lg"
                   type="email"
+                  data-test="email"
                   placeholder="Email"
                   value=${email}
                   oninput=${[ChangeEmail, targetValue]}
@@ -169,6 +171,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                 <input
                   class="form-control form-control-lg"
                   type="password"
+                  data-test="password"
                   placeholder="Password"
                   value=${password}
                   oninput=${[ChangePassword, targetValue]}

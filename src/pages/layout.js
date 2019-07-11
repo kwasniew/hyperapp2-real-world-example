@@ -17,7 +17,7 @@ const UserImage = ({ user }) => html`
 `;
 
 const UserLink = ({ user }) => html`
-  ${user.image ? UserImage({ user }) : ""} ${user.username}
+  ${user.image ? UserImage({ user }) : ""} <span data-test="profile">${user.username}</span>
 `;
 
 const UserView = ({ page, user }) => html`
