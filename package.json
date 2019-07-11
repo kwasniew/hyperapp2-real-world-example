@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "postinstall": "pika-web --dest src/web_modules",
+    "prebuild": "pika-web --dest src/web_modules",
     "build": "parcel build src/index.html --experimental-scope-hoisting",
     "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
     "test": "tape -r esm test/unit/*Test.js | faucet",
