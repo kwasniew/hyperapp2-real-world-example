@@ -1,16 +1,22 @@
 /// <reference types="Cypress" />
 
+const feed = feedName => cy.contains("[data-test=feed]", feedName);
 const assertFeedActive = feedName =>
-  cy.contains("[data-test=feed]", feedName).should("have.class", "active");
+  feed(feedName).should("have.class", "active");
 const assertFeedInactive = feedName =>
-  cy.contains("[data-test=feed]", feedName).should("not.have.class", "active");
+  feed(feedName).should("not.have.class", "active");
 const assertFeeds = (...feeds) => {
   cy.get("[data-test=feed]").should("have.length", feeds.length);
   feeds.map(feed => {
-    Array.isArray(feed) ? assertFeedActive(feed[0]): assertFeedInactive(feed);
+    Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
   });
 };
-
+const firstTagText = alias =>
+  cy
+    .get("[data-test=tag]")
+    .first()
+    .as(alias)
+    .invoke("text");
 
 describe("articles", () => {
   context("anonymous", () => {
@@ -31,19 +37,18 @@ describe("articles", () => {
 
     it("show active Your Feed and inactive Global feed", () => {
       assertFeeds(["Your Feed"], "Global Feed");
-      cy.contains("[data-test=feed]", "Global Feed").click();
+      feed("Global Feed").click();
       assertFeeds("Your Feed", ["Global Feed"]);
     });
 
     it("toggle tag feed when active", () => {
-      cy.get("[data-test=tag]")
-        .first()
-        .as("firstTag")
-        .invoke("text")
-        .then(text => {
-          cy.get("@firstTag").click();
-          assertFeeds("Your Feed", "Global Feed", [text]);
-        });
+      firstTagText("firstTag").then(text => {
+        cy.get("@firstTag").click();
+        assertFeeds("Your Feed", "Global Feed", [text]);
+
+        feed("Global Feed").click();
+        assertFeeds("Your Feed", ["Global Feed"]);
+      });
     });
   });
 });
