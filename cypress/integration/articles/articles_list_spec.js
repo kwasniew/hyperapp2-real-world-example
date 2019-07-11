@@ -1,5 +1,17 @@
 /// <reference types="Cypress" />
 
+const assertFeedActive = feedName =>
+  cy.contains("[data-test=feed]", feedName).should("have.class", "active");
+const assertFeedInactive = feedName =>
+  cy.contains("[data-test=feed]", feedName).should("not.have.class", "active");
+const assertFeeds = (...feeds) => {
+  cy.get("[data-test=feed]").should("have.length", feeds.length);
+  feeds.map(feed => {
+    Array.isArray(feed) ? assertFeedActive(feed[0]): assertFeedInactive(feed);
+  });
+};
+
+
 describe("articles", () => {
   context("anonymous", () => {
     beforeEach(() => {
@@ -7,11 +19,7 @@ describe("articles", () => {
     });
 
     it("show active global feed only", () => {
-      cy.contains("[data-test=feed]", "Global Feed").should(
-        "have.class",
-        "active"
-      );
-      cy.get("[data-test=feed]").should("have.length", 1);
+      assertFeeds(["Global Feed"]);
     });
   });
 
@@ -22,26 +30,9 @@ describe("articles", () => {
     });
 
     it("show active Your Feed and inactive Global feed", () => {
-      cy.contains("[data-test=feed]", "Your Feed").should(
-        "have.class",
-        "active"
-      );
-      cy.contains("[data-test=feed]", "Global Feed").should(
-        "not.have.class",
-        "active"
-      );
-      cy.get("[data-test=feed]").should("have.length", 2);
-
+      assertFeeds(["Your Feed"], "Global Feed");
       cy.contains("[data-test=feed]", "Global Feed").click();
-      cy.contains("[data-test=feed]", "Your Feed").should(
-        "not.have.class",
-        "active"
-      );
-      cy.contains("[data-test=feed]", "Global Feed").should(
-        "have.class",
-        "active"
-      );
-      cy.get("[data-test=feed]").should("have.length", 2);
+      assertFeeds("Your Feed", ["Global Feed"]);
     });
 
     it("toggle tag feed when active", () => {
@@ -51,16 +42,7 @@ describe("articles", () => {
         .invoke("text")
         .then(text => {
           cy.get("@firstTag").click();
-          cy.get("[data-test=feed]").should("have.length", 3);
-          cy.contains("[data-test=feed]", "Global Feed").should(
-            "not.have.class",
-            "active"
-          );
-          cy.contains("[data-test=feed]", "Your Feed").should(
-            "not.have.class",
-            "active"
-          );
-          cy.contains("[data-test=feed]", text).should("have.class", "active");
+          assertFeeds("Your Feed", "Global Feed", [text]);
         });
     });
   });
