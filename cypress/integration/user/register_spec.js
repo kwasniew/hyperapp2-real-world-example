@@ -5,6 +5,21 @@ describe("register", () => {
     cy.visit("#!/register");
   });
 
+  it("greets with Sign Up and links to login", () => {
+    cy.contains("h1", "Sign Up");
+    cy.contains("Have an account?").should("have.attr", "href", "/login");
+  });
+
+  it("requires username, email, password", () => {
+    cy.get("form")
+      .contains("Sign up")
+      .click();
+    cy.get(".error-messages").should("contain", "email can't be blank");
+    cy.get(".error-messages").should("contain", "password can't be blank");
+    cy.get(".error-messages").should("contain", "username can't be blank and is too short (minimum is 1 character)");
+  });
+
+
   it("registers new user", () => {
     const username = "visitor";
     const email = "visitor@email.com";
@@ -25,6 +40,6 @@ describe("register", () => {
     cy.get("form").submit();
 
     cy.hash().should("be.empty");
-    cy.contains('[data-cy=profile]', username).should('be.visible');
+    cy.contains('[data-test=profile]', username).should('be.visible');
   });
 });
