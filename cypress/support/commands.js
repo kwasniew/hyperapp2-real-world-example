@@ -21,6 +21,7 @@ Cypress.Commands.add("hasError", message =>
 );
 
 Cypress.Commands.add("typeIntoField", (name, text) =>
+
   cy.field(name).type(text)
 );
 
