@@ -101,6 +101,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
               <fieldset class="form-group">
                 <input
                   class="form-control form-control-lg"
+                  data-test="email"
                   type="email"
                   placeholder="Email"
                   value=${email}
@@ -112,6 +113,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
                 <input
                   class="form-control form-control-lg"
                   type="password"
+                  data-test="password"
                   placeholder="Password"
                   value=${password}
                   oninput=${[ChangePassword, targetValue]}
