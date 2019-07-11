@@ -50,5 +50,12 @@ describe("articles", () => {
         assertFeeds("Your Feed", ["Global Feed"]);
       });
     });
+
+    it("paginate articles", () => {
+      feed("Global Feed").click();
+      cy.contains(".active", "1");
+      cy.contains(".page-link", "2").click();
+      cy.get(".active .page-link").should("have.text", "2");
+    });
   });
 });
