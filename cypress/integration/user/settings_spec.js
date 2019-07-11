@@ -4,6 +4,7 @@ const assertSessionCleared = () => cy.window()
   .should("be.null");
 
 const updateSettings = () => cy.contains("Update Settings").click();
+const goToSettings = () => cy.contains(".nav-item", "Settings").click();
 
 describe("settings", () => {
   beforeEach(() => {
@@ -17,11 +18,11 @@ describe("settings", () => {
 
   it("allows to update settings", () => {
     const newBio = "bio updated at " + new Date();
-    cy.get("[data-test=bio]").clear().type(newBio);
+    cy.typeIntoClearField("bio", newBio);
     updateSettings();
-    cy.hash().should("be.empty");
-    cy.contains(".nav-item", "Settings").click();
-    cy.get("[data-test=bio]").should("have.value", newBio);
+    cy.assertAtHomePage();
+    goToSettings();
+    cy.field("bio").should("have.value", newBio);
   });
 
   it("prevents profile update with invalid password", () => {
@@ -32,7 +33,7 @@ describe("settings", () => {
 
   it("logs out", () => {
     cy.contains("logout").click();
-    cy.hash().should("be.empty");
+    cy.assertAtHomePage();
     assertSessionCleared();
   });
 });

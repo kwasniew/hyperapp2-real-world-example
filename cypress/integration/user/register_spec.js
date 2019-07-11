@@ -1,5 +1,22 @@
 /// <reference types="Cypress" />
 
+const submit = () =>
+  cy
+    .get("form")
+    .contains("Sign up")
+    .click();
+const loggedInAs = username => cy.contains("[data-test=profile]", username);
+const setupRegisterSuccessFor = username => {
+  cy.server();
+  const apiUrl = Cypress.env("apiUrl");
+  cy.route({
+    method: "POST",
+    url: `${apiUrl}/users`,
+    status: 201,
+    response: { user: { token: "validToken", username } }
+  });
+};
+
 describe("register", () => {
   beforeEach(() => {
     cy.visit("#!/register");
@@ -11,35 +28,27 @@ describe("register", () => {
   });
 
   it("requires username, email, password", () => {
-    cy.get("form")
-      .contains("Sign up")
-      .click();
+    submit();
     cy.hasError("email can't be blank");
     cy.hasError("password can't be blank");
-    cy.hasError("username can't be blank and is too short (minimum is 1 character)");
+    cy.hasError(
+      "username can't be blank and is too short (minimum is 1 character)"
+    );
   });
-
 
   it("registers new user", () => {
     const username = "visitor";
     const email = "visitor@email.com";
     const password = "visiting";
 
-    cy.server();
-    const apiUrl = Cypress.env("apiUrl");
-    cy.route({
-      method: "POST",
-      url: `${apiUrl}/users`,
-      status: 201,
-      response: {"user": {"token": "validToken", username}}
-    });
+    setupRegisterSuccessFor(username);
 
-    cy.get("[data-test=username]").type(username);
-    cy.get("[data-test=email]").type(email);
-    cy.get("[data-test=password]").type(password);
-    cy.get("form").submit();
+    cy.typeIntoField("username", username);
+    cy.typeIntoField("email", email);
+    cy.typeIntoField("password", password);
+    submit();
 
-    cy.hash().should("be.empty");
-    cy.contains('[data-test=profile]', username).should('be.visible');
+    cy.assertAtHomePage();
+    loggedInAs(username).should("be.visible");
   });
 });
