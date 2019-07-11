@@ -109,6 +109,7 @@ const FeedTab = ({ active, type, name }, children) =>
     <li class="nav-item">
       <a
         href=""
+        data-test="feed"
         class=${cc({ "nav-link": true, active })}
         onclick=${[ChangeTab, { activeFeedName: name, activeFeedType: type }]}
       >
@@ -123,6 +124,7 @@ const Tags = ({ tags }) => html`
       return html`
         <a
           href=""
+          data-test="tag"
           class="tag-pill tag-default"
           onclick=${[ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}
         >
