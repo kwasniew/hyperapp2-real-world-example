@@ -17,18 +17,18 @@ describe("login", () => {
     cy.get("form")
       .contains("Sign in")
       .click();
-    cy.get(".error-messages").should("contain", "email or password is invalid");
+    cy.hasError("email or password is invalid");
   });
 
   it("requires password", () => {
     cy.get("[data-test=email]").type("hyperapp@gmail.com{enter}");
-    cy.get(".error-messages").should("contain", "email or password is invalid");
+    cy.hasError("email or password is invalid")
   });
 
   it("requires valid username and password", () => {
     cy.get("[data-test=email]").type("hyperapp@gmail.com");
     cy.get("[data-test=password]").type("invalid{enter}");
-    cy.get(".error-messages").should("contain", "email or password is invalid");
+    cy.hasError("email or password is invalid");
   });
 
   it("navigates to home on successful login", () => {

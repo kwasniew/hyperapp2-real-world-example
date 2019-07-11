@@ -15,6 +15,10 @@ Cypress.Commands.add("login", (user = Cypress.env("user")) => {
     });
 });
 
+Cypress.Commands.add("hasError", message => {
+  cy.get(".error-messages").should("contain", message);
+});
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite

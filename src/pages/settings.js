@@ -62,6 +62,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
         <input
           class="form-control"
           type="text"
+          data-test="image"
           placeholder="URL of profile picture"
           value=${image}
           oninput=${ChangeFieldFromTarget("image")}
@@ -72,6 +73,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
         <input
           class="form-control form-control-lg"
           type="text"
+          data-test="username"
           placeholder="Username"
           value=${username}
           oninput=${ChangeFieldFromTarget("username")}
@@ -82,6 +84,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
         <textarea
           class="form-control form-control-lg"
           rows="8"
+          data-test="bio"
           placeholder="Short bio about you"
           value=${bio}
           oninput=${ChangeFieldFromTarget("bio")}
@@ -92,6 +95,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
         <input
           class="form-control form-control-lg"
           type="email"
+          data-test="email"
           placeholder="Email"
           value=${email}
           oninput=${ChangeFieldFromTarget("email")}
@@ -102,6 +106,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
         <input
           class="form-control form-control-lg"
           type="password"
+          data-test="password"
           placeholder="New Password"
           value=${password}
           oninput=${ChangeFieldFromTarget("password")}

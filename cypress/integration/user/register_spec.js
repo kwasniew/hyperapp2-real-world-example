@@ -14,9 +14,9 @@ describe("register", () => {
     cy.get("form")
       .contains("Sign up")
       .click();
-    cy.get(".error-messages").should("contain", "email can't be blank");
-    cy.get(".error-messages").should("contain", "password can't be blank");
-    cy.get(".error-messages").should("contain", "username can't be blank and is too short (minimum is 1 character)");
+    cy.hasError("email can't be blank");
+    cy.hasError("password can't be blank");
+    cy.hasError("username can't be blank and is too short (minimum is 1 character)");
   });
 
 

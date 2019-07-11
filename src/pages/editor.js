@@ -81,6 +81,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 <input
                   class="form-control form-control-lg"
                   type="text"
+                  data-test="title"
                   placeholder="Article Title"
                   value=${title}
                   oninput=${ChangeFieldFromTarget("title")}
@@ -91,6 +92,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 <input
                   class="form-control"
                   type="text"
+                  data-test="description"
                   placeholder="What's this article about?"
                   value=${description}
                   oninput=${ChangeFieldFromTarget("description")}
@@ -101,6 +103,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 <textarea
                   class="form-control"
                   rows="8"
+                  data-test="body"
                   placeholder="Write your article (in markdown)"
                   value=${body}
                   oninput=${ChangeFieldFromTarget("body")}
@@ -111,6 +114,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 <input
                   class="form-control"
                   type="text"
+                  data-test="tags"
                   placeholder="Enter tags"
                   value=${currentTag}
                   onkeyup=${OnEnter(AddTag)}

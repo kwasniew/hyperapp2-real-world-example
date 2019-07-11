@@ -3,8 +3,8 @@
   "env": {
     "apiUrl": "https://conduit.productionready.io/api",
     "user": {
-      "email": "hyperapp@gmail.com",
-      "password": "hyperapp"
+      "email": "testingwithcypress@gmail.com",
+      "password": "testingwithcypress"
     }
   }
 }
