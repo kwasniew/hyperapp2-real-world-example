@@ -11,12 +11,14 @@ const assertFeeds = (...feeds) => {
     Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
   });
 };
-const firstTagText = alias =>
+const tag = (index, alias) =>
   cy
     .get("[data-test=tag]")
-    .first()
+    .eq(index)
     .as(alias)
     .invoke("text");
+const activePage = () => cy.get(".active .page-link");
+const page = label => cy.contains(".page-link", label);
 
 describe("articles", () => {
   context("anonymous", () => {
@@ -42,8 +44,8 @@ describe("articles", () => {
     });
 
     it("toggle tag feed when active", () => {
-      firstTagText("firstTag").then(text => {
-        cy.get("@firstTag").click();
+      tag(0, "selectedTag").then(text => {
+        cy.get("@selectedTag").click();
         assertFeeds("Your Feed", "Global Feed", [text]);
 
         feed("Global Feed").click();
@@ -53,9 +55,9 @@ describe("articles", () => {
 
     it("paginate articles", () => {
       feed("Global Feed").click();
-      cy.contains(".active", "1");
-      cy.contains(".page-link", "2").click();
-      cy.get(".active .page-link").should("have.text", "2");
+      activePage().should("have.text", "1");
+      page("2").click();
+      activePage().should("have.text", "2");
     });
   });
 });
