@@ -25,5 +25,6 @@ describe("register", () => {
     cy.get("form").submit();
 
     cy.hash().should("be.empty");
+    cy.contains('[data-cy=profile]', username).should('be.visible');
   });
 });
