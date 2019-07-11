@@ -14,8 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-import './fetchPolyfill'
+import "./commands";
+import "./fetchPolyfill";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
