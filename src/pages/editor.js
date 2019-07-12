@@ -20,9 +20,9 @@ const RemoveTag = tag => state => ({
   tagList: state.tagList.filter(t => t !== tag)
 });
 
-const SaveArticle = ({ article, token, method }) =>
+const SaveArticle = ({ article, token, method, url }) =>
   Http({
-    url: API_ROOT + "/articles",
+    url,
     options: {
       method,
       headers: {
@@ -48,6 +48,7 @@ const SubmitArticle = state => [
         tagList: state.tagList
       },
       token: state.user.token,
+      url: API_ROOT + "/articles" + (state.page === NEW_EDITOR ? "" : `/${state.slug}`),
       method: state.page === NEW_EDITOR ? "POST": "PUT"
     })
   ]

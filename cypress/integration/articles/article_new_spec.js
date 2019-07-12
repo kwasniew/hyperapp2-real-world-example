@@ -33,4 +33,6 @@ describe("new article", () => {
     publishArticle();
     cy.assertAtHomePage();
   });
+
+  it("update article", () => {});
 });
