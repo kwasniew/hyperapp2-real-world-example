@@ -6,10 +6,10 @@
       "body": "This is article body",
       "createdAt": "2019-07-12T07:06:23.280Z",
       "updatedAt": "2019-07-14T07:06:23.280Z",
-      "tagList": ["tag1"],
+      "tagList": ["tag1", "tag2"],
       "description": "Unfavorited Article Description",
       "author": {
-        "username": "testuser",
+        "username": "testuser1",
         "bio": null,
         "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
         "following": false
@@ -23,10 +23,10 @@
       "body": "This is article body",
       "createdAt": "2019-07-13T07:06:23.280Z",
       "updatedAt": "2019-07-13T07:06:23.280Z",
-      "tagList": ["tag2", "tag3"],
+      "tagList": ["tag3"],
       "description": "Favorited Article Description",
       "author": {
-        "username": "testuser",
+        "username": "testuser2",
         "bio": null,
         "image": "https://dummyimage.com/100x100/f01818/ffffff&text=+boom",
         "following": false
