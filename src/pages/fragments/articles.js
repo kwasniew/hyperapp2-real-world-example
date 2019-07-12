@@ -72,7 +72,7 @@ const FavoriteButton = ({ article }) => {
 };
 
 const ArticlePreview = ({ article }) => html`
-  <div class="article-preview">
+  <div data-test="article" class="article-preview">
     <div class="article-meta">
       <a href=${profile(article.author.username)}>
         <img src=${article.author.image} />

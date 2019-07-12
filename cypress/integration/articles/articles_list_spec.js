@@ -19,9 +19,9 @@ const tag = (index, alias) =>
     .invoke("text");
 const activePage = () => cy.get(".active .page-link");
 const page = label => cy.contains(".page-link", label);
+const apiUrl = Cypress.env("apiUrl");
 const setupGlobalFeed = () => {
   cy.server();
-  const apiUrl = Cypress.env("apiUrl");
   cy.route({
     method: "GET",
     url: `${apiUrl}/articles?limit=10&offset=0`,
@@ -29,72 +29,26 @@ const setupGlobalFeed = () => {
     response: "fixture:articles/global.json"
   });
 };
-// const article = index => cy.get(".article-preview").eq(index);
-
-// const favoriteButton = parent => {
-//   const object = parent.find("[data-test='favorite-count']");
-//   const selectors = {
-//     isUnfavorited() {
-//       return object.should("have.class", "unfavorited");
-//     },
-//     isFavorited() {
-//       return object.should("have.class", "favorited");
-//     }
-//   };
-//   return Object.assign(object, selectors);
-// };
-//
-// const meta = parent => {
-//   const object = parent.find(".article-meta");
-//   const selectors = {
-//     avatar() {
-//       return object.find("img");
-//     },
-//     author() {
-//       return object.find(".author");
-//     },
-//     date() {
-//       return object.find(".date");
-//     }
-//   };
-//   return Object.assign(object, selectors);
-// };
-//
-// const article = index => {
-//   const object = cy.get(".article-preview").eq(index);
-//   const selectors = {
-//     meta() {
-//       return meta(object);
-//     },
-//     title() {},
-//     description() {},
-//     favoriteButton() {
-//       return favoriteButton(object);
-//     }
-//   };
-//
-//   return Object.assign(object, selectors);
-// };
-//
-// const articleList = index => {
-//   return {
-//     selector: `.article-preview:eq(${index})`,
-//     meta: {
-//       selector: ".article-meta",
-//       avatar: { selector: "img" },
-//       author: { selector: ".author" },
-//       date: { selector: ".date" }
-//     },
-//     favoriteButton: {
-//       selector: "[data-test='favorite-count']"
-//     }
-//   };
-// };
+const setupFavorite = () => {
+  cy.server();
+  cy.route({
+    method: "POST",
+    url: `${apiUrl}/articles/unfavorited-article-title/favorite`,
+    status: 200,
+    response: "fixture:articles/favorited.json"
+  });
+  cy.route({
+    method: "DELETE",
+    url: `${apiUrl}/articles/favorited-article-title/favorite`,
+    status: 200,
+    response: "fixture:articles/unfavorited.json"
+  });
+};
 
 const articleFromList = index => {
   const indexed = name => `${name}-${index}`;
   const indexedArticle = indexed("article");
-  const article = cy.get(`.article-preview:eq(${index})`).as(indexedArticle);
+  const article = cy.get("[data-test=article]").eq(index).as(indexedArticle);
   return Object.assign(article, {
     title() {
       return cy.get("@" + indexedArticle).find("h1");
@@ -115,16 +69,16 @@ const articleFromList = index => {
       const meta = cy
         .get("@" + indexedArticle)
         .find(".article-meta")
-        .as(indexedArticle + "meta");
+        .as(indexedArticle + "-meta");
       return Object.assign(meta, {
         avatar() {
-          return cy.get("@" + indexedArticle + "meta").find("img");
+          return cy.get("@" + indexedArticle + "-meta").find("img");
         },
         author() {
-          return cy.get("@" + indexedArticle + "meta").find(".author");
+          return cy.get("@" + indexedArticle + "-meta").find(".author");
         },
         date() {
-          return cy.get("@" + indexedArticle + "meta").find(".date");
+          return cy.get("@" + indexedArticle + "-meta").find(".date");
         }
       });
     },
@@ -132,16 +86,16 @@ const articleFromList = index => {
       const button = cy
         .get("@" + indexedArticle)
         .find("[data-test='favorite-count']")
-        .as(indexedArticle + "favoriteButton");
+        .as(indexedArticle + "-favoriteButton");
       return Object.assign(article, button, {
         isUnfavorited() {
           return cy
-            .get("@" + indexedArticle + "favoriteButton")
+            .get("@" + indexedArticle + "-favoriteButton")
             .should("have.class", "unfavorited");
         },
         isFavorited() {
           return cy
-            .get("@" + indexedArticle + "favoriteButton")
+            .get("@" + indexedArticle + "-favoriteButton")
             .should("have.class", "favorited");
         }
       });
@@ -167,16 +121,33 @@ describe("articles", () => {
       cy.visit("/");
     });
 
-    it.only("provide articles preview", () => {
+    it("favorite/unfavorite article", () => {
+      setupFavorite();
+
+      const firstButton = articleFromList(0).favoriteButton();
+      firstButton
+        .should("contain", 0)
+        .isUnfavorited();
+      firstButton.click();
+      firstButton
+        .should("contain", 1)
+        .isFavorited();
+
+      const secondButton = articleFromList(1).favoriteButton();
+
+      secondButton
+        .should("contain", 200)
+        .isFavorited();
+      secondButton.click();
+      secondButton.should("contain", 199).isUnfavorited();
+    });
+
+    it("provide articles preview", () => {
       cy.get(".article-preview").should("have.length", 2);
 
       const firstArticle = articleFromList(0);
       const firstArticleMeta = firstArticle.meta();
 
-      firstArticle
-        .favoriteButton()
-        .should("contain", 0)
-        .isUnfavorited();
       firstArticle.title().should("contain", "Unfavorited Article Title");
       firstArticle
         .description()
@@ -190,10 +161,6 @@ describe("articles", () => {
       const secondArticle = articleFromList(1);
       const secondArticleMeta = secondArticle.meta();
 
-      secondArticle
-        .favoriteButton()
-        .should("contain", 200)
-        .isFavorited();
       secondArticle.title().should("contain", "Favorited Article Title");
       secondArticle
         .description()
