@@ -42,36 +42,28 @@ const setupOtherAuthorArticle = () => {
     response: {}
   }).as("deleteComment");
 };
+const checkArticle = () => {
+  cy.elementContains("title", "Article Title");
+  cy.element("avatar").should("be.visible");
+  cy.elementContains("date", "Fri Jul 12 2019");
+  cy.element("markdown").contains("h1", "markdown test");
+  cy.element("tag")
+    .should("contain", "javascript")
+    .and("contain", "testing");
+};
 
 describe("article details", () => {
-  context("anonymous", () => {
-    beforeEach(() => {
-      cy.visit("/#!/article/article-with-details");
-    });
-
-    it("show article", () => {});
-  });
   context("logged-in", () => {
     beforeEach(() => {
       cy.fastLogin();
     });
 
-    const checkArticle = () => {
-      cy.elementContains("title", "Article Title");
-      cy.element("avatar").should("be.visible");
-      cy.elementContains("date", "Fri Jul 12 2019");
-      cy.element("markdown").contains("h1", "markdown test");
-      cy.element("tag")
-        .should("contain", "javascript")
-        .and("contain", "testing");
-      cy.element("commentInput");
-    };
-
     it("show own article", () => {
       setupOwnArticle();
       cy.visit("/#!/article/own-article");
-      checkArticle();
 
+      checkArticle();
+      cy.element("authPrompt").should("not.exist");
       cy.element("edit").should("exist");
       cy.element("delete").should("exist");
     });
@@ -80,7 +72,7 @@ describe("article details", () => {
       setupOtherAuthorArticle();
       cy.visit("/#!/article/other-user-article");
       checkArticle();
-
+      cy.element("authPrompt").should("not.exist");
       cy.element("edit").should("not.exist");
       cy.element("delete").should("not.exist");
     });
@@ -107,6 +99,18 @@ describe("article details", () => {
         });
       cy.wait("@deleteComment");
       cy.element("comment").should("have.length", 1);
+    });
+  });
+
+  context("anonymous", () => {
+    it("show article", () => {
+      setupOwnArticle();
+      cy.visit("/#!/article/own-article");
+
+      checkArticle();
+      cy.element("authPrompt").should("exist");
+      cy.element("edit").should("not.exist");
+      cy.element("delete").should("not.exist");
     });
   });
 });

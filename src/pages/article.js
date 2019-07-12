@@ -219,7 +219,7 @@ const CommentContainer = ({ state }) => html`
           </div>
         `
       : html`
-          <p>
+          <p data-test="authPrompt">
             <a href=${LOGIN}>Sign in </a>
             or
             <a href=${REGISTER}> sign up </a>
