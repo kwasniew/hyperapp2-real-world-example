@@ -15,6 +15,15 @@ Cypress.Commands.add("login", (user = Cypress.env("user")) =>
       // the web application will have the user logged in
     })
 );
+Cypress.Commands.add("fastLogin", (user = Cypress.env("user")) =>
+  cy
+    .wrap(user)
+    .then(user => {
+      localStorage.setItem("session", JSON.stringify(user));
+      // with this user set, when we visit the page
+      // the web application will have the user logged in
+    })
+)
 
 Cypress.Commands.add("hasError", message =>
   cy.get(".error-messages").should("contain", message)

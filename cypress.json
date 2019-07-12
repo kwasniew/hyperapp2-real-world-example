@@ -4,7 +4,9 @@
     "apiUrl": "https://conduit.productionready.io/api",
     "user": {
       "email": "testingwithcypress@gmail.com",
-      "password": "testingwithcypress"
+      "password": "testingwithcypress",
+      "username": "Test Cypress User",
+      "token": "fakeToken"
     }
   }
 }

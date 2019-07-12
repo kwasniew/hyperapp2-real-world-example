@@ -105,11 +105,11 @@ const ArticleActions = ({ state }) => {
   return canModify
     ? html`
         <span>
-          <a href=${editor(state.slug)} class="btn btn-outline-secondary btn-sm">
+          <a data-test="edit" href=${editor(state.slug)} class="btn btn-outline-secondary btn-sm">
             <i class="ion-edit" /> Edit Article
           </a>
 
-          <button class="btn btn-outline-danger btn-sm" onclick=${SubmitDeleteArticle}>
+          <button data-test="delete" class="btn btn-outline-danger btn-sm" onclick=${SubmitDeleteArticle}>
             <i class="ion-trash-a" /> Delete Article
           </button>
         </span>
@@ -122,14 +122,14 @@ const ArticleActions = ({ state }) => {
 const ArticleMeta = ({ state }) => html`
   <div class="article-meta">
     <a href=${profile(state.author.username)}>
-      <img src=${state.author.image} />
+      <img data-test="avatar" src=${state.author.image} />
     </a>
 
     <div class="info">
-      <a href=${profile(state.author.username)} class="author">
+      <a data-test="author" href=${profile(state.author.username)} class="author">
         ${state.author.username}
       </a>
-      <span class="date">${format(state.createdAt)}</span>
+      <span data-test="date" class="date">${format(state.createdAt)}</span>
     </div>
 
     ${ArticleActions({ state })}
@@ -140,7 +140,7 @@ const ArticleBanner = ({ state }) =>
   html`
     <div class="banner">
       <div class="container">
-        <h1>${state.title}</h1>
+        <h1 data-test="title">${state.title}</h1>
         ${ArticleMeta({ state })}
       </div>
     </div>
@@ -152,6 +152,7 @@ const CommentInput = ({ state }) => html`
       <textarea
         class="form-control"
         placeholder="Write a comment..."
+        data-test="commentText"
         value=${state.commentText}
         oninput=${ChangeFieldFromTarget("commentText")}
         rows="3"
@@ -175,7 +176,7 @@ const DeleteButton = ({ comment, slug, user }) => {
   return canModify
     ? html`
         <span class="mod-options">
-          <i class="ion-trash-a" onclick=${SubmitDeleteComment(comment.id)} />
+          <i data-test="deleteComment" class="ion-trash-a" onclick=${SubmitDeleteComment(comment.id)} />
         </span>
       `
     : "";
@@ -242,12 +243,12 @@ export const ArticlePage = state =>
           <div class="container page">
             <div class="row article-content">
               <div class="col-xs-12">
-                <div innerHTML=${markdown(state.body)} />
+                <div data-test="markdown" innerHTML=${markdown(state.body)} />
 
                 <ul class="tag-list">
                   ${state.tagList.map(
                     tag => html`
-                      <li class="tag-default tag-pill tag-outline">
+                      <li data-test="tag" class="tag-default tag-pill tag-outline">
                         ${tag}
                       </li>
                     `
