@@ -75,24 +75,24 @@ const ArticlePreview = ({ article }) => html`
   <div data-test="article" class="article-preview">
     <div class="article-meta">
       <a href=${profile(article.author.username)}>
-        <img src=${article.author.image} />
+        <img data-test="avatar" src=${article.author.image} />
       </a>
       <div class="info">
         <a class="author" href=${profile(article.author.username)}>
           ${article.author.username}
         </a>
-        <span class="date">${format(article.createdAt)}</span>
+        <span data-test="date" class="date">${format(article.createdAt)}</span>
       </div>
       ${FavoriteButton({ article })}
     </div>
     <a href=${articleLink(article.slug)} class="preview-link">
-      <h1>${article.title}</h1>
-      <p>${article.description}</p>
+      <h1 data-test="title">${article.title}</h1>
+      <p data-test="description">${article.description}</p>
       <span>Read more...</span>
       <ul class="tag-list">
         ${article.tagList.map(tag => {
           return html`
-            <li class="tag-default tag-pill tag-outline">
+            <li data-test="tag" class="tag-default tag-pill tag-outline">
               ${tag}
             </li>
           `;

@@ -5,7 +5,7 @@ const submit = () =>
     .get("form")
     .contains("Sign up")
     .click();
-const loggedInAs = username => cy.contains("[data-test=profile]", username);
+const loggedInAs = username => cy.elementContains("profile", username);
 const setupRegisterSuccessFor = username => {
   cy.server();
   const apiUrl = Cypress.env("apiUrl");

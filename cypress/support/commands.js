@@ -22,16 +22,17 @@ Cypress.Commands.add("hasError", message =>
 
 Cypress.Commands.add("typeIntoField", (name, text) =>
 
-  cy.field(name).type(text)
+  cy.element(name).type(text)
 );
 
 Cypress.Commands.add("typeIntoClearField", (name, text) =>
-  cy.field(name).clear().type(text)
+  cy.element(name).clear().type(text)
 );
 
 Cypress.Commands.add("assertAtHomePage", () => cy.hash().should("be.empty"));
 
-Cypress.Commands.add("field", name => cy.get(`[data-test=${name}]`));
+Cypress.Commands.add("element", name => cy.get(`[data-test=${name}]`));
+Cypress.Commands.add("elementContains", (name, value) => cy.contains(`[data-test=${name}]`, value));
 
 // ***********************************************
 // This example commands.js shows you how to

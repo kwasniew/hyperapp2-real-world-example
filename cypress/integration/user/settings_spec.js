@@ -13,16 +13,16 @@ describe("settings", () => {
   });
 
   it("allows to update prefilled settings", () => {
-    cy.field("username").should("have.value", "Test Cypress User");
-    cy.field("email").should("have.value", "testingwithcypress@gmail.com");
-    cy.field("password").should("be.empty");
+    cy.element("username").should("have.value", "Test Cypress User");
+    cy.element("email").should("have.value", "testingwithcypress@gmail.com");
+    cy.element("password").should("be.empty");
 
     const newBio = "bio updated at " + new Date();
     cy.typeIntoClearField("bio", newBio);
     updateSettings();
     cy.assertAtHomePage();
     goToSettings();
-    cy.field("bio").should("have.value", newBio);
+    cy.element("bio").should("have.value", newBio);
   });
 
   it("prevents profile update with invalid password", () => {
