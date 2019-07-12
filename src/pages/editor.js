@@ -10,6 +10,7 @@ import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/Router.js";
+import { NEW_EDITOR } from "./links.js";
 
 // Actions & Effects
 const AddTag = state => [{ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] }, preventDefault];
@@ -19,11 +20,11 @@ const RemoveTag = tag => state => ({
   tagList: state.tagList.filter(t => t !== tag)
 });
 
-const SaveArticle = ({ article, token }) =>
+const SaveArticle = ({ article, token, method }) =>
   Http({
     url: API_ROOT + "/articles",
     options: {
-      method: "POST",
+      method,
       headers: {
         "Content-Type": "application/json",
         ...authHeader(token)
@@ -46,7 +47,8 @@ const SubmitArticle = state => [
         body: state.body,
         tagList: state.tagList
       },
-      token: state.user.token
+      token: state.user.token,
+      method: state.page === NEW_EDITOR ? "POST": "PUT"
     })
   ]
 ];
