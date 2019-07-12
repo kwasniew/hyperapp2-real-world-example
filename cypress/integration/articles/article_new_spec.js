@@ -13,7 +13,7 @@ describe("new article", () => {
   const deleteTag = name =>
     cy
       .contains(name)
-      .find("i")
+      .find("[data-test=remove-tag]")
       .click();
 
   it("create new article", () => {

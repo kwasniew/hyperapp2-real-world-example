@@ -126,7 +126,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                     tag =>
                       html`
                         <span class="tag-default tag-pill">
-                          <i class="ion-close-round" onclick=${RemoveTag(tag)} />
+                          <i class="ion-close-round" data-test="remove-tag" onclick=${RemoveTag(tag)} />
                           ${tag}
                         </span>
                       `

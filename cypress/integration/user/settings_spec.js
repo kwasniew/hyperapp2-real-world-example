@@ -12,11 +12,11 @@ describe("settings", () => {
     cy.visit("/#!/settings");
   });
 
-  it("greets with Your Settings", () => {
-    cy.contains("h1", "Your Settings");
-  });
+  it("allows to update prefilled settings", () => {
+    cy.field("username").should("have.value", "Test Cypress User");
+    cy.field("email").should("have.value", "testingwithcypress@gmail.com");
+    cy.field("password").should("be.empty");
 
-  it("allows to update settings", () => {
     const newBio = "bio updated at " + new Date();
     cy.typeIntoClearField("bio", newBio);
     updateSettings();
