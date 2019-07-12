@@ -21,7 +21,7 @@ const activePage = () => cy.get(".active .page-link");
 const page = label => cy.contains(".page-link", label);
 const apiUrl = Cypress.env("apiUrl");
 const setupGlobalFeed = () => {
-  cy.server();
+  cy.server({ force404: true });
   cy.route({
     method: "GET",
     url: `${apiUrl}/articles?limit=10&offset=0`,
@@ -30,25 +30,28 @@ const setupGlobalFeed = () => {
   });
 };
 const setupFavorite = () => {
-  cy.server();
+  cy.server({ force404: true });
   cy.route({
     method: "POST",
     url: `${apiUrl}/articles/unfavorited-article-title/favorite`,
     status: 200,
     response: "fixture:articles/favorited.json"
-  });
+  }).as("favorite");
   cy.route({
     method: "DELETE",
     url: `${apiUrl}/articles/favorited-article-title/favorite`,
     status: 200,
     response: "fixture:articles/unfavorited.json"
-  });
+  }).as("unfavorite");
 };
 
-const articleFromList = index => {
+const article = index => {
   const indexed = name => `${name}-${index}`;
   const indexedArticle = indexed("article");
-  const article = cy.get("[data-test=article]").eq(index).as(indexedArticle);
+  const article = cy
+    .get("[data-test=article]")
+    .eq(index)
+    .as(indexedArticle);
   return Object.assign(article, {
     title() {
       return cy.get("@" + indexedArticle).find("h1");
@@ -66,36 +69,38 @@ const articleFromList = index => {
         .then(tags => tags.map((i, tag) => tag.innerText).toArray());
     },
     meta() {
+      const indexedMeta = indexed("meta");
       const meta = cy
         .get("@" + indexedArticle)
         .find(".article-meta")
-        .as(indexedArticle + "-meta");
+        .as(indexedMeta);
       return Object.assign(meta, {
         avatar() {
-          return cy.get("@" + indexedArticle + "-meta").find("img");
+          return cy.get("@" + indexedMeta).find("img");
         },
         author() {
-          return cy.get("@" + indexedArticle + "-meta").find(".author");
+          return cy.get("@" + indexedMeta).find(".author");
         },
         date() {
-          return cy.get("@" + indexedArticle + "-meta").find(".date");
+          return cy.get("@" + indexedMeta).find(".date");
         }
       });
     },
     favoriteButton() {
+      const indexedFavoriteButton = indexed("favoriteButton");
       const button = cy
         .get("@" + indexedArticle)
         .find("[data-test='favorite-count']")
-        .as(indexedArticle + "-favoriteButton");
+        .as(indexedFavoriteButton);
       return Object.assign(article, button, {
         isUnfavorited() {
           return cy
-            .get("@" + indexedArticle + "-favoriteButton")
+            .get("@" + indexedFavoriteButton)
             .should("have.class", "unfavorited");
         },
         isFavorited() {
           return cy
-            .get("@" + indexedArticle + "-favoriteButton")
+            .get("@" + indexedFavoriteButton)
             .should("have.class", "favorited");
         }
       });
@@ -124,20 +129,17 @@ describe("articles", () => {
     it("favorite/unfavorite article", () => {
       setupFavorite();
 
-      const firstButton = articleFromList(0).favoriteButton();
-      firstButton
-        .should("contain", 0)
-        .isUnfavorited();
+      const firstButton = article(0).favoriteButton();
+      firstButton.should("contain", 0).isUnfavorited();
       firstButton.click();
-      firstButton
-        .should("contain", 1)
-        .isFavorited();
+      firstButton.should("contain", 1).isFavorited();
+      // cy.get("@favorite").should(xhr => {
+      //   expect(xhr.requestBody).to.be.null;
+      // });
 
-      const secondButton = articleFromList(1).favoriteButton();
+      const secondButton = article(1).favoriteButton();
 
-      secondButton
-        .should("contain", 200)
-        .isFavorited();
+      secondButton.should("contain", 200).isFavorited();
       secondButton.click();
       secondButton.should("contain", 199).isUnfavorited();
     });
@@ -145,7 +147,7 @@ describe("articles", () => {
     it("provide articles preview", () => {
       cy.get(".article-preview").should("have.length", 2);
 
-      const firstArticle = articleFromList(0);
+      const firstArticle = article(0);
       const firstArticleMeta = firstArticle.meta();
 
       firstArticle.title().should("contain", "Unfavorited Article Title");
@@ -158,7 +160,7 @@ describe("articles", () => {
       firstArticleMeta.author().should("contain", "testuser1");
       firstArticleMeta.date().should("contain", "Fri Jul 12 2019");
 
-      const secondArticle = articleFromList(1);
+      const secondArticle = article(1);
       const secondArticleMeta = secondArticle.meta();
 
       secondArticle.title().should("contain", "Favorited Article Title");
