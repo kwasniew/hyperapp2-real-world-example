@@ -152,7 +152,7 @@ const CommentInput = ({ state }) => html`
       <textarea
         class="form-control"
         placeholder="Write a comment..."
-        data-test="commentText"
+        data-test="commentInput"
         value=${state.commentText}
         oninput=${ChangeFieldFromTarget("commentText")}
         rows="3"
@@ -184,12 +184,12 @@ const DeleteButton = ({ comment, slug, user }) => {
 
 const Comment = ({ comment, slug, user }) =>
   html`
-    <div class="card">
+    <div class="card" data-test="comment">
       <div class="card-block">
-        <p class="card-text">${comment.body}</p>
+        <p data-test="commentText" class="card-text">${comment.body}</p>
       </div>
       <div class="card-footer">
-        <a href=${profile(comment.author.username)} class="comment-author">
+        <a data-test="commentAuthor" href=${profile(comment.author.username)} class="comment-author">
           <img src=${comment.author.image} class="comment-author-img" alt=${comment.author.username} />
         </a>
         ${" "}
