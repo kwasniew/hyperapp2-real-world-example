@@ -1,19 +1,39 @@
 const apiUrl = Cypress.env("apiUrl");
 const user = Cypress.env("user");
 
+const checkBasicInformation = () => {
+  cy.element("avatar").should("be.visible");
+  cy.elementContains("username", user.username);
+  cy.elementContains("bio", "bio updated at");
+  cy.assertFeeds(["My Articles"], "Favorited Articles");
+  cy.get(".article-preview").should("have.length", 5).each(el => cy.wrap(el).contains(user.username)).end();
+  cy.contains("Favorited Articles").click();
+  cy.assertFeeds("My Articles", ["Favorited Articles"]);
+};
+
 describe("author details", () => {
-  it("own profile", () => {
+  it("view own profile", () => {
     cy.login();
     cy.visit(`/#!/profile/${encodeURIComponent(user.username)}`);
-    cy.element("avatar").should("be.visible");
-    cy.elementContains("username", user.username);
-    cy.elementContains("bio", "bio updated at");
+    checkBasicInformation();
+
     cy.elementContains("editSettings", "Edit Profile Settings");
     cy.element("changeFollow").should("not.exist");
-    cy.assertFeeds(["My Articles"], "Favorited Articles");
-    cy.get(".article-preview").should("have.length", 5).each(el => cy.wrap(el).contains(user.username)).end();
-    cy.contains("Favorited Articles").click();
-    cy.assertFeeds("My Articles", ["Favorited Articles"]);
+  });
+
+  it("view other profile as loggedIn", () => {
+    cy.login();
+    cy.visit(`/#!/profile/${encodeURIComponent("Jack H")}`);
+
+    cy.element("editSettings").should("not.exist");
+    cy.element("changeFollow").should("exist");
+  });
+
+  it("view other profile as anonymous", () => {
+    cy.visit(`/#!/profile/${encodeURIComponent(user.username)}`);
+
+    cy.element("editSettings").should("not.exist")
+    cy.element("changeFollow").should("not.exist");
   });
 
 });
