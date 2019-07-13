@@ -63,3 +63,30 @@ const assertFeeds = (...feeds) => {
   });
 };
 Cypress.Commands.add("assertFeeds", assertFeeds);
+
+
+Cypress.Commands.add("record", () => {
+  cy.server({
+    onRequest: request => {
+      // console.log(request);
+    },
+    onResponse: response => {
+      console.log({
+        method: response.method,
+        url: response.url,
+        status: response.status,
+        response: response.responseBody
+      });
+
+      const url = new URL(response.url)
+      const pathname = decodeURIComponent(url.pathname+url.search);
+      const hyphened = pathname.replace(/\//g, "-");
+      const fileName = `${response.method}${hyphened}-${response.status}`;
+
+      console.log(fileName);
+
+      cy.now('writeFile', `cypress/fixtures/generated/${fileName}.json`, response.responseBody);
+    }
+  });
+  cy.route('**');
+});

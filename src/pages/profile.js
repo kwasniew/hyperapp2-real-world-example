@@ -23,14 +23,12 @@ const FAVORITED_FEED = "favorited";
 
 const FetchAuthorFeed = ({ page, username, token }) =>
   FetchArticles(
-    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
+    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=0`,
     token
   );
 const FetchFavoritedFeed = ({ page, username, token }) =>
   FetchArticles(
-    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=${page *
-      5}`,
+    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=0`,
     token
   );
 

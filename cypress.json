@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://hyperapp2.netlify.com/",
+  "baseUrl": "http://localhost:8080",
   "env": {
     "apiUrl": "https://conduit.productionready.io/api",
     "user": {

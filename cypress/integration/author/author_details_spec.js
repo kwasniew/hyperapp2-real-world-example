@@ -6,7 +6,10 @@ const checkBasicInformation = () => {
   cy.elementContains("username", user.username);
   cy.elementContains("bio", "bio updated at");
   cy.assertFeeds(["My Articles"], "Favorited Articles");
-  cy.get(".article-preview").should("have.length", 5).each(el => cy.wrap(el).contains(user.username)).end();
+  cy.get(".article-preview")
+    .should("have.length", 5)
+    .each(el => cy.wrap(el).contains(user.username))
+    .end();
   cy.contains("Favorited Articles").click();
   cy.assertFeeds("My Articles", ["Favorited Articles"]);
 };
@@ -32,8 +35,7 @@ describe("author details", () => {
   it("view other profile as anonymous", () => {
     cy.visit(`/#!/profile/${encodeURIComponent(user.username)}`);
 
-    cy.element("editSettings").should("not.exist")
+    cy.element("editSettings").should("not.exist");
     cy.element("changeFollow").should("not.exist");
   });
-
 });
