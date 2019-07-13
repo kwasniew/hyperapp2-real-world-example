@@ -16,7 +16,7 @@ describe("new article", () => {
       .find("[data-test=remove-tag]")
       .click();
 
-  it("create new article", () => {
+  it("create and update article", () => {
     cy.typeIntoField("title", "JS microlibs");
     cy.typeIntoField("description", "This is article about using microlibs");
     cy.typeIntoField(
@@ -32,7 +32,7 @@ describe("new article", () => {
     assertTags("javascript", "frameworks");
     publishArticle();
     cy.assertAtHomePage();
-  });
 
-  it("update article", () => {});
+    cy.visit("/#!/editor");
+  });
 });

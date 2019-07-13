@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 const feed = feedName => cy.elementContains("feed", feedName);
 const assertFeedActive = feedName =>
   feed(feedName).should("have.class", "active");
