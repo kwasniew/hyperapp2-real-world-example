@@ -40,3 +40,13 @@ Cypress.Commands.add("assertAtHomePage", () => cy.hash().should("be.empty"));
 Cypress.Commands.add("element", name => cy.get(`[data-test=${name}]`));
 Cypress.Commands.add("elementContains", (name, value) => cy.contains(`[data-test=${name}]`, value));
 
+// because typing long text is slow and causes weird issues with lost characters in SPA frameworks
+Cypress.Commands.add('fill', {
+  prevSubject: 'element'
+}, (subject, value) => {
+  cy.wrap(subject).invoke('val', value).trigger('input').trigger('change')
+});
+Cypress.Commands.add("fillInField", (name, text) => {
+  cy.element(name).fill(text);
+});
+
