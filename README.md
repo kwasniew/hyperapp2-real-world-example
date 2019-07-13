@@ -18,7 +18,7 @@ Examples (minified+gzipped):
 * [hyperapp-fx](https://bundlephobia.com/result?p=hyperapp-fx@2.0.0-beta.1) 1.6kB
 * [snarkdown](https://bundlephobia.com/result?p=snarkdown@1.2.2) 1.0kB
 * [classcat](https://bundlephobia.com/result?p=classcat@4.0.2) 0.3kB
-* [page](https://bundlephobia.com/result?p=page@1.11.4) 3.9kB
+* [page](https://bundlephobia.com/result?p=page@1.11.4) 3.9kB (this one has 1 dependency)
 
 ### Development without tooling
 
