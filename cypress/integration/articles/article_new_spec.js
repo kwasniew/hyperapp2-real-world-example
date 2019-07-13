@@ -22,6 +22,17 @@ describe("new article", () => {
       url: `${apiUrl}/articles/*`
     }).as("updateArticle");
   };
+  const waitForSlug = alias =>
+    cy
+      .wait("@createArticle")
+      .its("responseBody.article.slug")
+      .as(alias);
+
+  const waitForArticleUpdate = slug =>
+    cy
+      .wait("@updateArticle")
+      .its("responseBody.article.slug")
+      .should("equal", slug);
 
   it("create and update article", () => {
     listenToPublishArticle();
@@ -30,10 +41,7 @@ describe("new article", () => {
 
     cy.typeIntoField("title", "JS microlibs");
     cy.typeIntoField("description", "This is article about using microlibs");
-    cy.fillInField(
-      "body",
-      "# Title\n## Header\nAvoid bloated JS frameworks"
-    );
+    cy.fillInField("body", "# Title\n## Header\nAvoid bloated JS frameworks");
     cy.typeIntoField(
       "tags",
       "javascript{enter}mistake{enter}frameworks{enter}"
@@ -43,14 +51,11 @@ describe("new article", () => {
     assertTags("javascript", "frameworks");
     publishArticle();
 
-    cy.wait("@createArticle")
-      .its("responseBody.article.slug")
-      .as("createSlug");
+    waitForSlug("createSlug");
     cy.assertAtHomePage();
     cy.get("@createSlug").then(slug => {
       cy.visit(`/#!/editor/${slug}`);
-      cy.reload();
-      cy.contains("Publish Article");
+      cy.reload(); // page.js doesn't reload on hash change
 
       cy.element("title").should("have.value", "JS microlibs");
       cy.element("description").should(
@@ -65,9 +70,7 @@ describe("new article", () => {
       cy.typeIntoClearField("title", "Avoid bloated frameworks");
 
       publishArticle();
-      cy.wait("@updateArticle")
-        .its("responseBody.article.slug")
-        .should("equal", slug);
+      waitForArticleUpdate(slug);
       cy.assertAtHomePage();
     });
   });
