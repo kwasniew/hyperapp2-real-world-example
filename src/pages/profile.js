@@ -74,7 +74,7 @@ const Unfollow = ChangeFollow("DELETE");
 
 // Views
 const FollowUserButton = ({ username, following }) => html`
-  <button
+  <button data-test="changeFollow"
     onclick=${following ? Unfollow : Follow}
     class=${"btn btn-sm action-btn" +
       (following ? " btn-secondary" : " btn-outline-secondary")}
@@ -85,7 +85,7 @@ const FollowUserButton = ({ username, following }) => html`
 `;
 
 const EditProfileSettings = () => html`
-  <a href=${SETTINGS} class="btn btn-sm btn-outline-secondary action-btn">
+  <a data-test="editSettings" href=${SETTINGS} class="btn btn-sm btn-outline-secondary action-btn">
     <i class="ion-gear-a" /> Edit Profile Settings
   </a>
 `;
@@ -95,6 +95,7 @@ const Tabs = ({ username, activeFeedType }) =>
     <ul class="nav nav-pills outline-active">
       <li class="nav-item">
         <a
+          data-test="feed"
           class=${activeFeedType === AUTHOR_FEED
             ? "nav-link active"
             : "nav-link"}
@@ -106,6 +107,7 @@ const Tabs = ({ username, activeFeedType }) =>
 
       <li class="nav-item">
         <a
+          data-test="feed"
           class=${activeFeedType === FAVORITED_FEED
             ? "nav-link active"
             : "nav-link"}
@@ -136,14 +138,15 @@ export const ProfilePage = ({
               ${profile.image
                 ? html`
                     <img
+                      data-test="avatar"
                       class="user-img"
                       src=${profile.image}
                       alt=${profile.username}
                     />
                   `
                 : ""}
-              <h4>${profile.username}</h4>
-              <p>${profile.bio}</p>
+              <h4 data-test="username">${profile.username}</h4>
+              <p data-test="bio">${profile.bio}</p>
 
               ${isLoggedIn({ user })
                 ? isOwnProfile({ user, profile })

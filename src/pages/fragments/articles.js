@@ -78,7 +78,7 @@ const ArticlePreview = ({ article }) => html`
         <img data-test="avatar" src=${article.author.image} />
       </a>
       <div class="info">
-        <a class="author" href=${profile(article.author.username)}>
+        <a data-test="author" class="author" href=${profile(article.author.username)}>
           ${article.author.username}
         </a>
         <span data-test="date" class="date">${format(article.createdAt)}</span>

@@ -11,5 +11,6 @@ declare namespace Cypress {
     typeIntoClearField(name: string, text: string): Chainable<any>
     elementContains(title: string): Chainable<any>
     fillInField(name: string, text: string): Chainable<any>
+    assertFeeds(...names: string[]): Chainable<any>
   }
 }

@@ -1,14 +1,5 @@
 const feed = feedName => cy.elementContains("feed", feedName);
-const assertFeedActive = feedName =>
-  feed(feedName).should("have.class", "active");
-const assertFeedInactive = feedName =>
-  feed(feedName).should("not.have.class", "active");
-const assertFeeds = (...feeds) => {
-  cy.element("feed").should("have.length", feeds.length);
-  feeds.map(feed => {
-    Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
-  });
-};
+
 const tag = (index, alias) =>
   cy
     .element("tag")
@@ -52,7 +43,7 @@ describe("articles", () => {
     });
 
     it("show active global feed with 10 articles", () => {
-      assertFeeds(["Global Feed"]);
+      cy.assertFeeds(["Global Feed"]);
       cy.get(".article-preview").should("have.length", 10);
     });
   });
@@ -119,18 +110,18 @@ describe("articles", () => {
     });
 
     it("show active Your Feed and inactive Global feed", () => {
-      assertFeeds(["Your Feed"], "Global Feed");
+      cy.assertFeeds(["Your Feed"], "Global Feed");
       feed("Global Feed").click();
-      assertFeeds("Your Feed", ["Global Feed"]);
+      cy.assertFeeds("Your Feed", ["Global Feed"]);
     });
 
     it("toggle tag feed when active", () => {
       tag(0, "selectedTag").then(text => {
         cy.get("@selectedTag").click();
-        assertFeeds("Your Feed", "Global Feed", [text]);
+        cy.assertFeeds("Your Feed", "Global Feed", [text]);
 
         feed("Global Feed").click();
-        assertFeeds("Your Feed", ["Global Feed"]);
+        cy.assertFeeds("Your Feed", ["Global Feed"]);
       });
     });
 

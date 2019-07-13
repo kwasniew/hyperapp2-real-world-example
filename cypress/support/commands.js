@@ -50,3 +50,16 @@ Cypress.Commands.add("fillInField", (name, text) => {
   cy.element(name).fill(text);
 });
 
+
+const feed = feedName => cy.elementContains("feed", feedName);
+const assertFeedActive = feedName =>
+  feed(feedName).should("have.class", "active");
+const assertFeedInactive = feedName =>
+  feed(feedName).should("not.have.class", "active");
+const assertFeeds = (...feeds) => {
+  cy.element("feed").should("have.length", feeds.length);
+  feeds.map(feed => {
+    Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
+  });
+};
+Cypress.Commands.add("assertFeeds", assertFeeds);
