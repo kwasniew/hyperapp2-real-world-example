@@ -40,12 +40,17 @@ describe("Real World API", () => {
 
   after(() => provider.finalize());
 
-  it("get a list of tags", async () => {
+  const runFx = async fx => {
     const dispatch = (action, value) => {
       dispatch.invokedWith = [action, value];
     };
-    const [effect, props] = FetchTags;
+    const [effect, props] = fx;
     await effect(dispatch, props);
+    return dispatch;
+  };
+
+  it("get a list of tags", async () => {
+    const dispatch = await runFx(FetchTags);
     assert.deepStrictEqual(dispatch.invokedWith, [SetTags, EXPECTED_BODY]);
   });
 });
