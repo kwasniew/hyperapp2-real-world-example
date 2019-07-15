@@ -95,7 +95,10 @@ describe("Real World API Home Page", () => {
       withRequest: {
         method: "GET",
         path: "/api/articles/feed",
-        query: "limit=10&offset=0"
+        query: "limit=10&offset=0",
+        headers: {
+          Authorization: like("Token placeholder")
+        }
       },
       willRespondWith: {
         status: 200,
@@ -134,5 +137,26 @@ describe("Real World API Home Page", () => {
     assert.deepStrictEqual(action, SetArticles);
     assert.deepStrictEqual(articles.length, 1);
     assert.deepStrictEqual(articlesCount, 1);
+  });
+
+  it("user feed not allowed without token", async () => {
+    await provider.addInteraction({
+      state: "articles in followed users feed",
+      uponReceiving: "request for articles with invalid token",
+      withRequest: {
+        method: "GET",
+        path: "/api/articles/feed",
+        query: "limit=10&offset=0"
+      },
+      willRespondWith: {
+        status: 401
+      }
+    });
+
+    const dispatch = await runFx(
+      FetchUserFeed({ pageIndex: 0, token: "invalid" })
+    );
+    const [action, _] = dispatch.invokedWith;
+    assert.deepStrictEqual(action, LogError);
   });
 });
