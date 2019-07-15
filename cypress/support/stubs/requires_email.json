@@ -38,11 +38,11 @@
               "is": {
                 "statusCode": 200,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:14:57 GMT",
+                  "Date": "Mon, 15 Jul 2019 13:01:04 GMT",
                   "Content-Type": "text/plain",
                   "Transfer-Encoding": "chunked",
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d58a9adfc40bdcb0fb8ab1cfe70dc807b1563192896; expires=Tue, 14-Jul-20 12:14:56 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=d556aa56d80c23ea108d36c1dac47dd141563195664; expires=Tue, 14-Jul-20 13:01:04 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Access-Control-Allow-Credentials": "true",
                   "Access-Control-Allow-Headers": "content-type",
                   "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
@@ -53,7 +53,7 @@
                   "X-Powered-By": "Phusion Passenger 4.0.60",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba8b54e432ac5-WAW"
+                  "CF-RAY": "4f6bec487e1dcca7-WAW"
                 },
                 "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
                 "_mode": "binary"
@@ -94,11 +94,11 @@
               "is": {
                 "statusCode": 422,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:14:57 GMT",
+                  "Date": "Mon, 15 Jul 2019 13:01:05 GMT",
                   "Content-Type": "application/json; charset=utf-8",
-                  "Content-Length": 47,
+                  "Transfer-Encoding": "chunked",
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d6f86327d84cfea36f9185f82a47a6cd71563192897; expires=Tue, 14-Jul-20 12:14:57 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=d14f754c63414c99b3ea2ff4851ab69421563195664; expires=Tue, 14-Jul-20 13:01:04 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Access-Control-Allow-Credentials": "true",
                   "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
                   "Access-Control-Allow-Origin": "http://localhost:8080",
@@ -109,12 +109,12 @@
                   "X-Content-Type-Options": "nosniff",
                   "X-Frame-Options": "SAMEORIGIN",
                   "X-Powered-By": "Phusion Passenger 4.0.60",
-                  "X-Request-Id": "1ad34f18-33c8-4a22-99bc-defb4c3c697e",
-                  "X-Runtime": "0.006031",
+                  "X-Request-Id": "618b4dbb-a307-43f6-ac29-fb638b3250b8",
+                  "X-Runtime": "0.006223",
                   "X-XSS-Protection": "1; mode=block",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba8b6db6b2b0d-WAW"
+                  "CF-RAY": "4f6bec4a2983ccab-WAW"
                 },
                 "body": "{\"errors\":{\"email or password\":[\"is invalid\"]}}",
                 "_mode": "text"

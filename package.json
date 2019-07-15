@@ -6,9 +6,9 @@
     "start": "http-server src",
     "cy:open": "cypress open",
     "mb": "mb",
-    "test:record": "CYPRESS_MODE=record npm-run-all --parallel mb start cy:open",
-    "test:stub": "CYPRESS_MODE=stub npm-run-all --parallel mb start cy:open",
-    "test:prod": "npm-run-all --parallel mb start cy:open"
+    "test:record": "CYPRESS_mode=record CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
+    "test:stub": "CYPRESS_mode=stub CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
+    "test:prod": "CYPRESS_mode=prod CYPRESS_apiUrl=https://conduit.productionready.io/api npm-run-all --parallel start cy:open"
   },
   "dependencies": {
     "classcat": "4.0.2",

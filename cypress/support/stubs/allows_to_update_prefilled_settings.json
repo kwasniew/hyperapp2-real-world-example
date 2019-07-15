@@ -38,27 +38,27 @@
               "is": {
                 "statusCode": 200,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:15:13 GMT",
+                  "Date": "Mon, 15 Jul 2019 13:01:14 GMT",
                   "Content-Type": "application/json; charset=utf-8",
                   "Transfer-Encoding": "chunked",
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=db2ef36dd38016ebc179da8c0c643ecf61563192913; expires=Tue, 14-Jul-20 12:15:13 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=dbb278a13bf50cb08f36b888b00fd1e731563195674; expires=Tue, 14-Jul-20 13:01:14 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Cache-Control": "max-age=0, private, must-revalidate",
                   "Content-Encoding": "gzip",
-                  "ETag": "W/\"19a2dc04aac67078740225b84d763a3e\"",
+                  "ETag": "W/\"f14b9cfcc22cb6c907ba5731279a4bcd\"",
                   "Status": "200 OK",
                   "Vary": "Origin",
                   "X-Content-Type-Options": "nosniff",
                   "X-Frame-Options": "SAMEORIGIN",
                   "X-Powered-By": "Phusion Passenger 4.0.60",
-                  "X-Request-Id": "f16d39aa-1e53-48d5-8fc1-4b0822a51daa",
-                  "X-Runtime": "0.083988",
+                  "X-Request-Id": "116bfbb8-fada-422f-9d0f-041981ec57a6",
+                  "X-Runtime": "0.084925",
                   "X-XSS-Protection": "1; mode=block",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba91e2b20cc8b-WAW"
+                  "CF-RAY": "4f6bec829b9f6af9-WAW"
                 },
-                "body": "H4sIAAAAAAAAAwAAAP//ZM5db4IwFAbgv2J6jaTFocLVlDkBpUaDHXKzIDRY5GtQ/Kjxv6/E3e2myen75D3nAbqWNsB8AJYAcwz1kaEAWkQsBybgtOWsTK+Mn+J73dC2fU/7SI2rAiggbmjEaTLjkmoQGUM4GSLkozcTIlPX1OlECyXr6uQ/030kjW5qmgq1F5N3lFFBpfLl3oH12jjY9/cp4Mgqmch38Ncn/1gRpdKXXZ4rgFdnWkpC7y6kwYxtmLsiaMvWlns6LuN+dvbCQZi5hipRHVrOGGcz5Ilz65REhIHbHb5Q7mQVI0siEmv+QYP5PQywcD773OnLcmrL8myBcJYKLA6652ND3X0fbXv1Q/ht6m29y6hZX647d0EuNiRot+dzw77VeEW2Swiez18AAAD//wMABMyf1nYBAAA=",
+                "body": "H4sIAAAAAAAAAwAAAP//ZM5db4IwFAbgv2J6jYR2Q4WrIXOs6NAtypCbBaFi+TTSxlDjf98h7m43TU7fJ+85NyQ7dkH2DfEM2RPDfLI0xOqEV8hGgnWCN/mVi1Pany+s617yIdLTtkYaSi8sESxzBFBiYGtsTMcYb/GzbWDbJPpsSmJg8pz9Z+YWgzFtQnSDPBjc0SQ1A7WFvSP3sXG0G+7T0IG3kMA7+uuDP14nOfhGVpWGRFuyBgjrfYNFDl9zfxniT75y/dPBS4eZ7hTFAfctHdA5dukkKBz8ocqONqGKI1/uv3FFi5aHXqgyd/7KonkfR4Gib0NOh7KKvUN5scBBkatAlSRQX5YeXl1n1q9+Nkwu18lUHvZSeOt5uTDrY2qWUeOVnax7cjy16H7/BQAA//8DAEKr/LN2AQAA",
                 "_mode": "binary"
               }
             }
@@ -73,15 +73,12 @@
             },
             {
               "deepEquals": {
-                "path": "/api/articles/feed"
+                "path": "/api/tags"
               }
             },
             {
               "deepEquals": {
-                "query": {
-                  "limit": "10",
-                  "offset": "0"
-                }
+                "query": {}
               }
             },
             {
@@ -98,32 +95,34 @@
           "responses": [
             {
               "is": {
-                "statusCode": 401,
+                "statusCode": 200,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:15:13 GMT",
-                  "Content-Type": "text/html",
-                  "Transfer-Encoding": "chunked",
+                  "Date": "Mon, 15 Jul 2019 13:01:14 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Content-Length": 150,
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d7eda025729bca7d50ff49fc71a4fa7751563192913; expires=Tue, 14-Jul-20 12:15:13 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=db0e131aec44bfd042401c0587131b2571563195674; expires=Tue, 14-Jul-20 13:01:14 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Access-Control-Allow-Credentials": "true",
                   "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
                   "Access-Control-Allow-Origin": "http://localhost:8080",
                   "Access-Control-Max-Age": "1728000",
-                  "Cache-Control": "no-cache",
-                  "Status": "401 Unauthorized",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"11e84ca351b1813dfd30c1338349d620\"",
+                  "Status": "200 OK",
                   "Vary": "Origin",
                   "X-Content-Type-Options": "nosniff",
                   "X-Frame-Options": "SAMEORIGIN",
                   "X-Powered-By": "Phusion Passenger 4.0.60",
-                  "X-Request-Id": "03b7fefb-8339-42cd-942b-13b6b132861b",
-                  "X-Runtime": "0.002986",
+                  "X-Request-Id": "17e9566d-f326-43da-a4ca-ca26fe02580b",
+                  "X-Runtime": "0.155938",
                   "X-XSS-Protection": "1; mode=block",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba91dffabcc9b-WAW"
+                  "CF-RAY": "4f6bec855dd3cc9f-WAW"
                 },
-                "body": "",
-                "_mode": "text"
+                "body": "H4sIAAAAAAAAAwAAAP//JIxBDsMwCAT/wjkv6FeqHnCKHRobLEMUVVX/3uBe2GF34QOOxeB2h3S4wwLPgUXFLnKyMHwgC0sJjOoCGGPVnIliE27orHJxrnrSmDEObFQvair0/jsRbNg7C1lwwhSJHbbx1IIjmpUwvr2wT11Vd6Y4OKlWeHx/AAAA//8DAK12oRe1AAAA",
+                "_mode": "binary"
               }
             }
           ]
@@ -161,11 +160,11 @@
               "is": {
                 "statusCode": 200,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:15:15 GMT",
+                  "Date": "Mon, 15 Jul 2019 13:01:15 GMT",
                   "Content-Type": "text/plain",
                   "Content-Length": 25,
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d7682e73caf0cceff0ed86cc9007a47681563192915; expires=Tue, 14-Jul-20 12:15:15 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=d8cd588bb37dfa8419674872ead9e22171563195675; expires=Tue, 14-Jul-20 13:01:15 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Access-Control-Allow-Credentials": "true",
                   "Access-Control-Allow-Headers": "authorization,content-type",
                   "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
@@ -176,7 +175,7 @@
                   "X-Powered-By": "Phusion Passenger 4.0.60",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba9293da5ccab-WAW"
+                  "CF-RAY": "4f6bec8958ffb87b-WAW"
                 },
                 "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
                 "_mode": "binary"
@@ -217,90 +216,31 @@
               "is": {
                 "statusCode": 200,
                 "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:15:15 GMT",
+                  "Date": "Mon, 15 Jul 2019 13:01:15 GMT",
                   "Content-Type": "application/json; charset=utf-8",
-                  "Transfer-Encoding": "chunked",
+                  "Content-Length": 317,
                   "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d91982364a1c2d71dd961a43cff3fb0c81563192915; expires=Tue, 14-Jul-20 12:15:15 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Set-Cookie": "__cfduid=d4201e6d2e2736f78a2c47d2f1ef6459b1563195675; expires=Tue, 14-Jul-20 13:01:15 GMT; path=/; domain=.productionready.io; HttpOnly",
                   "Access-Control-Allow-Credentials": "true",
                   "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
                   "Access-Control-Allow-Origin": "http://localhost:8080",
                   "Access-Control-Max-Age": "1728000",
                   "Cache-Control": "max-age=0, private, must-revalidate",
                   "Content-Encoding": "gzip",
-                  "ETag": "W/\"f7f316278db2f55ec677fcfabd8f9cf3\"",
+                  "ETag": "W/\"fb620e1675e5491e909ced280150a91e\"",
                   "Status": "200 OK",
                   "Vary": "Origin",
                   "X-Content-Type-Options": "nosniff",
                   "X-Frame-Options": "SAMEORIGIN",
                   "X-Powered-By": "Phusion Passenger 4.0.60",
-                  "X-Request-Id": "c7462427-a102-4f75-b7ed-763366963dcf",
-                  "X-Runtime": "0.013878",
+                  "X-Request-Id": "cb1148a8-3073-462e-ae31-d578bd65053a",
+                  "X-Runtime": "0.011505",
                   "X-XSS-Protection": "1; mode=block",
                   "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
                   "Server": "cloudflare",
-                  "CF-RAY": "4f6ba92ad904cc7f-WAW"
+                  "CF-RAY": "4f6bec8b3c5eb863-WAW"
                 },
-                "body": "H4sIAAAAAAAAAwAAAP//ZM7LboJAFAbgVzGzRsJMBYVVlbZ2QCE2SIGNQZjgIBfLpZYxvnsPsbtuJjnzf/nPuaG+ZQ0yboinyNAU9UmXECtjXiADdazteJVdeXdKhkvD2vY5GyM5qUskoaRhccfSZQeUKFifKvMpxh6eGQo2VCIv5iQC1l/S/0z1MBjVIERWyIPBHVVcMlAe7J2Yj42T/XifhI68hgTeyV8f/PEyzsBXfVFIqKvPrALCBkthwZK73LJ9vOMb0zod18k4072g2OGWLgO6RCbVnHyJt+Lc0soXUWD14ScuaF5zf+2L1Fy9sGA1RIEj6NuY07GsYO9Qnr9iJ8+EI0J16/m67H6Hh42f2okaDvZMkA/7S9PqXeMevMWiSUh0iqei/1njbIvu918AAAD//wMA3uLqxnYBAAA=",
-                "_mode": "binary"
-              }
-            }
-          ]
-        },
-        {
-          "predicates": [
-            {
-              "deepEquals": {
-                "method": "OPTIONS"
-              }
-            },
-            {
-              "deepEquals": {
-                "path": "/api/articles/feed"
-              }
-            },
-            {
-              "deepEquals": {
-                "query": {
-                  "limit": "10",
-                  "offset": "0"
-                }
-              }
-            },
-            {
-              "deepEquals": {
-                "body": ""
-              }
-            },
-            {
-              "equals": {
-                "headers": {}
-              }
-            }
-          ],
-          "responses": [
-            {
-              "is": {
-                "statusCode": 200,
-                "headers": {
-                  "Date": "Mon, 15 Jul 2019 12:15:16 GMT",
-                  "Content-Type": "text/plain",
-                  "Content-Length": 25,
-                  "Connection": "keep-alive",
-                  "Set-Cookie": "__cfduid=d2b9a0b448b50167132e3d6aa5173dd601563192916; expires=Tue, 14-Jul-20 12:15:16 GMT; path=/; domain=.productionready.io; HttpOnly",
-                  "Access-Control-Allow-Credentials": "true",
-                  "Access-Control-Allow-Headers": "authorization",
-                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-                  "Access-Control-Allow-Origin": "http://localhost:8080",
-                  "Access-Control-Max-Age": "1728000",
-                  "Content-Encoding": "gzip",
-                  "Status": "200 OK",
-                  "X-Powered-By": "Phusion Passenger 4.0.60",
-                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-                  "Server": "cloudflare",
-                  "CF-RAY": "4f6ba92d0cf3cc87-WAW"
-                },
-                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "body": "H4sIAAAAAAAAAwAAAP//ZM5db4IwFAbgv2J6jaTtAAdXU+Zcu4kjAca4Q2iwlA8nJc4a//tK3N1umpy+T95zrmAc2Al4V8BL4DnQfnANwNqcN8ADkg2Sd9WZy0NxOZ7YMDxVU2QWfQsMUJxYLlm5lJpiiNw5XMwRipDlQeTZ2Hxc4Eyz8Vj+Z3aEtLE9jE2I70zf0eUt0yrSe2f+feMsnu4zwJ73OtHv7K9P//E2r7TvxqYxgOwF6zRhFwpZuuQ7Tt8SFPJ3nx72m2KaSawICjh1TY2OmU+coF6irRID6RKVpXT8+kQNqXuebBJV+qtnlq4uWRoo8jLlZCpr2Ksur9coqCsVKIEDlbhm+LGOYof2tC/yveXQUGxSX4zOtjzH7Cce5qGQll1a8FuA2+0XAAD//wMAdsDwZ3YBAAA=",
                 "_mode": "binary"
               }
             }
