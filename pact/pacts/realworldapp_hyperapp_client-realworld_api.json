@@ -1,0 +1,35 @@
+{
+  "consumer": {
+    "name": "RealWorldApp Hyperapp Client"
+  },
+  "provider": {
+    "name": "RealWorld API"
+  },
+  "interactions": [
+    {
+      "description": "request for tags",
+      "providerState": "list of tags",
+      "request": {
+        "method": "GET",
+        "path": "/api/tags"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "tags": [
+            "tag1",
+            "tag2"
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

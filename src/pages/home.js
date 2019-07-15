@@ -7,9 +7,9 @@ import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
 
 // Actions & Effects
-const SetTags = (state, { tags }) => ({ ...state, tags });
+export const SetTags = (state, { tags }) => ({ ...state, tags });
 
-const FetchTags = Http({
+export const FetchTags = Http({
   url: API_ROOT + "/tags",
   action: SetTags,
   error: LogError

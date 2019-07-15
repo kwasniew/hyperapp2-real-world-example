@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "prebuild": "pika-web --dest src/web_modules",
+    "pika": "pika-web --dest src/web_modules",
+    "postinstall": "npm run pika",
+    "prebuild": "npm run pika",
     "build": "parcel build src/index.html --experimental-scope-hoisting",
     "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
     "start": "http-server src",
@@ -8,24 +10,32 @@
     "mb": "mb",
     "test:record": "CYPRESS_mode=record CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:stub": "CYPRESS_mode=stub CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
-    "test:prod": "CYPRESS_mode=prod CYPRESS_apiUrl=https://conduit.productionready.io/api npm-run-all --parallel start cy:open"
+    "test:prod": "CYPRESS_mode=prod CYPRESS_apiUrl=https://conduit.productionready.io/api npm-run-all --parallel start cy:open",
+    "test:contract": "mocha pact/*Test.js --require esm"
   },
   "dependencies": {
+    "@kwasniew/hyperapp-fx": "2.0.0-beta.2",
     "classcat": "4.0.2",
     "htm": "2.1.1",
-    "hyperapp": "2.0.0-beta.22",
-    "@kwasniew/hyperapp-fx": "2.0.0-beta.1",
+    "hyperapp": "github:jorgebucaran/hyperapp#release",
     "page": "1.11.4",
     "snarkdown": "1.2.2"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "8.2.6",
     "@pika/web": "0.4.3",
     "cypress": "3.4.0",
+    "esm": "3.2.25",
     "http-server": "0.11.1",
+    "mocha": "6.1.4",
     "mountebank": "2.1.0",
+    "node-fetch": "2.6.0",
     "npm-run-all": "4.1.5",
     "parcel": "1.12.3",
     "prettier": "1.18.2",
+    "tape": "4.11.0",
+    "tape-async": "2.3.0",
+    "tape-await": "0.1.2",
     "wait-on": "3.3.0"
   }
 }
