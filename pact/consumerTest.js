@@ -1,11 +1,19 @@
-import { PORT } from "./setup.js";
+import { PORT } from "./setup";
 import { Matchers, Pact } from "@pact-foundation/pact";
-import { FetchTags, SetTags } from "../src/pages/home.js";
+import { FetchTags, SetTags } from "../src/pages/home";
 import assert from "assert";
 import path from "path";
-import { LogError } from "../src/pages/fragments/forms.js";
+import { LogError } from "../src/pages/fragments/forms";
+import { FetchUserFeed } from "../src/pages/home";
+import { SetArticles } from "../src/pages/fragments/articles";
 
-const { eachLike, like } = Matchers;
+const {
+  eachLike,
+  like,
+  iso8601DateTimeWithMillis,
+  boolean,
+  integer
+} = Matchers;
 
 const provider = new Pact({
   consumer: "RealWorldApp Hyperapp Client",
@@ -16,7 +24,7 @@ const provider = new Pact({
   logLevel: "ERROR"
 });
 
-describe("Real World API", () => {
+describe("Real World API Home Page", () => {
   before(async function() {
     this.timeout(5000);
     await provider.setup();
@@ -78,5 +86,53 @@ describe("Real World API", () => {
       LogError,
       { errors: ["unexpected error"] }
     ]);
+  });
+
+  it("get a list of articles from users we follow", async () => {
+    await provider.addInteraction({
+      state: "articles in followed users feed",
+      uponReceiving: "request for articles",
+      withRequest: {
+        method: "GET",
+        path: "/api/articles/feed",
+        query: "limit=10&offset=0"
+      },
+      willRespondWith: {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: like("Token placeholder")
+        },
+        body: {
+          articles: eachLike({
+            slug: like("sample-title-xyz"),
+            title: like("Sample Title"),
+            description: like("Some Description"),
+            body: like("# Article Header"),
+            tagList: eachLike("tag"),
+            createdAt: iso8601DateTimeWithMillis("2019-07-09T16:09:25.138Z"),
+            favorited: boolean(true),
+            favoritesCount: integer(0),
+            author: {
+              username: like("Some Author"),
+              bio: like("Some bio"),
+              image: like(
+                "https://avatars3.githubusercontent.com/u/12631?s=400&v=4"
+              ),
+              following: boolean(true)
+            }
+          }),
+          articlesCount: integer(1)
+        }
+      }
+    });
+
+    const dispatch = await runFx(
+      FetchUserFeed({ pageIndex: 0, token: "placeholder" })
+    );
+    const [action, {articles, articlesCount}] = dispatch.invokedWith;
+    assert.deepStrictEqual(action, SetArticles);
+    assert.deepStrictEqual(articles.length, 1);
+    assert.deepStrictEqual(articlesCount, 1);
   });
 });

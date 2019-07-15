@@ -59,6 +59,99 @@
           }
         }
       }
+    },
+    {
+      "description": "request for articles",
+      "providerState": "articles in followed users feed",
+      "request": {
+        "method": "GET",
+        "path": "/api/articles/feed",
+        "query": "limit=10&offset=0"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Token placeholder"
+        },
+        "body": {
+          "articles": [
+            {
+              "slug": "sample-title-xyz",
+              "title": "Sample Title",
+              "description": "Some Description",
+              "body": "# Article Header",
+              "tagList": [
+                "tag"
+              ],
+              "createdAt": "2019-07-09T16:09:25.138Z",
+              "favorited": true,
+              "favoritesCount": 0,
+              "author": {
+                "username": "Some Author",
+                "bio": "Some bio",
+                "image": "https://avatars3.githubusercontent.com/u/12631?s=400&v=4",
+                "following": true
+              }
+            }
+          ],
+          "articlesCount": 1
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          },
+          "$.body.articles": {
+            "min": 1
+          },
+          "$.body.articles[*].*": {
+            "match": "type"
+          },
+          "$.body.articles[*].slug": {
+            "match": "type"
+          },
+          "$.body.articles[*].title": {
+            "match": "type"
+          },
+          "$.body.articles[*].description": {
+            "match": "type"
+          },
+          "$.body.articles[*].body": {
+            "match": "type"
+          },
+          "$.body.articles[*].tagList": {
+            "min": 1
+          },
+          "$.body.articles[*].tagList[*].*": {
+            "match": "type"
+          },
+          "$.body.articles[*].createdAt": {
+            "match": "regex",
+            "regex": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d{3,}([+-][0-2]\\d:[0-5]\\d|Z)$"
+          },
+          "$.body.articles[*].favorited": {
+            "match": "type"
+          },
+          "$.body.articles[*].favoritesCount": {
+            "match": "type"
+          },
+          "$.body.articles[*].author.username": {
+            "match": "type"
+          },
+          "$.body.articles[*].author.bio": {
+            "match": "type"
+          },
+          "$.body.articles[*].author.image": {
+            "match": "type"
+          },
+          "$.body.articles[*].author.following": {
+            "match": "type"
+          },
+          "$.body.articlesCount": {
+            "match": "type"
+          }
+        }
+      }
     }
   ],
   "metadata": {

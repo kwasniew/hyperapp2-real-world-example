@@ -44,7 +44,7 @@ export const loadingArticles = {
   isLoading: true
 };
 
-const SetArticles = (state, { articles, articlesCount }) => ({
+export const SetArticles = (state, { articles, articlesCount }) => ({
   ...state,
   isLoading: false,
   articles,
