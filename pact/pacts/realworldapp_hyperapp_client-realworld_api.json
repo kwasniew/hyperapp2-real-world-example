@@ -25,6 +25,27 @@
           ]
         }
       }
+    },
+    {
+      "description": "request for tags",
+      "providerState": "failing tags",
+      "request": {
+        "method": "GET",
+        "path": "/api/tags"
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "errors": {
+            "body": [
+              "unexpected error"
+            ]
+          }
+        }
+      }
     }
   ],
   "metadata": {

@@ -11,7 +11,7 @@
     "test:record": "CYPRESS_mode=record CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:stub": "CYPRESS_mode=stub CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:prod": "CYPRESS_mode=prod CYPRESS_apiUrl=https://conduit.productionready.io/api npm-run-all --parallel start cy:open",
-    "test:contract": "mocha pact/*Test.js --require esm"
+    "test:consumer": "mocha pact/*Test.js --require esm"
   },
   "dependencies": {
     "@kwasniew/hyperapp-fx": "2.0.0-beta.2",

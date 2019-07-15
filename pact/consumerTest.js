@@ -3,6 +3,7 @@ import { Pact } from "@pact-foundation/pact";
 import { FetchTags, SetTags } from "../src/pages/home.js";
 import assert from "assert";
 import path from "path";
+import { LogError } from "../src/pages/fragments/forms.js";
 
 const provider = new Pact({
   consumer: "RealWorldApp Hyperapp Client",
@@ -13,27 +14,20 @@ const provider = new Pact({
   logLevel: "ERROR"
 });
 
-const EXPECTED_BODY = {
+const TAGS_SUCCESS = {
   tags: ["tag1", "tag2"]
+};
+const TAGS_ERROR = {
+  errors: {
+    body: ["unexpected error"]
+  }
 };
 
 describe("Real World API", () => {
   before(async function() {
     this.timeout(5000);
     await provider.setup();
-    await provider.addInteraction({
-      state: "list of tags",
-      uponReceiving: "request for tags",
-      withRequest: {
-        method: "GET",
-        path: "/api/tags"
-      },
-      willRespondWith: {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-        body: EXPECTED_BODY
-      }
-    });
+
   });
 
   afterEach(() => provider.verify());
@@ -50,7 +44,40 @@ describe("Real World API", () => {
   };
 
   it("get a list of tags", async () => {
+    await provider.addInteraction({
+      state: "list of tags",
+      uponReceiving: "request for tags",
+      withRequest: {
+        method: "GET",
+        path: "/api/tags"
+      },
+      willRespondWith: {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+        body: TAGS_SUCCESS
+      }
+    });
+
     const dispatch = await runFx(FetchTags);
-    assert.deepStrictEqual(dispatch.invokedWith, [SetTags, EXPECTED_BODY]);
+    assert.deepStrictEqual(dispatch.invokedWith, [SetTags, TAGS_SUCCESS]);
+  });
+
+  it("return tag list error", async () => {
+    await provider.addInteraction({
+      state: "failing tags",
+      uponReceiving: "request for tags",
+      withRequest: {
+        method: "GET",
+        path: "/api/tags"
+      },
+      willRespondWith: {
+        status: 422,
+        headers: { "Content-Type": "application/json" },
+        body: TAGS_ERROR
+      }
+    });
+
+    const dispatch = await runFx(FetchTags);
+    assert.deepStrictEqual(dispatch.invokedWith, [LogError, TAGS_ERROR]);
   });
 });

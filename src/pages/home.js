@@ -12,13 +12,14 @@ export const SetTags = (state, { tags }) => ({ ...state, tags });
 export const FetchTags = Http({
   url: API_ROOT + "/tags",
   action: SetTags,
-  error: LogError
+  error: LogError,
+  errorResponse: "json"
 });
 
-const FetchUserFeed = ({ pageIndex, token }) =>
+export const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
-const FetchGlobalFeed = ({ pageIndex, token }) => FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
-const FetchTagFeed = ({ tag, pageIndex, token }) =>
+export const FetchGlobalFeed = ({ pageIndex, token }) => FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
+export const FetchTagFeed = ({ tag, pageIndex, token }) =>
   FetchArticles(`/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`, token);
 
 const GLOBAL_FEED = "global";
