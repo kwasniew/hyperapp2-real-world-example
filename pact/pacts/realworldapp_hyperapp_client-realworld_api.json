@@ -20,9 +20,16 @@
         },
         "body": {
           "tags": [
-            "tag1",
-            "tag2"
+            "tag"
           ]
+        },
+        "matchingRules": {
+          "$.body.tags": {
+            "min": 1
+          },
+          "$.body.tags[*].*": {
+            "match": "type"
+          }
         }
       }
     },
@@ -39,10 +46,16 @@
           "Content-Type": "application/json"
         },
         "body": {
-          "errors": {
-            "body": [
-              "unexpected error"
-            ]
+          "errors": [
+            "unexpected error"
+          ]
+        },
+        "matchingRules": {
+          "$.body.errors": {
+            "min": 1
+          },
+          "$.body.errors[*].*": {
+            "match": "type"
           }
         }
       }

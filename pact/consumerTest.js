@@ -1,9 +1,11 @@
 import { PORT } from "./setup.js";
-import { Pact } from "@pact-foundation/pact";
+import { Matchers, Pact } from "@pact-foundation/pact";
 import { FetchTags, SetTags } from "../src/pages/home.js";
 import assert from "assert";
 import path from "path";
 import { LogError } from "../src/pages/fragments/forms.js";
+
+const { eachLike, like } = Matchers;
 
 const provider = new Pact({
   consumer: "RealWorldApp Hyperapp Client",
@@ -14,20 +16,10 @@ const provider = new Pact({
   logLevel: "ERROR"
 });
 
-const TAGS_SUCCESS = {
-  tags: ["tag1", "tag2"]
-};
-const TAGS_ERROR = {
-  errors: {
-    body: ["unexpected error"]
-  }
-};
-
 describe("Real World API", () => {
   before(async function() {
     this.timeout(5000);
     await provider.setup();
-
   });
 
   afterEach(() => provider.verify());
@@ -54,12 +46,14 @@ describe("Real World API", () => {
       willRespondWith: {
         status: 200,
         headers: { "Content-Type": "application/json" },
-        body: TAGS_SUCCESS
+        body: {
+          tags: eachLike("tag")
+        }
       }
     });
 
     const dispatch = await runFx(FetchTags);
-    assert.deepStrictEqual(dispatch.invokedWith, [SetTags, TAGS_SUCCESS]);
+    assert.deepStrictEqual(dispatch.invokedWith, [SetTags, { tags: ["tag"] }]);
   });
 
   it("return tag list error", async () => {
@@ -73,11 +67,16 @@ describe("Real World API", () => {
       willRespondWith: {
         status: 422,
         headers: { "Content-Type": "application/json" },
-        body: TAGS_ERROR
+        body: {
+          errors: eachLike("unexpected error")
+        }
       }
     });
 
     const dispatch = await runFx(FetchTags);
-    assert.deepStrictEqual(dispatch.invokedWith, [LogError, TAGS_ERROR]);
+    assert.deepStrictEqual(dispatch.invokedWith, [
+      LogError,
+      { errors: ["unexpected error"] }
+    ]);
   });
 });
