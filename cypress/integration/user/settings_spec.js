@@ -1,10 +1,27 @@
-const assertSessionCleared = () => cy.window()
-  .its("localStorage")
-  .invoke("getItem", "session")
-  .should("be.null");
+const assertSessionCleared = () =>
+  cy
+    .window()
+    .its("localStorage")
+    .invoke("getItem", "session")
+    .should("be.null");
 
 const updateSettings = () => cy.contains("Update Settings").click();
 const goToSettings = () => cy.contains(".nav-item", "Settings").click();
+
+const listenToUpdateSettings = () => {
+  const apiUrl = Cypress.env("apiUrl");
+  cy.server();
+  cy.route({
+    method: "PUT",
+    url: `${apiUrl}/user`
+  }).as("updateSettings");
+};
+
+const waitForUpdatedBio = bio =>
+  cy
+    .wait("@updateSettings")
+    .its("request.body.user.bio")
+    .should("equal", bio);
 
 describe("settings", () => {
   beforeEach(() => {
@@ -17,12 +34,13 @@ describe("settings", () => {
     cy.element("email").should("have.value", "testingwithcypress@gmail.com");
     cy.element("password").should("be.empty");
 
-    const newBio = "bio updated at " + new Date();
+    const newBio = "bio updated";
     cy.typeIntoClearField("bio", newBio);
+    listenToUpdateSettings();
     updateSettings();
+    waitForUpdatedBio(newBio);
+
     cy.assertAtHomePage();
-    goToSettings();
-    cy.element("bio").should("have.value", newBio);
   });
 
   it("prevents profile update with invalid password", () => {

@@ -1,0 +1,70 @@
+{
+  "imposters": [
+    {
+      "protocol": "http",
+      "port": 3000,
+      "recordRequests": false,
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "POST"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/users/login"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": "{\"user\":{\"email\":\"testingwithcypress@gmail.com\",\"password\":\"testingwithcypress\"}}"
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:15:19 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d41566c9f741294fd88c61d2a1b778ec71563192919; expires=Tue, 14-Jul-20 12:15:19 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"c999f4605bd34fa99adcca3f3866100d\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "6aab7ed6-507f-46de-80cc-fc6703c76268",
+                  "X-Runtime": "0.083974",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba9411defb86f-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//ZM7LboJAFAbgVzGzRsLQooVVEVsdUFobpMCOyxEHh0sFoozx3TvE7rqZ5Mz/5T/nhvoWzsi4IZohY6ZoT7qEoIwpQwbqoO1olV9od0yH5gxt+5qPkZzWJZJQeoa4g8zsBFUVrE+V+RRjDz8bCjY0VX6Zq5FgfZP9Z5qHhdEMVZUV9cHEHVVcglCe2DuxHhsn+/E+CSW0Fol4J3994o+WcS581TMmoa4+QSUIDLYCgUk/qO34eEc3ln1MVuk4kz0n2KW2LgvURBaZuYWJt/zUksrnUWD34TdmpKipv/J5Zi2WECyGKHA5eR9zMpYxWIvy4g27Rc5dHmpbj+nyZg/hz9d83Ry2UXJ1ZwFL8sK2emdZ0fAQ497JPjPz6gSwQ/f7LwAAAP//AwC1hLOfdgEAAA==",
+                "_mode": "binary"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

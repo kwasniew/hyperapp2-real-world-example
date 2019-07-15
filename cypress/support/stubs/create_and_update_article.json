@@ -1,0 +1,518 @@
+{
+  "imposters": [
+    {
+      "protocol": "http",
+      "port": 3000,
+      "recordRequests": false,
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "POST"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/users/login"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": "{\"user\":{\"email\":\"testingwithcypress@gmail.com\",\"password\":\"testingwithcypress\"}}"
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:23 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d3002a6aada964517ac0a8093964cc14e1563192863; expires=Tue, 14-Jul-20 12:14:23 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"7d6d22234893361dbc5654866af4d742\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "0e6b9241-e5f6-4c8b-a110-80249df924c8",
+                  "X-Runtime": "0.085609",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba7e36dc9b83f-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//ZM5db4IwFAbgv2J6jaStosLVFD9WdHUuyJAbg6XBYgEjJYs1/veVuLvdNDl9n7znPEDb8BvwHkBkwBtBZ+BagJepkMADijdKVPmPUGd2v95407zlXWSzugQWYDeeKp5NlaEYIrcPx32EQjT0IPIcbE/GODGsvWb/mRMiYxwPYxviFzN3VGnJjQrN3p7/2tjbd/dZ4CRqk5i399dn/kSZ5sZXrZQWUPWFV4bwewB5PBVbEawjtBMbPzifVqybyV4TREXg2gZdE5+MaDFFH/rSkCrSSRy0h28kSVGLaBXpzJ/NeTy7JzHVZNnlpCuT/N2UFwtEi1xTfRjSgrp2/yNTxxrHCa/lnMnP5dmfHFUjv1apggOxXxx36w0L8ZZdwPP5CwAA//8DAMiRk012AQAA",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "OPTIONS"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:27 GMT",
+                  "Content-Type": "text/plain",
+                  "Content-Length": 25,
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d1abf998690e669316dc9e93ad11517871563192866; expires=Tue, 14-Jul-20 12:14:26 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Headers": "authorization,content-type",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Content-Encoding": "gzip",
+                  "Status": "200 OK",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba7faac10cca3-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "POST"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": "{\"article\":{\"title\":\"JS microlibs\",\"description\":\"This is article about using microlibs\",\"body\":\"# Title\\n## Header\\nAvoid bloated JS frameworks\",\"tagList\":[\"javascript\",\"frameworks\"]}}"
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:28 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=dcb412dbe1b2ad5cb78c07a504e111e481563192867; expires=Tue, 14-Jul-20 12:14:27 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"c4e927378c9d9134cc466efe6112fbf8\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "f5e59b96-2f25-48e1-b7e8-ef352e2efd33",
+                  "X-Runtime": "0.567470",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba7fd6a5e6aed-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//jJDLTsMwEEV/xXK3zVOgQHZVNwixo2ygLJzYTaY4mchjt4qq/jtjWvHYIVmWdebOnfE9SeU8tNbI+iQ9+PiQj89igNahhYbkUpINHdM9Jd80KSsoyzsuNqhnLi7EJjZvx8VCPBiljduOqwOCFo1F5Y0WbLpzajBHdB/RtXUm8pXn7jIv7pO8SorbTVHWxU1dVmlV5a8sC5P+j8yr7gmIRW9yrw6KWgeTZ/5r5PtSanMpAI5st+mBBJ9rAkI1GLwIBGP35/8q+B5dDCiQcSMbxmZDXqznyRki8cI8ZgHIFb7FdWtmMKgu6nvvJ6qzjLziaenkUIc2LsIx6DkFzL6UlNEA1sxJO7tA6X7q4ifQWjzyWrLeKUvmzEgd0EEccUE/hNYYRg4iP58/AQAA//8DADy9zWPdAQAA",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "OPTIONS"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles/feed"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {
+                  "limit": "10",
+                  "offset": "0"
+                }
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:28 GMT",
+                  "Content-Type": "text/plain",
+                  "Content-Length": 25,
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d6390adc9be23ff6d5ed581b198e06f1b1563192868; expires=Tue, 14-Jul-20 12:14:28 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Headers": "authorization",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Content-Encoding": "gzip",
+                  "Status": "200 OK",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba8041b27cc7b-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "GET"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/tags"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:29 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=db3615f15d7c07dc939b44aa7778a405a1563192868; expires=Tue, 14-Jul-20 12:14:28 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"11e84ca351b1813dfd30c1338349d620\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "7550bb75-02df-46de-85b3-860f8006b935",
+                  "X-Runtime": "0.157346",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba8043a04b827-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//JIxBDsMwCAT/wjkv6FeqHnCKHRobLEMUVVX/3uBe2GF34QOOxeB2h3S4wwLPgUXFLnKyMHwgC0sJjOoCGGPVnIliE27orHJxrnrSmDEObFQvair0/jsRbNg7C1lwwhSJHbbx1IIjmpUwvr2wT11Vd6Y4OKlWeHx/AAAA//8DAK12oRe1AAAA",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "OPTIONS"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles/js-microlibs-27i228"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:29 GMT",
+                  "Content-Type": "text/plain",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d6c3589c468885cbd910b4440b1309d061563192869; expires=Tue, 14-Jul-20 12:14:29 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Headers": "authorization",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Content-Encoding": "gzip",
+                  "Status": "200 OK",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba8099c36cc93-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "_mode": "binary"
+              }
+            },
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:31 GMT",
+                  "Content-Type": "text/plain",
+                  "Content-Length": 25,
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d084892f858d312fb58593661eb772cb31563192871; expires=Tue, 14-Jul-20 12:14:31 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Headers": "authorization,content-type",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Content-Encoding": "gzip",
+                  "Status": "200 OK",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba8161d23cc9b-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "GET"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles/js-microlibs-27i228"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:30 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d058ac13be6ac5e8b4cff7c495d0af2271563192869; expires=Tue, 14-Jul-20 12:14:29 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"866b0b47a395fa3d70037f7e1216b003\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "1cb7cbd5-9fcb-43c0-a742-d61ebc28d13b",
+                  "X-Runtime": "0.022824",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba80cfe62cc9b-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//jJBPT8MwDMW/SpRd178CFXqbdkGIG+MC45A2aeeR1lWcbKqmfXccNoF2Q4qi6OfnZ+edpHIeWmtkfZIefHzI51cxQOvQQkNyKcmGnumekl+alBWU5QMXG9QzFxdiE5u342IhnozSxm3H1QFBi8ai8kYLNu2cGswR3Vd0bZ2JfOW5u8yLxySvkuJ+U5R1cVeXVVpV+TvLwqT/I/OqfwFi0Ye8mbJXB0Wtg8nLz6XU5vIGHNluswMSfK4JCNVg8CIQjP3N/1XwO3QxoEDGjewemw15sZ4nZ4jEG/OYBSBX+BbXrZnBoPqo33k/UZ1l5BVPSyeHOrRxEY5Bzylg9qOkjAawZk7a2QVK91PPHh1ai0deS9adsmTOjNQBHcQRF/RHaI1h5CDy8/kbAAD//wMA4ThtPd0BAAA=",
+                "_mode": "binary"
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "PUT"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles/js-microlibs-27i228"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {}
+              }
+            },
+            {
+              "deepEquals": {
+                "body": "{\"article\":{\"title\":\"Avoid bloated frameworks\",\"description\":\"This is article about using microlibs\",\"body\":\"# Title\\n## Header\\nAvoid bloated JS frameworks\",\"tagList\":[\"frameworks\",\"javascript\"]}}"
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:14:32 GMT",
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Transfer-Encoding": "chunked",
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d707125b17c4c07695217a4bc2b6cab891563192871; expires=Tue, 14-Jul-20 12:14:31 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Cache-Control": "max-age=0, private, must-revalidate",
+                  "Content-Encoding": "gzip",
+                  "ETag": "W/\"115008a697f4964d42a2ae8230b88a0f\"",
+                  "Status": "200 OK",
+                  "Vary": "Origin",
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "SAMEORIGIN",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "X-Request-Id": "d50f7cfa-f473-4969-aaa4-4f06d890aa9d",
+                  "X-Runtime": "0.075761",
+                  "X-XSS-Protection": "1; mode=block",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba818eb9ecc77-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//dJBPT8MwDMW/SpRd178MFXqbdkGIG+MC45A2WeeR1lWcbKqmfXccNoF2QIqi6Pn5Z+edpHIeWmtkfZIefHzI5QFBi8ai8kaLrVO9OaL7IjmXZEPHjj0lPbQOLTSUlBWU5QMXG9QTF2diHUGbYTYTT0Zp4zbDLfL59ZbaOhP1pefuMi8ek7xKivt1UdbFoi6rtKryd7aFUf9vuyvT4mERbV51L0Bs+pA3U/bqoKh1MHr5OZfaXN6AA+PWOyDB55qGUA0GLwLB0InfnzJDBb9DF8MKZNzA9NhsyIvVNDpDJN5Yj1kAcoVvcd2aNehVF/0770eqs4y84mnp6FCHNi7CMegpBcx+nJRRD9ZMSTu5QOl+7JixRWvxyGvJeqssmTNL6oAO4oiL9KfQCsPAQeTn8zcAAAD//wMAVRrSTukBAAA=",
+                "_mode": "binary"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -37,6 +37,11 @@ const setupFavorite = () => {
 const article = index => cy.element("article").eq(index);
 
 describe("articles", () => {
+  beforeEach(function () {
+    console.log(this.currentTest.title);
+    // cy.record(this.currentTest.title);
+  });
+
   context("anonymous E2E", () => {
     beforeEach(() => {
       cy.visit("/");

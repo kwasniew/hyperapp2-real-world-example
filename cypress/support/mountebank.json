@@ -1,0 +1,31 @@
+{
+  "port": 3000,
+  "protocol": "http",
+
+  "stubs": [
+    {
+      "responses": [
+        {
+          "proxy": {
+            "to": "https://conduit.productionready.io/api",
+            "mode": "proxyAlways",
+            "predicateGenerators": [
+              {
+                "matches": {
+                  "method": true,
+                  "path": true,
+                  "query": true,
+                  "body": true,
+                  "headers": {
+                    "Authorization": true
+                  }
+                }
+
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

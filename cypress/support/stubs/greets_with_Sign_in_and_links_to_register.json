@@ -1,0 +1,10 @@
+{
+  "imposters": [
+    {
+      "protocol": "http",
+      "port": 3000,
+      "recordRequests": false,
+      "stubs": []
+    }
+  ]
+}

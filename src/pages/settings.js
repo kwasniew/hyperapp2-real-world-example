@@ -11,15 +11,15 @@ import { authHeader } from "../shared/authHeader.js";
 
 // Actions & Effects
 const UpdateSettings = user => {
-  const { password, ...userWithoutPassword } = user;
-  const submitUser = password && password.length > 0 ? user : userWithoutPassword;
+  const { password, token, ...userWithoutPassword } = user;
+  const submitUser = password && password.length > 0 ? {password, ...userWithoutPassword} : userWithoutPassword;
   return Http({
     url: API_ROOT + "/user",
     options: {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        ...authHeader(user.token)
+        ...authHeader(token)
       },
       body: JSON.stringify({ user: submitUser })
     },

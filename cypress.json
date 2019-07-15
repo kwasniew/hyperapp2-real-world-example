@@ -1,7 +1,8 @@
 {
-  "baseUrl": "http://localhost:8080",
+  "baseUrl": "http://localhost:8080/",
   "env": {
-    "apiUrl": "https://conduit.productionready.io/api",
+    "prodApiUrl": "https://conduit.productionready.io/api",
+    "apiUrl": "http://localhost:3000/api",
     "user": {
       "email": "testingwithcypress@gmail.com",
       "password": "testingwithcypress",

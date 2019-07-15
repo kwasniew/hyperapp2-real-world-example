@@ -1,0 +1,70 @@
+{
+  "imposters": [
+    {
+      "protocol": "http",
+      "port": 3000,
+      "recordRequests": false,
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "deepEquals": {
+                "method": "OPTIONS"
+              }
+            },
+            {
+              "deepEquals": {
+                "path": "/api/articles/feed"
+              }
+            },
+            {
+              "deepEquals": {
+                "query": {
+                  "limit": "10",
+                  "offset": "0"
+                }
+              }
+            },
+            {
+              "deepEquals": {
+                "body": ""
+              }
+            },
+            {
+              "equals": {
+                "headers": {}
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": {
+                  "Date": "Mon, 15 Jul 2019 12:15:13 GMT",
+                  "Content-Type": "text/plain",
+                  "Content-Length": 25,
+                  "Connection": "keep-alive",
+                  "Set-Cookie": "__cfduid=d07422416b1f5c186590ab3b11811ecc31563192912; expires=Tue, 14-Jul-20 12:15:12 GMT; path=/; domain=.productionready.io; HttpOnly",
+                  "Access-Control-Allow-Credentials": "true",
+                  "Access-Control-Allow-Headers": "authorization",
+                  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                  "Access-Control-Allow-Origin": "http://localhost:8080",
+                  "Access-Control-Max-Age": "1728000",
+                  "Content-Encoding": "gzip",
+                  "Status": "200 OK",
+                  "X-Powered-By": "Phusion Passenger 4.0.60",
+                  "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                  "Server": "cloudflare",
+                  "CF-RAY": "4f6ba91a0c40cc8f-WAW"
+                },
+                "body": "H4sIAAAAAAAAAwAAAP//AwAAAAAAAAAAAA==",
+                "_mode": "binary"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
