@@ -8,7 +8,7 @@ import { format } from "../shared/date.js";
 import { LogError } from "./fragments/forms.js";
 import { RedirectAction } from "../lib/Router.js";
 import { ChangeFieldFromTarget } from "./fragments/forms.js";
-import { preventDefault } from "../lib/events.js";
+import {preventDefault} from "../web_modules/@hyperapp/events.js";
 import { FetchArticle } from "./fragments/article.js";
 
 // Actions & Effects
@@ -41,7 +41,6 @@ const AddComment = (state, { comment }) => ({
 const SubmitComment = state => [
   state,
   [
-    preventDefault,
     Http({
       url: API_ROOT + "/articles/" + state.slug + "/comments",
       options: {
@@ -147,7 +146,7 @@ const ArticleBanner = ({ state }) =>
   `;
 
 const CommentInput = ({ state }) => html`
-  <form class="card comment-form" onsubmit=${SubmitComment}>
+  <form class="card comment-form" onsubmit=${preventDefault(SubmitComment)}>
     <div class="card-block">
       <textarea
         class="form-control"

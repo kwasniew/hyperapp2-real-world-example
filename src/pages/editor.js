@@ -2,7 +2,7 @@ import { ListErrors } from "./fragments/forms.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
-import { preventDefault, OnEnter } from "../lib/events.js";
+import { OnEnter } from "../lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
@@ -11,9 +11,10 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/Router.js";
 import { NEW_EDITOR } from "./links.js";
+import {preventDefault} from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
-const AddTag = state => [{ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] }, preventDefault];
+const AddTag = state => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });
 
 const RemoveTag = tag => state => ({
   ...state,
@@ -39,7 +40,6 @@ const SaveArticle = ({ article, token, method, url }) =>
 const SubmitArticle = state => [
   Submitting(state),
   [
-    preventDefault,
     SaveArticle({
       article: {
         title: state.title,
@@ -120,7 +120,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                   data-test="tags"
                   placeholder="Enter tags"
                   value=${currentTag}
-                  onkeyup=${OnEnter(AddTag)}
+                  onkeyup=${preventDefault(OnEnter(AddTag))}
                   oninput=${ChangeFieldFromTarget("currentTag")}
                 />
 
@@ -141,7 +141,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 class="btn btn-lg pull-xs-right btn-primary"
                 type="button"
                 disabled=${inProgress}
-                onclick=${SubmitArticle}
+                onclick=${preventDefault(SubmitArticle)}
               >
                 Publish Article
               </button>

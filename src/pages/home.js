@@ -1,10 +1,11 @@
 import { html } from "../shared/html.js";
 import cc from "../web_modules/classcat.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../lib/events.js";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
+import {preventDefault} from "../web_modules/@hyperapp/events.js";
+import {eventWith} from "../lib/events.js";
 
 // Actions & Effects
 export const SetTags = (state, { tags }) => ({ ...state, tags });
@@ -53,7 +54,7 @@ const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     currentPageIndex: 0,
     ...loadingArticles
   };
-  return [newState, [preventDefault, FetchFeed(newState)]];
+  return [newState, [FetchFeed(newState)]];
 };
 
 const ChangePage = (state, { currentPageIndex }) => {
@@ -63,7 +64,7 @@ const ChangePage = (state, { currentPageIndex }) => {
     currentPageIndex
   };
 
-  return [newState, [preventDefault, FetchFeed(newState)]];
+  return [newState, [FetchFeed(newState)]];
 };
 
 export const LoadHomePage = page => state => {
@@ -112,7 +113,7 @@ const FeedTab = ({ active, type, name }, children) =>
         href=""
         data-test="feed"
         class=${cc({ "nav-link": true, active })}
-        onclick=${[ChangeTab, { activeFeedName: name, activeFeedType: type }]}
+        onclick=${[preventDefault(ChangeTab), eventWith({activeFeedName: name, activeFeedType: type })]}
       >
         ${children}
       </a>
@@ -127,7 +128,7 @@ const Tags = ({ tags }) => html`
           href=""
           data-test="tag"
           class="tag-pill tag-default"
-          onclick=${[ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}
+          onclick=${[preventDefault(ChangeTab), eventWith({ activeFeedType: TAG_FEED, activeFeedName: tag })]}
         >
           ${tag}
         </a>
@@ -147,7 +148,7 @@ const ListPagination = ({ pages }) => {
           page =>
             html`
               <li class=${page.isCurrent ? "page-item active" : "page-item"}>
-                <a class="page-link" href="" onclick=${[ChangePage, { currentPageIndex: page.index }]}>
+                <a class="page-link" href="" onclick=${[preventDefault(ChangePage), eventWith({currentPageIndex: page.index })]}>
                   ${page.humanDisplay}
                 </a>
               </li>

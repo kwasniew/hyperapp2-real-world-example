@@ -1,10 +1,6 @@
 export const targetValue = event => event.target.value;
 export const keyCode = event => event.keyCode;
 
-const preventDefaultEffect = (dispatch, props, event) => event.preventDefault();
-
-export const preventDefault = [preventDefaultEffect];
-
 const OnKeyCode = code => action => [
   (state, keyCode) => {
     if (keyCode === code) {
@@ -14,5 +10,7 @@ const OnKeyCode = code => action => [
   },
   keyCode
 ];
+
+export const eventWith = props => e => Object.assign(e, props);
 
 export const OnEnter = OnKeyCode(13);

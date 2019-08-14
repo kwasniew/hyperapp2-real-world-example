@@ -14,10 +14,11 @@
     "test:consumer": "mocha pact/*Test.js --require esm"
   },
   "dependencies": {
+    "@hyperapp/events": "0.0.3",
     "@kwasniew/hyperapp-fx": "2.0.0-beta.2",
     "classcat": "4.0.2",
     "htm": "2.1.1",
-    "hyperapp": "github:jorgebucaran/hyperapp#release",
+    "hyperapp": "2.0.1",
     "page": "1.11.4",
     "snarkdown": "1.2.2"
   },

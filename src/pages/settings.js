@@ -1,13 +1,13 @@
 import { html } from "../shared/html.js";
 import { ListErrors } from "./fragments/forms.js";
 import { errorsList } from "./fragments/forms.js";
-import { preventDefault } from "../lib/events.js";
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
+import {preventDefault} from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
 const UpdateSettings = user => {
@@ -32,7 +32,6 @@ const UpdateSettings = user => {
 const SubmitForm = state => [
   Submitting(state),
   [
-    preventDefault,
     UpdateSettings({
       image: state.image,
       username: state.username,
@@ -56,7 +55,7 @@ export const LoadSettingsPage = page => state => {
 
 // Views
 const SettingsForm = ({ image, username, bio, email, password, inProgress }) => html`
-  <form onsubmit=${SubmitForm}>
+  <form onsubmit=${preventDefault(SubmitForm)}>
     <fieldset>
       <fieldset class="form-group">
         <input

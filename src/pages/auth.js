@@ -1,5 +1,4 @@
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
-import { preventDefault } from "../lib/events.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
 import { targetValue } from "../lib/events.js";
@@ -9,6 +8,7 @@ import { UserSuccess } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
+import {preventDefault} from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
 const ChangeUsername = (state, username) => ({ ...state, username });
@@ -31,7 +31,7 @@ const Login = ({ email, password }) =>
   });
 const SubmitLogin = state => [
   Submitting(state),
-  [preventDefault, Login({ email: state.email, password: state.password })]
+  [Login({ email: state.email, password: state.password })]
 ];
 
 const Register = ({ email, password, username }) =>
@@ -51,7 +51,6 @@ const Register = ({ email, password, username }) =>
 const SubmitRegister = state => [
   { ...state, inProgess: true },
   [
-    preventDefault,
     Register({
       email: state.email,
       password: state.password,
@@ -96,7 +95,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
 
           ${ListErrors({ errors: errorsList({ errors }) })}
 
-          <form onsubmit=${SubmitLogin}>
+          <form onsubmit=${preventDefault(SubmitLogin)}>
             <fieldset>
               <fieldset class="form-group">
                 <input
@@ -143,7 +142,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
 
           ${ListErrors({ errors: errorsList({ errors }) })}
 
-          <form onsubmit=${SubmitRegister}>
+          <form onsubmit=${preventDefault(SubmitRegister)}>
             <fieldset>
               <fieldset class="form-group">
                 <input
