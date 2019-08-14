@@ -11,7 +11,7 @@ app(
   {
     init: () => [initialState, ReadUser, RoutePages({ routes })],
     view,
-    node: document.getElementById("app")
-  },
-  logger(true, console.log)
+    node: document.getElementById("app"),
+    middleware: logger(console.log)
+  }
 );

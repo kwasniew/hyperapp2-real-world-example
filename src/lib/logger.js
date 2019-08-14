@@ -1,15 +1,20 @@
-// https://gist.github.com/sergey-shpak/29f1f5733715fedb265662d2f327ee8c
 const isArray = Array.isArray;
 const isFunction = param => typeof param === "function";
 
-export const logger = (env, output = console.debug) =>
-  env &&
-  (dispatch => (action, props, obj) => {
-    if (isFunction(action)) output("Action", action.name, props, obj);
-    else if (isArray(action)) {
-      // 'tuple action' logged with next dispatch iteration
-      if (isArray(action[1])) output("Effect", action[1][0].name, action[1][1]);
-    } else output("State", action);
-    return dispatch(action, props, obj);
+export const logger = (output = console.debug) =>
+  (dispatch => (action, props) => {
+    if (isFunction(action)) {
+      output("Action", action.name, props);
+    } else if (isArray(action)) {
+      output("State", action[0]);
+      if (isArray(action[1])) {
+        for(let i = 1; i < action.length; i++) {
+          output("Effect", action[i][0].name, action[i][1]);
+        }
+      }
+    } else {
+      output("State", action);
+    }
+    return dispatch(action, props);
   });
 export default logger;
