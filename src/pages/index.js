@@ -18,6 +18,6 @@ const pageStructure = [
   [PROFILE_FAVORITED, ProfilePage, LoadProfileFavoritedPage]
 ];
 
-const fromEntries = Object.fromEntries || (arr => Object.assign({}, ...Array.from(arr, ([k, v]) => ({[k]: v}) )));
+const fromEntries = Object.fromEntries || (arr => Object.assign({}, ...Array.from(arr, ([k, v]) => ({ [k]: v }))));
 export const pages = fromEntries(pageStructure);
 export const routes = fromEntries(pageStructure.map(([path, _, initAction]) => [path, initAction(path)]));

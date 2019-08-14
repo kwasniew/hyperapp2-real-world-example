@@ -7,12 +7,12 @@ import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
-import {preventDefault} from "../web_modules/@hyperapp/events.js";
+import { preventDefault } from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
 const UpdateSettings = user => {
   const { password, token, ...userWithoutPassword } = user;
-  const submitUser = password && password.length > 0 ? {password, ...userWithoutPassword} : userWithoutPassword;
+  const submitUser = password && password.length > 0 ? { password, ...userWithoutPassword } : userWithoutPassword;
   return Http({
     url: API_ROOT + "/user",
     options: {

@@ -11,7 +11,7 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/Router.js";
 import { NEW_EDITOR } from "./links.js";
-import {preventDefault} from "../web_modules/@hyperapp/events.js";
+import { preventDefault } from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
 const AddTag = state => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });
@@ -49,7 +49,7 @@ const SubmitArticle = state => [
       },
       token: state.user.token,
       url: API_ROOT + "/articles" + (state.page === NEW_EDITOR ? "" : `/${state.slug}`),
-      method: state.page === NEW_EDITOR ? "POST": "PUT"
+      method: state.page === NEW_EDITOR ? "POST" : "PUT"
     })
   ]
 ];

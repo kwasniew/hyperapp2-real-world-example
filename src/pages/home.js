@@ -4,8 +4,8 @@ import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
-import {preventDefault} from "../web_modules/@hyperapp/events.js";
-import {eventWith} from "../lib/events.js";
+import { preventDefault } from "../web_modules/@hyperapp/events.js";
+import { eventWith } from "../lib/events.js";
 
 // Actions & Effects
 export const SetTags = (state, { tags }) => ({ ...state, tags });
@@ -19,7 +19,8 @@ export const FetchTags = Http({
 
 export const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
-export const FetchGlobalFeed = ({ pageIndex, token }) => FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
+export const FetchGlobalFeed = ({ pageIndex, token }) =>
+  FetchArticles(`/articles?limit=10&offset=${pageIndex * 10}`, token);
 export const FetchTagFeed = ({ tag, pageIndex, token }) =>
   FetchArticles(`/articles?limit=10&tag=${tag}&offset=${pageIndex * 10}`, token);
 
@@ -113,7 +114,7 @@ const FeedTab = ({ active, type, name }, children) =>
         href=""
         data-test="feed"
         class=${cc({ "nav-link": true, active })}
-        onclick=${[preventDefault(ChangeTab), eventWith({activeFeedName: name, activeFeedType: type })]}
+        onclick=${[preventDefault(ChangeTab), eventWith({ activeFeedName: name, activeFeedType: type })]}
       >
         ${children}
       </a>
@@ -148,7 +149,11 @@ const ListPagination = ({ pages }) => {
           page =>
             html`
               <li class=${page.isCurrent ? "page-item active" : "page-item"}>
-                <a class="page-link" href="" onclick=${[preventDefault(ChangePage), eventWith({currentPageIndex: page.index })]}>
+                <a
+                  class="page-link"
+                  href=""
+                  onclick=${[preventDefault(ChangePage), eventWith({ currentPageIndex: page.index })]}
+                >
                   ${page.humanDisplay}
                 </a>
               </li>

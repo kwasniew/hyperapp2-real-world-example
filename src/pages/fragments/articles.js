@@ -65,7 +65,11 @@ const FavoriteButton = ({ article }) => {
   const style = article.favorited ? "btn-primary favorited" : "btn-outline-primary unfavorited";
 
   return html`
-    <button onclick=${[ChangeFavoriteStatus, article.slug]} data-test="favorite-count" class=${"btn btn-sm btn-primary pull-xs-right " + style}>
+    <button
+      onclick=${[ChangeFavoriteStatus, article.slug]}
+      data-test="favorite-count"
+      class=${"btn btn-sm btn-primary pull-xs-right " + style}
+    >
       <i class="ion-heart" /> ${article.favoritesCount}
     </button>
   `;

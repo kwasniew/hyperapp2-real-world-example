@@ -1,14 +1,13 @@
 import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
-import { targetValue } from "../lib/events.js";
 import { errorsList } from "./fragments/forms.js";
 import { ListErrors } from "./fragments/forms.js";
 import { UserSuccess } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
-import {preventDefault} from "../web_modules/@hyperapp/events.js";
+import { preventDefault, targetValue } from "../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
 const ChangeUsername = (state, username) => ({ ...state, username });
@@ -29,10 +28,7 @@ const Login = ({ email, password }) =>
     action: UserSuccess,
     error: FormError
   });
-const SubmitLogin = state => [
-  Submitting(state),
-  [Login({ email: state.email, password: state.password })]
-];
+const SubmitLogin = state => [Submitting(state), [Login({ email: state.email, password: state.password })]];
 
 const Register = ({ email, password, username }) =>
   Http({

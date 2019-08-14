@@ -22,15 +22,9 @@ const AUTHOR_FEED = "author";
 const FAVORITED_FEED = "favorited";
 
 const FetchAuthorFeed = ({ page, username, token }) =>
-  FetchArticles(
-    `/articles?author=${encodeURIComponent(username)}&limit=5&offset=0`,
-    token
-  );
+  FetchArticles(`/articles?author=${encodeURIComponent(username)}&limit=5&offset=0`, token);
 const FetchFavoritedFeed = ({ page, username, token }) =>
-  FetchArticles(
-    `/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=0`,
-    token
-  );
+  FetchArticles(`/articles?favorited=${encodeURIComponent(username)}&limit=5&offset=0`, token);
 
 const fetches = {
   [AUTHOR_FEED]: FetchAuthorFeed,
@@ -59,8 +53,7 @@ export const LoadProfileFavoritedPage = LoadPage(FAVORITED_FEED);
 const ChangeFollow = method => state => [
   state,
   Http({
-    url:
-      API_ROOT + "/profiles/" + encodeURIComponent(state.profile.username) + "/follow",
+    url: API_ROOT + "/profiles/" + encodeURIComponent(state.profile.username) + "/follow",
     options: { method, headers: authHeader(state.user.token) },
     action: SetProfile,
     error: LogError
@@ -72,10 +65,10 @@ const Unfollow = ChangeFollow("DELETE");
 
 // Views
 const FollowUserButton = ({ username, following }) => html`
-  <button data-test="changeFollow"
+  <button
+    data-test="changeFollow"
     onclick=${following ? Unfollow : Follow}
-    class=${"btn btn-sm action-btn" +
-      (following ? " btn-secondary" : " btn-outline-secondary")}
+    class=${"btn btn-sm action-btn" + (following ? " btn-secondary" : " btn-outline-secondary")}
   >
     <i class="ion-plus-round" />
     ${" "} ${following ? "Unfollow" : "Follow"} ${username}
@@ -94,9 +87,7 @@ const Tabs = ({ username, activeFeedType }) =>
       <li class="nav-item">
         <a
           data-test="feed"
-          class=${activeFeedType === AUTHOR_FEED
-            ? "nav-link active"
-            : "nav-link"}
+          class=${activeFeedType === AUTHOR_FEED ? "nav-link active" : "nav-link"}
           href=${profile(username)}
         >
           My Articles
@@ -106,9 +97,7 @@ const Tabs = ({ username, activeFeedType }) =>
       <li class="nav-item">
         <a
           data-test="feed"
-          class=${activeFeedType === FAVORITED_FEED
-            ? "nav-link active"
-            : "nav-link"}
+          class=${activeFeedType === FAVORITED_FEED ? "nav-link active" : "nav-link"}
           href=${profileFavorited(username)}
         >
           Favorited Articles
@@ -120,13 +109,7 @@ const Tabs = ({ username, activeFeedType }) =>
 const isLoggedIn = ({ user }) => user.token;
 const isOwnProfile = ({ user, profile }) => user.username === profile.username;
 
-export const ProfilePage = ({
-  user,
-  profile,
-  activeFeedType,
-  articles,
-  isLoading
-}) => html`
+export const ProfilePage = ({ user, profile, activeFeedType, articles, isLoading }) => html`
   <div class="profile-page">
     <div>
       <div class="user-info">
@@ -135,12 +118,7 @@ export const ProfilePage = ({
             <div class="col-xs-12 col-md-10 offset-md-1">
               ${profile.image
                 ? html`
-                    <img
-                      data-test="avatar"
-                      class="user-img"
-                      src=${profile.image}
-                      alt=${profile.username}
-                    />
+                    <img data-test="avatar" class="user-img" src=${profile.image} alt=${profile.username} />
                   `
                 : ""}
               <h4 data-test="username">${profile.username}</h4>

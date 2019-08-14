@@ -1,4 +1,3 @@
-export const targetValue = event => event.target.value;
 export const keyCode = event => event.keyCode;
 
 const OnKeyCode = code => action => [
