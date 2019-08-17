@@ -11,7 +11,8 @@
     "test:record": "CYPRESS_mode=record CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:stub": "CYPRESS_mode=stub CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:prod": "CYPRESS_mode=prod CYPRESS_apiUrl=https://conduit.productionready.io/api npm-run-all --parallel start cy:open",
-    "test:consumer": "mocha pact/*Test.js --require esm"
+    "test:consumer": "mocha pact/*Test.js --require esm",
+    "test:performance": "bundlesize"
   },
   "dependencies": {
     "@hyperapp/events": "0.0.3",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@pact-foundation/pact": "8.2.6",
     "@pika/web": "0.4.3",
+    "bundlesize": "0.18.0",
     "cypress": "3.4.0",
     "esm": "3.2.25",
     "http-server": "0.11.1",
@@ -38,5 +40,11 @@
     "tape-async": "2.3.0",
     "tape-await": "0.1.2",
     "wait-on": "3.3.0"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/*.js",
+      "maxSize": "20 kB"
+    }
+  ]
 }
