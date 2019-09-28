@@ -20,6 +20,7 @@
     "classcat": "4.0.2",
     "htm": "2.1.1",
     "hyperapp": "2.0.1",
+    "hyperapp-v2-basiclogger": "0.3.0",
     "page": "1.11.4",
     "snarkdown": "1.2.2"
   },

@@ -45,7 +45,7 @@ const Register = ({ email, password, username }) =>
     error: FormError
   });
 const SubmitRegister = state => [
-  { ...state, inProgess: true },
+  { ...state, inProgress: true },
   [
     Register({
       email: state.email,
