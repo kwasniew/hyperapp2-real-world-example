@@ -10,10 +10,10 @@ const element = (container) => name => container.querySelector(`[data-test=${nam
 const pageElement = element(document);
 const elements = container => name => container.querySelectorAll(`[data-test=${name}]`);
 const pageElements = elements(document);
-const feed = feedName => getByText(pageElement("feeds"), feedName);
-const assertFeedActive = feedName => assert.ok(hasClass(feed(feedName))("active"));
-const assertFeedInactive = feedName => assert.ok(!hasClass(feed(feedName))("active"));
-const assertFeeds = (...feeds) => {
+const feed = feedName => () => getByText(pageElement("feeds"), feedName);
+const assertFeedActive = feedName => assert.ok(hasClass(feed(feedName)())("active"));
+const assertFeedInactive = feedName => assert.ok(!hasClass(feed(feedName)())("active"));
+const assertFeeds = (...feeds) => () => {
   assert.deepStrictEqual(pageElements("feed").length, feeds.length);
   feeds.map(feed => {
     Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
@@ -48,6 +48,11 @@ async function login({ email = "testingwithcypress@gmail.com", password = "testi
   const body = await res.json();
   localStorage.setItem("session", JSON.stringify(body.user));
 }
+
+const goToFeed = async (feedName) => {
+  const link = await waitForElement(feed(feedName));
+  link.click();
+};
 
 describe("articles", function() {
   beforeEach(function() {
@@ -89,13 +94,9 @@ describe("articles", function() {
       init();
     });
     it("switch your and global feed", async () => {
-      await wait(() => {
-        assertFeeds(["Your Feed"], "Global Feed");
-      });
-      feed("Global Feed").click();
-      await wait(() => {
-        assertFeeds("Your Feed", ["Global Feed"]);
-      });
+      await wait(assertFeeds(["Your Feed"], "Global Feed"));
+      feed("Global Feed")().click();
+      await wait(assertFeeds("Your Feed", ["Global Feed"]));
 
     });
 
@@ -103,18 +104,13 @@ describe("articles", function() {
       const someTag = await waitForElement(() => tag(0));
       const text = someTag.textContent;
       someTag.click();
-      await wait(() => {
-        assertFeeds("Your Feed", "Global Feed", [text]);
-      });
-      feed("Global Feed").click();
-      await wait(() => {
-        assertFeeds("Your Feed", ["Global Feed"]);
-      });
+      await wait(assertFeeds("Your Feed", "Global Feed", [text]));
+      feed("Global Feed")().click();
+      await wait(assertFeeds("Your Feed", ["Global Feed"]));
     });
 
     it("paginate articles", async function() {
-      const link = await waitForElement(() => feed("Global Feed"));
-      link.click();
+      await goToFeed("Global Feed");
       await wait(() => {
         assert.deepStrictEqual(activePage().textContent, "1");
       });
@@ -125,8 +121,7 @@ describe("articles", function() {
     });
 
     it("favorite/unfavorite articles", async function() {
-      const link = await waitForElement(() => feed("Global Feed"));
-      link.click();
+      await goToFeed("Global Feed");
       const counter = await waitForElement(unfavorited);
       const count = Number(counter.textContent);
       counter.click();
@@ -152,7 +147,7 @@ describe("articles", function() {
     it("show active global feed with 10 articles", async function() {
       return wait(
         () => {
-          assertFeeds(["Global Feed"]);
+          assertFeeds(["Global Feed"])();
           assert.deepStrictEqual(articles().length, 10);
         }
       );
