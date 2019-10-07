@@ -19,6 +19,13 @@ const assertFeeds = (...feeds) => () => {
     Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
   });
 };
+const assertArticleCount = number => () => {
+  assert.deepStrictEqual(articles().length, number);
+}
+
+const assertActivePage = label => () => {
+  assert.deepStrictEqual(activePage().textContent, label);
+};
 const articles = (index) => typeof index !== "undefined" ? pageElements("article")[index] : pageElements("article");
 const activePage = () => document.querySelector(".active .page-link");
 const page = label => getByText(document.querySelector(".pagination"), label);
@@ -67,11 +74,7 @@ describe("articles", function() {
       init();
     });
     it("provide articles preview", async () => {
-      await wait(
-        () => {
-          assert.deepStrictEqual(articles().length, 2);
-        }
-      );
+      await wait(assertArticleCount(2));
       const firstArticleSelector = element(articles(0));
       assert.deepStrictEqual(firstArticleSelector("title").textContent, "Unfavorited Article Title");
       assert.deepStrictEqual(firstArticleSelector("description").textContent, "Unfavorited Article Description");
@@ -111,13 +114,9 @@ describe("articles", function() {
 
     it("paginate articles", async function() {
       await goToFeed("Global Feed");
-      await wait(() => {
-        assert.deepStrictEqual(activePage().textContent, "1");
-      });
+      await wait(assertActivePage("1"));
       page("2").click();
-      await wait(() => {
-        assert.deepStrictEqual(activePage().textContent, "2");
-      });
+      await wait(assertActivePage("2"));
     });
 
     it("favorite/unfavorite articles", async function() {
@@ -141,16 +140,10 @@ describe("articles", function() {
     });
   });
   context("guest", function() {
-    beforeEach(async function() {
-      init();
-    });
+    beforeEach(init);
     it("show active global feed with 10 articles", async function() {
-      return wait(
-        () => {
-          assertFeeds(["Global Feed"])();
-          assert.deepStrictEqual(articles().length, 10);
-        }
-      );
+      await wait(assertFeeds(["Global Feed"]));
+      return wait(assertArticleCount(10));
     });
   });
 });
