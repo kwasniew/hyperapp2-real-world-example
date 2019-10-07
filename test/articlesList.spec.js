@@ -11,8 +11,8 @@ const pageElement = element(document);
 const elements = container => name => container.querySelectorAll(`[data-test=${name}]`);
 const pageElements = elements(document);
 const feed = feedName => getByText(pageElement("feeds"), feedName);
-const assertFeedActive = feedName => assert.ok(Array.from(feed(feedName).classList).includes("active"));
-const assertFeedInactive = feedName => assert.ok(!Array.from(feed(feedName).classList).includes("active"));
+const assertFeedActive = feedName => assert.ok(hasClass(feed(feedName))("active"));
+const assertFeedInactive = feedName => assert.ok(!hasClass(feed(feedName))("active"));
 const assertFeeds = (...feeds) => {
   assert.deepStrictEqual(pageElements("feed").length, feeds.length);
   feeds.map(feed => {
@@ -20,12 +20,13 @@ const assertFeeds = (...feeds) => {
   });
 };
 const article = index => pageElements("article")[index];
-const unfavorited = element => Array.from(element.classList).includes("unfavorited");
-const favorited = element => Array.from(element.classList).includes("favorited");
 const activePage = () => document.querySelector(".active .page-link");
 const page = label => getByText(document.querySelector(".pagination"), label);
 const tag = (index) => pageElements("tag")[index];
 const tags = (container) => Array.from(elements(container)("tag")).map(x => x.textContent);
+const hasClass = element => className => Array.from(element.classList).includes(className);
+const isFavorited = element => hasClass(element)("favorited");
+const isUnfavorited = element => hasClass(element)("unfavorited");
 
 const apiUrl = "https://conduit.productionready.io/api";
 
@@ -57,18 +58,6 @@ describe("articles", function() {
         res.status(200).json(globalFeed);
       });
       init();
-    });
-    it("favorite/unfavorite articles", async function() {
-      await wait(
-        () => {
-          assert.deepStrictEqual(document.querySelectorAll(".article-preview").length, 2);
-        }
-      );
-
-      const button1 = element(article(0))("favorite-count");
-      const button2 = element(article(1))("favorite-count");
-      assert.ok(unfavorited(button1));
-      assert.ok(favorited(button2));
     });
     it("provide articles preview", () => {
       return wait(
@@ -108,9 +97,9 @@ describe("articles", function() {
     });
 
     it("toggle tag feed when active", async () => {
-      const firstTag = await waitForElement(() => tag(0));
-      const text = firstTag.textContent;
-      firstTag.click();
+      const someTag = await waitForElement(() => tag(0));
+      const text = someTag.textContent;
+      someTag.click();
       await wait(() => {
         assertFeeds("Your Feed", "Global Feed", [text]);
       });
@@ -130,6 +119,29 @@ describe("articles", function() {
       await wait(() => {
         assert.deepStrictEqual(activePage().textContent, "2");
       });
+    });
+
+    it("favorite/unfavorite articles", async function() {
+      const link = await waitForElement(() => feed("Global Feed"));
+      link.click();
+      const counter = await waitForElement(
+        () => document.querySelector(".unfavorited")
+      );
+      const count = Number(counter.textContent);
+      counter.click();
+      await wait(
+        () => {
+          assert.ok(isFavorited(counter));
+          assert.deepStrictEqual(Number(counter.textContent), count + 1);
+        }
+      );
+      counter.click();
+      await wait(
+        () => {
+          assert.ok(isUnfavorited(counter));
+          assert.deepStrictEqual(Number(counter.textContent), count);
+        }
+      );
     });
   });
   context("guest", function() {
