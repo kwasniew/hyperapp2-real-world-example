@@ -19,7 +19,7 @@ const assertFeeds = (...feeds) => {
     Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
   });
 };
-const article = index => pageElements("article")[index];
+const articles = (index) => typeof index !== "undefined" ? pageElements("article")[index] : pageElements("article");
 const activePage = () => document.querySelector(".active .page-link");
 const page = label => getByText(document.querySelector(".pagination"), label);
 const tag = (index) => pageElements("tag")[index];
@@ -27,6 +27,8 @@ const tags = (container) => Array.from(elements(container)("tag")).map(x => x.te
 const hasClass = element => className => Array.from(element.classList).includes(className);
 const isFavorited = element => hasClass(element)("favorited");
 const isUnfavorited = element => hasClass(element)("unfavorited");
+const unfavorited = () => document.querySelector(".unfavorited");
+
 
 const apiUrl = "https://conduit.productionready.io/api";
 
@@ -59,24 +61,25 @@ describe("articles", function() {
       });
       init();
     });
-    it("provide articles preview", () => {
-      return wait(
+    it("provide articles preview", async () => {
+      await wait(
         () => {
-          const article0 = element(article(0));
-          assert.deepStrictEqual(article0("title").textContent, "Unfavorited Article Title");
-          assert.deepStrictEqual(article0("description").textContent, "Unfavorited Article Description");
-          assert.deepStrictEqual(tags(article(0)), ["tag1", "tag2"]);
-          assert.deepStrictEqual(article0("date").textContent, "Fri Jul 12 2019");
-          assert.deepStrictEqual(article0("avatar").src, "https://static.productionready.io/images/smiley-cyrus.jpg");
-
-          const article1 = element(article(1));
-          assert.deepStrictEqual(article1("title").textContent, "Favorited Article Title");
-          assert.deepStrictEqual(article1("description").textContent, "Favorited Article Description");
-          assert.deepStrictEqual(tags(article(1)), ["tag3"]);
-          assert.deepStrictEqual(article1("date").textContent, "Sat Jul 13 2019");
-          assert.deepStrictEqual(article1("avatar").src, "https://dummyimage.com/100x100/f01818/ffffff&text=+boom");
+          assert.deepStrictEqual(articles().length, 2);
         }
       );
+      const firstArticleSelector = element(articles(0));
+      assert.deepStrictEqual(firstArticleSelector("title").textContent, "Unfavorited Article Title");
+      assert.deepStrictEqual(firstArticleSelector("description").textContent, "Unfavorited Article Description");
+      assert.deepStrictEqual(tags(articles(0)), ["tag1", "tag2"]);
+      assert.deepStrictEqual(firstArticleSelector("date").textContent, "Fri Jul 12 2019");
+      assert.deepStrictEqual(firstArticleSelector("avatar").src, "https://static.productionready.io/images/smiley-cyrus.jpg");
+
+      const secondArticleSelector = element(articles(1));
+      assert.deepStrictEqual(secondArticleSelector("title").textContent, "Favorited Article Title");
+      assert.deepStrictEqual(secondArticleSelector("description").textContent, "Favorited Article Description");
+      assert.deepStrictEqual(tags(articles(1)), ["tag3"]);
+      assert.deepStrictEqual(secondArticleSelector("date").textContent, "Sat Jul 13 2019");
+      assert.deepStrictEqual(secondArticleSelector("avatar").src, "https://dummyimage.com/100x100/f01818/ffffff&text=+boom");
     });
 
   });
@@ -124,9 +127,7 @@ describe("articles", function() {
     it("favorite/unfavorite articles", async function() {
       const link = await waitForElement(() => feed("Global Feed"));
       link.click();
-      const counter = await waitForElement(
-        () => document.querySelector(".unfavorited")
-      );
+      const counter = await waitForElement(unfavorited);
       const count = Number(counter.textContent);
       counter.click();
       await wait(
@@ -152,7 +153,7 @@ describe("articles", function() {
       return wait(
         () => {
           assertFeeds(["Global Feed"]);
-          assert.deepStrictEqual(document.querySelectorAll(".article-preview").length, 10);
+          assert.deepStrictEqual(articles().length, 10);
         }
       );
     });
