@@ -1,6 +1,5 @@
 import jsdom from "jsdom-global";
-// import "isomorphic-unfetch";
-import fetch,  { Headers, Request, Response, FetchError } from 'node-fetch';
+import fetch, { Headers, Request, Response, FetchError } from "node-fetch";
 global.fetch = fetch;
 global.Request = Request;
 global.Response = Response;
@@ -27,4 +26,4 @@ function beforeEach() {
   global.localStorage.clear();
 }
 
-export default {beforeEach};
+export default { beforeEach };

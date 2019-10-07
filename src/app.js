@@ -8,11 +8,9 @@ import { ReadUser } from "./pages/fragments/user.js";
 const initialState = { user: {} };
 
 export const init = () =>
-  app(
-    {
-      init: () => [initialState, ReadUser, RoutePages({ routes })],
-      view,
-      node: document.getElementById("app")
-      // middleware: logger
-    }
-  );
+  app({
+    init: () => [initialState, ReadUser, RoutePages({ routes })],
+    view,
+    node: document.getElementById("app")
+    // middleware: logger
+  });
