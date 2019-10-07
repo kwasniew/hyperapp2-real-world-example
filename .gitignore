@@ -5,3 +5,5 @@ decision_log.md
 dist
 *.log
 recordings
+coverage
+.nyc_output

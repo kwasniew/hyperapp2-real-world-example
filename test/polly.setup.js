@@ -9,6 +9,7 @@ setupPolly({
   adapters: ["node-http"],
   persister: "fs",
   recordIfMissing: true,
+  recordFailedRequests: true,
   matchRequestsBy: {
     method: true,
     headers: true,
