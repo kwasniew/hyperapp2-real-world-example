@@ -200,7 +200,7 @@ export const HomePage = ({
         <div class="row">
           <div class="col-md-9">
             <div class="feed-toggle">
-              <ul class="nav nav-pills outline-active">
+              <ul data-test="feeds" class="nav nav-pills outline-active">
                 ${feeds.map(name => uiFeeds[name]({ activeFeedType, activeFeedName }))}
               </ul>
             </div>

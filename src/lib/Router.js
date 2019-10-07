@@ -1,6 +1,7 @@
-import page from "../web_modules/page.js";
+import Page from "../web_modules/page.js";
 
 const router = (dispatch, { routes }) => {
+  const page = Page.create();
   const paths = Object.keys(routes);
   paths.forEach(path => {
     const route = routes[path];
