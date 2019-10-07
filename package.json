@@ -9,7 +9,7 @@
     "cy:open": "cypress open",
     "mb:start": "mb start",
     "mb:stop": "mb stop",
-    "test": "mocha --require esm test/*.spec.js",
+    "test": "mocha --require esm test/*.spec.js --timeout 5000 --watch",
     "test:coverage": "nyc npm run test && nyc report --reporter=html",
     "test:record": "CYPRESS_mode=record CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
     "test:stub": "CYPRESS_mode=stub CYPRESS_apiUrl=http://localhost:3000/api npm-run-all --parallel mb start cy:open",
