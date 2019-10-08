@@ -21,7 +21,8 @@ global.localStorage = {
   }
 };
 
-function beforeEach() {
+function beforeEach(href) {
+  location.href = href;
   document.body.innerHTML = "<div id='app'></div>";
   global.localStorage.clear();
 }
