@@ -7,3 +7,4 @@ dist
 recordings
 coverage
 .nyc_output
+.parcel-cache

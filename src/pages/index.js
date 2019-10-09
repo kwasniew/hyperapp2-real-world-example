@@ -1,38 +1,7 @@
-// import { HomePage, LoadHomePage } from "../pages/home.js";
-// import { LoadLoginPage, LoadRegisterPage, LoginPage, RegisterPage } from "../pages/auth.js";
-// import { LoadSettingsPage, SettingsPage } from "../pages/settings.js";
-// import { EditorPage, LoadEditorPage, LoadNewEditorPage } from "../pages/editor.js";
-// import { ArticlePage, LoadArticlePage } from "../pages/article.js";
-// import { LoadProfileFavoritedPage, LoadProfilePage, ProfilePage } from "../pages/profile.js";
 import { ARTICLE, EDITOR, HOME, LOGIN, NEW_EDITOR, PROFILE, PROFILE_FAVORITED, REGISTER, SETTINGS } from "./links.js";
+import {fromEntries} from "../lib/object.js";
+import {lazy} from "../lib/lazy.js";
 
-
-const lazy = loader => {
-  let loadedModule;
-  const lazyActionOrView = function(name) {
-    return function lazy(placeholder) {
-      if(typeof placeholder !== "undefined") {
-        // view
-        return loadedModule ? loadedModule[name] : () => placeholder;
-      }
-      // action
-      if(loadedModule) {
-        return Promise.resolve(loadedModule[name]);
-      }
-
-      return loader().then(module => {
-        loadedModule = module;
-        return module[name];
-      });
-
-    }
-  };
-  return new Proxy({}, {
-    get(_, name) {
-      return lazyActionOrView(name);
-    }
-  });
-};
 const { HomePage, LoadHomePage } = lazy(() => import("../pages/home.js"));
 const {LoginPage, LoadLoginPage, RegisterPage, LoadRegisterPage} = lazy(() => import("../pages/auth.js"));
 const {SettingsPage, LoadSettingsPage} = lazy(() => import("../pages/settings.js"));
@@ -53,12 +22,8 @@ const pageStructure = [
   [PROFILE_FAVORITED, ProfilePage, LoadProfileFavoritedPage]
 ];
 
-const fromEntries = Object.fromEntries || (arr => Object.assign({}, ...Array.from(arr, ([k, v]) => ({ [k]: v }))));
 export const pages = fromEntries(pageStructure);
-export const routes = fromEntries(pageStructure.map(([path, _, initAction]) => {
-  if (initAction.name === "lazy") {
-    return [path, () => initAction().then(action => action(path))];
-  } else {
-    return [path, initAction(path)];
-  }
-}));
+export const routes = pageStructure.map(([path, _, initAction]) => {
+  return [path, initAction];
+});
+
