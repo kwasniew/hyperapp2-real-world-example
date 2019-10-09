@@ -14,7 +14,6 @@ const router = (dispatch, { routes }) => {
       } else {
         dispatch(route, context.params);
       }
-
     });
   });
 
@@ -25,13 +24,16 @@ const router = (dispatch, { routes }) => {
   };
 };
 
-const normalize = routes => fromEntries(routes.map(([path, pageAction]) => {
-  if (pageAction.name === "lazy") {
-    return [path, () => pageAction().then(action => action(path))];
-  } else {
-    return [path, pageAction(path)];
-  }
-}));
+const normalize = routes =>
+  fromEntries(
+    routes.map(([path, pageAction]) => {
+      if (pageAction.name === "lazy") {
+        return [path, () => pageAction().then(action => action(path))];
+      } else {
+        return [path, pageAction(path)];
+      }
+    })
+  );
 
 export const RoutePages = ({ routes }) => [router, { routes }];
 

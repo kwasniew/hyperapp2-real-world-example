@@ -1,5 +1,5 @@
 import { app } from "./web_modules/hyperapp.js";
-import { RoutePages } from "./lib/Router.js";
+import { RoutePages } from "./lib/router.js";
 import { view } from "./pages/layout.js";
 import { routes } from "./pages/index.js";
 import { ReadUser } from "./pages/fragments/user.js";

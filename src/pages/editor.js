@@ -9,7 +9,7 @@ import { FormError, Submitting } from "./fragments/forms.js";
 import { HOME } from "./links.js";
 import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
-import { RedirectAction } from "../lib/Router.js";
+import { RedirectAction } from "../lib/router.js";
 import { NEW_EDITOR } from "./links.js";
 import { preventDefault } from "../web_modules/@hyperapp/events.js";
 

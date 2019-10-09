@@ -6,7 +6,7 @@ import { authHeader } from "../shared/authHeader.js";
 import { profile, editor, HOME, LOGIN, REGISTER } from "./links.js";
 import { format } from "../shared/date.js";
 import { LogError } from "./fragments/forms.js";
-import { RedirectAction } from "../lib/Router.js";
+import { RedirectAction } from "../lib/router.js";
 import { ChangeFieldFromTarget } from "./fragments/forms.js";
 import { preventDefault } from "../web_modules/@hyperapp/events.js";
 import { FetchArticle } from "./fragments/article.js";
