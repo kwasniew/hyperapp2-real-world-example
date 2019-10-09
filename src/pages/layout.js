@@ -60,6 +60,6 @@ const Header = ({ page, user }) =>
 
 export const view = state => html`
   <div>
-    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : ""}
+    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](html`<div>Loading...</div>`)(state) : ""}
   </div>
 `;

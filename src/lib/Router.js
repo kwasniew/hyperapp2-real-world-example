@@ -7,7 +7,12 @@ const router = (dispatch, { routes }) => {
   paths.forEach(path => {
     const route = routes[path];
     page(path, context => {
-      dispatch(route, context.params);
+      if(route.length === 0) {
+        route().then(lazyRoute => dispatch(lazyRoute, context.params));
+      } else {
+        dispatch(route, context.params);
+      }
+
     });
   });
 
