@@ -1,15 +1,15 @@
 import Page from "../web_modules/page.js";
 import { fromEntries } from "./object.js";
 
-let page = Page.create();
-const router = (dispatch, { routes }) => {
-  const normalized = normalize(routes);
+let page;
+const router = (dispatch, { routes, lazy }) => {
   page = Page.create();
-  const paths = Object.keys(normalized);
+  const normalizedRoutes = normalize(lazy)(routes);
+  const paths = Object.keys(normalizedRoutes);
   paths.forEach(path => {
-    const route = normalized[path];
+    const route = normalizedRoutes[path];
     page(path, context => {
-      if (route.length === 0) {
+      if (lazy) {
         route().then(lazyRoute => dispatch(lazyRoute, context.params));
       } else {
         dispatch(route, context.params);
@@ -24,10 +24,10 @@ const router = (dispatch, { routes }) => {
   };
 };
 
-const normalize = routes =>
+const normalize = lazy => routes =>
   fromEntries(
     routes.map(([path, pageAction]) => {
-      if (pageAction.name === "lazy") {
+      if (lazy) {
         return [path, () => pageAction().then(action => action(path))];
       } else {
         return [path, pageAction(path)];
@@ -35,7 +35,7 @@ const normalize = routes =>
     })
   );
 
-export const RoutePages = ({ routes }) => [router, { routes }];
+export const RoutePages = ({ routes, lazy }) => [router, { routes, lazy }];
 
 const redirectEffect = (dispatch, props) => page.redirect(props.path);
 export const Redirect = props => [redirectEffect, props];
