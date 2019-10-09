@@ -28,7 +28,6 @@
     "snarkdown": "1.2.2"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "8.2.6",
     "@pika/web": "0.4.3",
     "@pollyjs/adapter-fetch": "2.6.3",
     "@pollyjs/adapter-node-http": "2.6.3",
@@ -50,10 +49,6 @@
     "nyc": "14.1.1",
     "parcel": "2.0.0-alpha.1.1",
     "prettier": "1.18.2",
-    "tape": "4.11.0",
-    "tape-async": "2.3.0",
-    "tape-await": "0.1.2",
-    "wait-on": "3.3.0",
     "whatwg-fetch": "3.0.0"
   },
   "bundlesize": [
