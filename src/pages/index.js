@@ -9,20 +9,23 @@ import { ARTICLE, EDITOR, HOME, LOGIN, NEW_EDITOR, PROFILE, PROFILE_FAVORITED, R
 
 const lazy = loader => {
   let loadedModule;
-  const lazyActionOrView = name => placeholder => {
-    if(typeof placeholder !== "undefined") {
-      // view
-      return loadedModule ? loadedModule[name] : () => placeholder;
-    }
-    // action
-    if(loadedModule) {
-      return Promise.resolve(loadedModule[name]);
-    }
+  const lazyActionOrView = function(name) {
+    return function lazy(placeholder) {
+      if(typeof placeholder !== "undefined") {
+        // view
+        return loadedModule ? loadedModule[name] : () => placeholder;
+      }
+      // action
+      if(loadedModule) {
+        return Promise.resolve(loadedModule[name]);
+      }
 
-    return loader().then(module => {
-      loadedModule = module;
-      return module[name];
-    });
+      return loader().then(module => {
+        loadedModule = module;
+        return module[name];
+      });
+
+    }
   };
   return new Proxy({}, {
     get(_, name) {
@@ -53,10 +56,9 @@ const pageStructure = [
 const fromEntries = Object.fromEntries || (arr => Object.assign({}, ...Array.from(arr, ([k, v]) => ({ [k]: v }))));
 export const pages = fromEntries(pageStructure);
 export const routes = fromEntries(pageStructure.map(([path, _, initAction]) => {
-  // if (initAction.length === 0) {
-  console.log(initAction);
+  if (initAction.name === "lazy") {
     return [path, () => initAction().then(action => action(path))];
-  // } else {
-  //   return [path, initAction(path)];
-  // }
+  } else {
+    return [path, initAction(path)];
+  }
 }));
