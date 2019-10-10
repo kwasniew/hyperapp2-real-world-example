@@ -62,11 +62,7 @@ export const view = state => html`
   <div>
     ${Header({ page: state.page, user: state.user })}
     ${state.page
-      ? pages[state.page](
-          html`
-            <div>Loading...</div>
-          `
-        )(state)
+      ? pages[state.page](state)
       : ""}
   </div>
 `;

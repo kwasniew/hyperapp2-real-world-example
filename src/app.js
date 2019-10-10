@@ -9,7 +9,7 @@ const initialState = { user: {} };
 
 export const init = () =>
   app({
-    init: () => [initialState, ReadUser, RoutePages({ routes, lazy: true })],
+    init: () => [initialState, ReadUser, RoutePages({ routes, lazy: false })],
     view,
     node: document.getElementById("app")
     // middleware: logger

@@ -123,3 +123,23 @@ When comparing different implementations remember that:
 * code formatting matters
 * some versions are more buggy than the others and do less error handling
 * some version lack features
+
+### No code splitting
+
+I've run some experiments with this codebase and code splitting per route/page brings only minor improvements over single bundle when visiting a home page (16.5kB vs 15kB).
+After navigating all the pages, single bundle minifies/gzips more effectively so we ship fewer bytes overall (16.5kB vs 31kB).
+
+### Testing strategy
+
+I wanted to optimize for fast, easy to write and stable tests.
+
+I decided to go for whole component/page tests. This style of testing allows for aggresive refactoring
+without breaking tests.
+
+Tools:
+* mocha - popular test runner with built-in reporter, less magical than jest
+* esm - allows to use ES6 modules in Node.js before we get better native support
+* jsdom - faster than spinning the browser (jsdom startup time is still our major bottleneck)
+* polly.js - on first test run we're recording HTTP traffic (faster than writing manual stubs). For subsequent runs
+we reply the recorded responses for faster I/O
+* dom-testing-library - convenient utils for async waiting, DOM querying and firing events
