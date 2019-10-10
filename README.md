@@ -133,7 +133,7 @@ After navigating all the pages, single bundle minifies/gzips more effectively so
 
 I wanted to optimize for fast, easy to write and stable tests.
 
-I decided to go for whole component/page tests. This style of testing allows for aggresive refactoring
+I decided to go for page/component tests in jsdom. This style of testing allows for aggressive refactoring
 without breaking tests.
 
 Tools:

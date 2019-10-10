@@ -7,7 +7,7 @@ const tag = (index, alias) =>
     .as(alias)
     .invoke("text");
 const activePage = () => cy.get(".active .page-link");
-const page = label => cy.contains(".page-link", label);
+export const page = label => cy.contains(".page-link", label);
 const apiUrl = Cypress.env("apiUrl");
 const setupGlobalFeed = () => {
   cy.server({ force404: true });

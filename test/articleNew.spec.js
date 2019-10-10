@@ -2,17 +2,13 @@ import jsdom from "./jsdom.setup.js";
 import "./polly.setup.js";
 import { fireEvent, waitForElement, wait, getByText } from "@testing-library/dom";
 import { init } from "../src/app.js";
-import { login } from "./login.js";
+import { login, createArticle } from "./apiClient.js";
 import { pageElement, element } from "./selectors.js";
+import {goToFeed, homePage} from "./homePage.js";
 import assert from "assert";
-
-// TODO: move this wait before action pattern to other places
-const typeIntoField = name => async text => {
-  const element = await waitForElement(() => pageElement(name));
-  element.value = text;
-  fireEvent.input(element);
-  return element;
-};
+import {typeIntoField} from "./actions.js";
+import { articles, assertFeeds } from "./homePage";
+import {assertElementValue} from "./assertions";
 
 const enterTag = async name => {
   const tagInput = await typeIntoField("tags")(name);
@@ -40,20 +36,21 @@ const publish = async () => {
   publishButton.click();
 };
 
-const homePage = async () => {
-  return await wait(() => {
-    assert.deepStrictEqual(window.location.pathname, "/");
-  });
-};
 
-describe("new article", function() {
+describe("article", function() {
+  let token;
+
   beforeEach(async function() {
     jsdom.beforeEach("/#!/editor");
-    await login();
+    ({token} = await login());
     init();
   });
 
-  it("create", async () => {
+  it("create article", async () => {
+    jsdom.beforeEach("/#!/editor");
+    await login();
+    init();
+
     await typeIntoField("title")("JS microlibs");
     await typeIntoField("description")("This is article about using microlibs");
     await typeIntoField("body")("# Title\n## Header\nAvoid bloated JS frameworks");
@@ -67,5 +64,20 @@ describe("new article", function() {
     await homePage();
   });
 
-  // TODO: Update
+  it("edit article", async () => {
+    jsdom.beforeEach("/#!/editor");
+    ({token} = await login());
+    const article = await createArticle(token)({title: "some title", description: "some description", body: "some body", tagList: ["tag1", "tag2"]});
+    const slug = article.slug;
+    location.href = `/#!/editor/${slug}`;
+    init();
+
+    await wait(assertElementValue("title")("some title"));
+    await wait(assertElementValue("description")("some description"));
+    await wait(assertElementValue("body")("some body"));
+    // assert.deepStrictEqual(tags(), ["tag1", "tag2"]);
+    // todo: extract shared tags assertions
+  });
+
+  // TODO: edit read, update, create failure
 });

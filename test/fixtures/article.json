@@ -1,0 +1,21 @@
+{
+  "article": {
+    "title": "some title",
+    "slug": "slug",
+    "body": "some body",
+    "createdAt": "2019-10-10T17:45:41.316Z",
+    "updatedAt": "2019-10-10T17:45:41.316Z",
+    "tagList": [
+      "tag1", "tag2"
+    ],
+    "description": "some description",
+    "author": {
+      "username": "Jack H",
+      "bio": "",
+      "image": "https://avatars3.githubusercontent.com/u/12631?s=400\u0026v=4",
+      "following": false
+    },
+    "favorited": false,
+    "favoritesCount": 0
+  }
+}

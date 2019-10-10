@@ -1,44 +1,15 @@
 import assert from "assert";
 import jsdom from "./jsdom.setup.js";
 import "./polly.setup.js";
-import { wait, waitForElement, getByPlaceholderText, getByText } from "@testing-library/dom";
+import { wait, waitForElement } from "@testing-library/dom";
 import { init } from "../src/app.js";
 import globalFeed from "./fixtures/global.json";
-import { login } from "./login.js";
-import { element, elements, pageElements, pageElement } from "./selectors.js";
+import { login } from "./apiClient.js";
+import { element } from "./selectors.js";
+import {assertFeeds, assertArticleCount, goToFeed, unfavorited, assertActivePage, tag, tags, feed, articles, isFavorited, isUnfavorited, page} from "./homePage.js";
 
-const feed = feedName => () => getByText(pageElement("feeds"), feedName);
-const assertFeedActive = feedName => assert.ok(hasClass(feed(feedName)())("active"));
-const assertFeedInactive = feedName => assert.ok(!hasClass(feed(feedName)())("active"));
-const assertFeeds = (...feeds) => () => {
-  assert.deepStrictEqual(pageElements("feed").length, feeds.length);
-  feeds.map(feed => {
-    Array.isArray(feed) ? assertFeedActive(feed[0]) : assertFeedInactive(feed);
-  });
-};
-const assertArticleCount = number => () => {
-  assert.deepStrictEqual(articles().length, number);
-};
-
-const assertActivePage = label => () => {
-  assert.deepStrictEqual(activePage().textContent, label);
-};
-const articles = index => (typeof index !== "undefined" ? pageElements("article")[index] : pageElements("article"));
-const activePage = () => document.querySelector(".active .page-link");
-const page = label => getByText(document.querySelector(".pagination"), label);
-const tag = index => pageElements("tag")[index];
-const tags = container => Array.from(elements(container)("tag")).map(x => x.textContent);
-const hasClass = element => className => Array.from(element.classList).includes(className);
-const isFavorited = element => hasClass(element)("favorited");
-const isUnfavorited = element => hasClass(element)("unfavorited");
-const unfavorited = () => document.querySelector(".unfavorited");
 
 const apiUrl = "https://conduit.productionready.io/api";
-
-const goToFeed = async feedName => {
-  const link = await waitForElement(feed(feedName));
-  link.click();
-};
 
 describe("articles", function() {
   beforeEach(function() {
@@ -122,7 +93,7 @@ describe("articles", function() {
     beforeEach(init);
     it("show active global feed with 10 articles", async function() {
       await wait(assertFeeds(["Global Feed"]));
-      return wait(assertArticleCount(10));
+      await wait(assertArticleCount(10));
     });
   });
 });
