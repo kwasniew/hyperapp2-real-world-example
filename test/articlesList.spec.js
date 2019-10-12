@@ -6,8 +6,20 @@ import { init } from "../src/app.js";
 import globalFeed from "./fixtures/global.json";
 import { login } from "./apiClient.js";
 import { element } from "./selectors.js";
-import {assertFeeds, assertArticleCount, goToFeed, unfavorited, assertActivePage, tag, tags, feed, articles, isFavorited, isUnfavorited, page} from "./homePage.js";
-
+import {
+  assertFeeds,
+  assertArticleCount,
+  goToFeed,
+  unfavorited,
+  assertActivePage,
+  tag,
+  tags,
+  feed,
+  articles,
+  isFavorited,
+  isUnfavorited,
+  page
+} from "./homePage.js";
 
 const apiUrl = "https://conduit.productionready.io/api";
 

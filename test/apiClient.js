@@ -7,10 +7,16 @@ const createArticle = token => async article => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Token ${token}`
+      Authorization: `Token ${token}`
     },
     body: JSON.stringify({ article })
   });
+  const body = await res.json();
+  return body.article;
+};
+
+const readArticle = token => async slug => {
+  const res = await fetch(`${apiUrl}/articles/${slug}`);
   const body = await res.json();
   return body.article;
 };
@@ -33,4 +39,4 @@ async function login({ email = "testingwithcypress@gmail.com", password = "testi
   return body.user;
 }
 
-export { login, createArticle };
+export { login, createArticle, readArticle };

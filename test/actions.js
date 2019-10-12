@@ -1,5 +1,5 @@
 import { fireEvent, waitForElement } from "@testing-library/dom";
-import {pageElement} from "./selectors.js";
+import { pageElement } from "./selectors.js";
 
 // TODO: move this wait before action pattern to other places
 export const typeIntoField = name => async text => {
