@@ -137,7 +137,7 @@ I decided to go for page/component tests in jsdom. This style of testing allows 
 without breaking tests.
 
 Tools:
-* mocha - popular test runner with built-in reporter, less magical than jest
+* mocha - popular test runner with built-in reporter, less magical than jest (consider switching to tape or testmatrix)
 * esm - allows to use ES6 modules in Node.js before we get better native support
 * jsdom - faster than spinning the browser (jsdom startup time is still our major bottleneck)
 * polly.js - on first test run we're recording HTTP traffic (faster than writing manual stubs). For subsequent runs
