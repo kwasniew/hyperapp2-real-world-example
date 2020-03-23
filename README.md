@@ -129,6 +129,8 @@ When comparing different implementations remember that:
 I've run some experiments with this codebase and code splitting per route/page brings only minor improvements over single bundle when visiting a home page (16.5kB vs 15kB).
 After navigating all the pages, single bundle minifies/gzips more effectively so we ship fewer bytes overall (16.5kB vs 31kB).
 
+Compare for yourself: [code splitting](https://hyperapp2.surge.sh/) vs [no code splitting](https://hyperapp2.netlify.com/)
+
 ### Testing strategy
 
 I wanted to optimize for fast, easy to write and stable tests.
