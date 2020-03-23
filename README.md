@@ -30,7 +30,7 @@ Common obstacles:
 * browsers don't understand CommonJS syntax, so choose libraries with native ES6 modules support and write fully qualified
 imports in your source code
 * JSX requires transpilation, so use JavaScript (e.g. tagged templates in [htm](https://github.com/developit/htm) library)
-* some transitive dependencies are not ES6 compliant, so translate npm dependencies for the browser at installation time with [pika-web](https://github.com/pikapkg/web)
+* some transitive dependencies are not ES6 compliant, so translate npm dependencies for the browser at installation time with [snowpack](https://github.com/pikapkg/snowpack)
 * IDEs/text editors can't handle tagged templates formatting, so use prettier which does it pretty well
 
 ### Functional thinking over OO thinking
@@ -112,7 +112,7 @@ Parcel is used to create a transpiled (older browsers support) and minified/tree
 
 Raw source size: < 1300 LOC (60% of the Hyperapp v1 version)
 
-Minified+gzipped bundle: 16.5kB
+Minified+gzipped bundle: 16.5kB (used to be 28.5kB in v1)
 
 Lighthouse score: 100
 
