@@ -194,7 +194,7 @@ export const HomePage = ({
 }) =>
   html`
     <div class="home-page" key="home-page">
-      ${user ? "" : Banner()}
+      ${user.username ? "" : Banner()}
 
       <div class="container page">
         <div class="row">
