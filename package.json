@@ -15,7 +15,6 @@
     "snarkdown": "1.2.2"
   },
   "devDependencies": {
-    "@snowpack/plugin-parcel": "1.0.0",
     "esbuild": "0.4.9",
     "prettier": "2.0.1",
     "snowpack": "2.3.1"
