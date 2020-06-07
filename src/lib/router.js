@@ -1,9 +1,7 @@
-import Page from "../web_modules/page.js";
+import page from "../web_modules/page.js";
 import { fromEntries } from "./object.js";
 
-let page;
-const router = (dispatch, { routes, lazy }) => {
-  page = Page.create();
+const router = (dispatch, { routes }) => {
   const normalizedRoutes = normalize(routes);
   const paths = Object.keys(normalizedRoutes);
   paths.forEach(path => {
@@ -13,7 +11,7 @@ const router = (dispatch, { routes, lazy }) => {
     });
   });
 
-  page.start({ hashbang: true });
+  page.start();
 
   return () => {
     page.stop();
