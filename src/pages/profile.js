@@ -1,5 +1,5 @@
 import { html } from "../shared/html.js";
-import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "./fragments/forms.js";
@@ -15,7 +15,7 @@ const FetchProfile = ({ username, token }) =>
     url: API_ROOT + "/profiles/" + encodeURIComponent(username),
     options: { headers: authHeader(token) },
     action: SetProfile,
-    error: LogError
+    error: LogError,
   });
 
 const AUTHOR_FEED = "author";
@@ -28,36 +28,36 @@ const FetchFavoritedFeed = ({ page, username, token }) =>
 
 const fetches = {
   [AUTHOR_FEED]: FetchAuthorFeed,
-  [FAVORITED_FEED]: FetchFavoritedFeed
+  [FAVORITED_FEED]: FetchFavoritedFeed,
 };
 
-export const LoadPage = activeFeedType => page => (state, { username }) => {
+export const LoadPage = (activeFeedType) => (page) => (state, { username }) => {
   const newState = {
     page,
     user: state.user,
     profile: state.profile || { username },
     activeFeedType,
-    ...loadingArticles
+    ...loadingArticles,
   };
   return [
     newState,
     [
       FetchProfile({ username, token: state.user.token }),
-      fetches[activeFeedType]({ page, username, token: state.user.token })
-    ]
+      fetches[activeFeedType]({ page, username, token: state.user.token }),
+    ],
   ];
 };
 export const LoadProfilePage = LoadPage(AUTHOR_FEED);
 export const LoadProfileFavoritedPage = LoadPage(FAVORITED_FEED);
 
-const ChangeFollow = method => state => [
+const ChangeFollow = (method) => (state) => [
   state,
   Http({
     url: API_ROOT + "/profiles/" + encodeURIComponent(state.profile.username) + "/follow",
     options: { method, headers: authHeader(state.user.token) },
     action: SetProfile,
-    error: LogError
-  })
+    error: LogError,
+  }),
 ];
 
 const Follow = ChangeFollow("POST");
@@ -117,9 +117,7 @@ export const ProfilePage = ({ user, profile, activeFeedType, articles, isLoading
           <div class="row">
             <div class="col-xs-12 col-md-10 offset-md-1">
               ${profile.image
-                ? html`
-                    <img data-test="avatar" class="user-img" src=${profile.image} alt=${profile.username} />
-                  `
+                ? html` <img data-test="avatar" class="user-img" src=${profile.image} alt=${profile.username} /> `
                 : ""}
               <h4 data-test="username">${profile.username}</h4>
               <p data-test="bio">${profile.bio}</p>
@@ -129,7 +127,7 @@ export const ProfilePage = ({ user, profile, activeFeedType, articles, isLoading
                   ? EditProfileSettings()
                   : FollowUserButton({
                       username: profile.username,
-                      following: profile.following
+                      following: profile.following,
                     })
                 : ""}
             </div>

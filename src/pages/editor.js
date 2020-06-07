@@ -3,7 +3,7 @@ import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
 import { OnEnter } from "../lib/events.js";
-import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { HOME } from "./links.js";
@@ -11,14 +11,14 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/router.js";
 import { NEW_EDITOR } from "./links.js";
-import { preventDefault } from "../web_modules/@hyperapp/events.js";
+import { preventDefault } from "../../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
-const AddTag = state => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });
+const AddTag = (state) => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });
 
-const RemoveTag = tag => state => ({
+const RemoveTag = (tag) => (state) => ({
   ...state,
-  tagList: state.tagList.filter(t => t !== tag)
+  tagList: state.tagList.filter((t) => t !== tag),
 });
 
 const SaveArticle = ({ article, token, method, url }) =>
@@ -28,16 +28,16 @@ const SaveArticle = ({ article, token, method, url }) =>
       method,
       headers: {
         "Content-Type": "application/json",
-        ...authHeader(token)
+        ...authHeader(token),
       },
-      body: JSON.stringify({ article })
+      body: JSON.stringify({ article }),
     },
     errorResponse: "json",
     action: RedirectAction(HOME),
-    error: FormError
+    error: FormError,
   });
 
-const SubmitArticle = state => [
+const SubmitArticle = (state) => [
   Submitting(state),
   [
     SaveArticle({
@@ -45,16 +45,16 @@ const SubmitArticle = state => [
         title: state.title,
         description: state.description,
         body: state.body,
-        tagList: state.tagList
+        tagList: state.tagList,
       },
       token: state.user.token,
       url: API_ROOT + "/articles" + (state.page === NEW_EDITOR ? "" : `/${state.slug}`),
-      method: state.page === NEW_EDITOR ? "POST" : "PUT"
-    })
-  ]
+      method: state.page === NEW_EDITOR ? "POST" : "PUT",
+    }),
+  ],
 ];
 
-export const LoadNewEditorPage = page => state => ({
+export const LoadNewEditorPage = (page) => (state) => ({
   page,
   user: state.user,
   ...formFields,
@@ -62,10 +62,10 @@ export const LoadNewEditorPage = page => state => ({
   description: "",
   body: "",
   currentTag: "",
-  tagList: []
+  tagList: [],
 });
 
-export const LoadEditorPage = page => (state, { slug }) => {
+export const LoadEditorPage = (page) => (state, { slug }) => {
   const newState = LoadNewEditorPage(page)(state);
   return [newState, FetchArticle({ slug, token: state.user.token })];
 };
@@ -126,7 +126,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
 
                 <div class="tag-list">
                   ${tagList.map(
-                    tag =>
+                    (tag) =>
                       html`
                         <span data-test="tag" class="tag-default tag-pill">
                           <i class="ion-close-round" data-test="remove-tag" onclick=${RemoveTag(tag)} />

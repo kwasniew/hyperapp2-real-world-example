@@ -17,7 +17,7 @@ const pageStructure = [
   [EDITOR, EditorPage, LoadEditorPage],
   [ARTICLE, ArticlePage, LoadArticlePage],
   [PROFILE, ProfilePage, LoadProfilePage],
-  [PROFILE_FAVORITED, ProfilePage, LoadProfileFavoritedPage]
+  [PROFILE_FAVORITED, ProfilePage, LoadProfileFavoritedPage],
 ];
 
 export const pages = fromEntries(pageStructure);

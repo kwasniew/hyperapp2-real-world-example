@@ -1,7 +1,7 @@
 import { html } from "../../shared/html.js";
 import { article as articleLink } from "../links.js";
 import { format } from "../../shared/date.js";
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "../../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../../config.js";
 import { authHeader } from "../../shared/authHeader.js";
 import { LogError } from "./forms.js";
@@ -10,25 +10,25 @@ import { profile } from "../links.js";
 // Actions & Effects
 const UpdateArticle = (state, { article }) => ({
   ...state,
-  articles: state.articles.map(oldArticle => (oldArticle.slug === article.slug ? article : oldArticle))
+  articles: state.articles.map((oldArticle) => (oldArticle.slug === article.slug ? article : oldArticle)),
 });
 
-const Favorite = method => ({ slug, token }) =>
+const Favorite = (method) => ({ slug, token }) =>
   Http({
     url: API_ROOT + `/articles/${slug}/favorite`,
     options: {
       method,
-      headers: authHeader(token)
+      headers: authHeader(token),
     },
     action: UpdateArticle,
-    error: LogError
+    error: LogError,
   });
 
 const FavoriteArticle = Favorite("POST");
 const UnfavoriteArticle = Favorite("DELETE");
 
 const ChangeFavoriteStatus = (state, slug) => {
-  const article = state.articles.find(a => a.slug === slug);
+  const article = state.articles.find((a) => a.slug === slug);
   if (!article) {
     return state;
   } else if (article.favorited) {
@@ -41,14 +41,14 @@ const ChangeFavoriteStatus = (state, slug) => {
 export const loadingArticles = {
   articles: [],
   articlesCount: 0,
-  isLoading: true
+  isLoading: true,
 };
 
 export const SetArticles = (state, { articles, articlesCount }) => ({
   ...state,
   isLoading: false,
   articles,
-  articlesCount
+  articlesCount,
 });
 
 // Views
@@ -57,7 +57,7 @@ export const FetchArticles = (path, token) => {
     url: API_ROOT + path,
     options: { headers: authHeader(token) },
     action: SetArticles,
-    error: LogError
+    error: LogError,
   });
 };
 
@@ -94,7 +94,7 @@ const ArticlePreview = ({ article }) => html`
       <p data-test="description">${article.description}</p>
       <span>Read more...</span>
       <ul class="tag-list">
-        ${article.tagList.map(tag => {
+        ${article.tagList.map((tag) => {
           return html`
             <li data-test="tag" class="tag-default tag-pill tag-outline">
               ${tag}
@@ -108,18 +108,14 @@ const ArticlePreview = ({ article }) => html`
 
 export const ArticleList = ({ isLoading, articles }, children) => {
   if (isLoading) {
-    return html`
-      <div class="article-preview">Loading...</div>
-    `;
+    return html` <div class="article-preview">Loading...</div> `;
   }
   if (articles.length === 0) {
-    return html`
-      <div class="article-preview">No articles are here... yet.</div>
-    `;
+    return html` <div class="article-preview">No articles are here... yet.</div> `;
   }
   return html`
     <div>
-      ${articles.map(article => ArticlePreview({ article }))} ${children}
+      ${articles.map((article) => ArticlePreview({ article }))} ${children}
     </div>
   `;
 };

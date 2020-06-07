@@ -1,16 +1,16 @@
 import { html } from "../shared/html.js";
 import { ListErrors } from "./fragments/forms.js";
 import { errorsList } from "./fragments/forms.js";
-import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
-import { preventDefault } from "../web_modules/@hyperapp/events.js";
+import { preventDefault } from "../../web_modules/@hyperapp/events.js";
 
 // Actions & Effects
-const UpdateSettings = user => {
+const UpdateSettings = (user) => {
   const { password, token, ...userWithoutPassword } = user;
   const submitUser = password && password.length > 0 ? { password, ...userWithoutPassword } : userWithoutPassword;
   return Http({
@@ -19,17 +19,17 @@ const UpdateSettings = user => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        ...authHeader(token)
+        ...authHeader(token),
       },
-      body: JSON.stringify({ user: submitUser })
+      body: JSON.stringify({ user: submitUser }),
     },
     errorResponse: "json",
     action: UserSuccess,
-    error: FormError
+    error: FormError,
   });
 };
 
-const SubmitForm = state => [
+const SubmitForm = (state) => [
   Submitting(state),
   [
     UpdateSettings({
@@ -38,18 +38,18 @@ const SubmitForm = state => [
       bio: state.bio,
       email: state.email,
       password: state.password,
-      token: state.user.token
-    })
-  ]
+      token: state.user.token,
+    }),
+  ],
 ];
 
-export const LoadSettingsPage = page => state => {
+export const LoadSettingsPage = (page) => (state) => {
   return {
     page,
     user: state.user,
     ...state.user,
     password: "",
-    ...formFields
+    ...formFields,
   };
 };
 

@@ -1,1 +1,1 @@
-export const format = date => new Date(date).toDateString();
+export const format = (date) => new Date(date).toDateString();

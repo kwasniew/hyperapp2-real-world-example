@@ -1,4 +1,4 @@
-src/web_modules
+web_modules
 node_modules
 decision_log.md
 .cache

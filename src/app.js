@@ -1,4 +1,4 @@
-import { app } from "./web_modules/hyperapp.js";
+import { app } from "../web_modules/hyperapp.js";
 import { RoutePages } from "./lib/router.js";
 import { view } from "./pages/layout.js";
 import { routes } from "./pages/index.js";
@@ -11,6 +11,6 @@ export const init = () =>
   app({
     init: () => [initialState, ReadUser, RoutePages({ routes })],
     view,
-    node: document.getElementById("app")
+    node: document.getElementById("app"),
     // middleware: logger
   });

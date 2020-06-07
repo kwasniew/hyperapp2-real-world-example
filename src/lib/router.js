@@ -1,12 +1,12 @@
-import page from "../web_modules/page.js";
+import page from "../../web_modules/page.js";
 import { fromEntries } from "./object.js";
 
 const router = (dispatch, { routes }) => {
   const normalizedRoutes = normalize(routes);
   const paths = Object.keys(normalizedRoutes);
-  paths.forEach(path => {
+  paths.forEach((path) => {
     const route = normalizedRoutes[path];
-    page(path, context => {
+    page(path, (context) => {
       dispatch(route, context.params);
     });
   });
@@ -18,13 +18,10 @@ const router = (dispatch, { routes }) => {
   };
 };
 
-const normalize = routes =>
-  fromEntries(
-    routes.map(([path, pageAction]) => [path, pageAction(path)])
-  );
+const normalize = (routes) => fromEntries(routes.map(([path, pageAction]) => [path, pageAction(path)]));
 
 export const RoutePages = ({ routes, lazy }) => [router, { routes, lazy }];
 
 const redirectEffect = (dispatch, props) => page.redirect(props.path);
-export const Redirect = props => [redirectEffect, props];
-export const RedirectAction = path => state => [state, Redirect({ path })];
+export const Redirect = (props) => [redirectEffect, props];
+export const RedirectAction = (path) => (state) => [state, Redirect({ path })];

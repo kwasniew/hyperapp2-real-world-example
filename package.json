@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "snowpack": "snowpack --dest src/web_modules",
+    "snowpack": "snowpack",
     "postinstall": "npm run snowpack",
     "prebuild": "npm run snowpack",
-    "build": "parcel build src/index.html",
+    "build": "parcel build index.html",
     "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
-    "start": "servor src index.html 8080 --reload --browse"
+    "start": "servor . index.html 8080 --reload --browse"
   },
   "dependencies": {
     "@hyperapp/events": "0.0.3",

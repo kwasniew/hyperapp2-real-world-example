@@ -1,10 +1,10 @@
 import { html } from "../shared/html.js";
-import cc from "../web_modules/classcat.js";
-import { Http } from "../web_modules/@kwasniew/hyperapp-fx.js";
+import cc from "../../web_modules/classcat.js";
+import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
-import { preventDefault } from "../web_modules/@hyperapp/events.js";
+import { preventDefault } from "../../web_modules/@hyperapp/events.js";
 import { eventWith } from "../lib/events.js";
 
 // Actions & Effects
@@ -14,7 +14,7 @@ export const FetchTags = Http({
   url: API_ROOT + "/tags",
   action: SetTags,
   error: LogError,
-  errorResponse: "json"
+  errorResponse: "json",
 });
 
 export const FetchUserFeed = ({ pageIndex, token }) =>
@@ -31,29 +31,29 @@ const TAG_FEED = "tag";
 const backendFeeds = {
   [GLOBAL_FEED]: FetchGlobalFeed,
   [USER_FEED]: FetchUserFeed,
-  [TAG_FEED]: FetchTagFeed
+  [TAG_FEED]: FetchTagFeed,
 };
 
 const FetchFeed = ({ activeFeedType, currentPageIndex, user, activeFeedName }) =>
   backendFeeds[activeFeedType]({
     pageIndex: currentPageIndex,
     token: user.token,
-    tag: activeFeedName
+    tag: activeFeedName,
   });
 
 const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
   const feeds = [
     state.user.token ? USER_FEED : null,
     GLOBAL_FEED,
-    activeFeedType === TAG_FEED ? TAG_FEED : null
-  ].filter(x => x);
+    activeFeedType === TAG_FEED ? TAG_FEED : null,
+  ].filter((x) => x);
   const newState = {
     ...state,
     activeFeedType,
     activeFeedName: activeFeedName ? activeFeedName : activeFeedType,
     feeds,
     currentPageIndex: 0,
-    ...loadingArticles
+    ...loadingArticles,
   };
   return [newState, [FetchFeed(newState)]];
 };
@@ -62,13 +62,13 @@ const ChangePage = (state, { currentPageIndex }) => {
   const newState = {
     ...state,
     ...loadingArticles,
-    currentPageIndex
+    currentPageIndex,
   };
 
   return [newState, [FetchFeed(newState)]];
 };
 
-export const LoadHomePage = page => state => {
+export const LoadHomePage = (page) => (state) => {
   const feeds = state.user.token ? [USER_FEED, GLOBAL_FEED] : [GLOBAL_FEED];
   const activeFeedType = state.user.token ? USER_FEED : GLOBAL_FEED;
   const activeFeedName = activeFeedType;
@@ -80,7 +80,7 @@ export const LoadHomePage = page => state => {
     feeds,
     tags: [],
     currentPageIndex: 0,
-    ...loadingArticles
+    ...loadingArticles,
   };
   return [newState, [FetchFeed(newState), FetchTags]];
 };
@@ -95,16 +95,14 @@ const TagFeed = ({ activeFeedType, activeFeedName }) =>
     {
       active: activeFeedType === TAG_FEED,
       type: TAG_FEED,
-      name: activeFeedName
+      name: activeFeedName,
     },
-    html`
-      <i class="ion-pound" /> ${activeFeedName}
-    `
+    html` <i class="ion-pound" /> ${activeFeedName} `
   );
 const uiFeeds = {
   [USER_FEED]: UserFeed,
   [GLOBAL_FEED]: GlobalFeed,
-  [TAG_FEED]: TagFeed
+  [TAG_FEED]: TagFeed,
 };
 
 const FeedTab = ({ active, type, name }, children) =>
@@ -123,7 +121,7 @@ const FeedTab = ({ active, type, name }, children) =>
 
 const Tags = ({ tags }) => html`
   <div class="tag-list">
-    ${tags.map(tag => {
+    ${tags.map((tag) => {
       return html`
         <a
           href=""
@@ -146,7 +144,7 @@ const ListPagination = ({ pages }) => {
     <nav>
       <ul class="pagination">
         ${pages.map(
-          page =>
+          (page) =>
             html`
               <li class=${page.isCurrent ? "page-item active" : "page-item"}>
                 <a
@@ -167,7 +165,7 @@ const pages = ({ count, currentPageIndex }) =>
   Array.from({ length: Math.ceil(count / 10) }).map((e, i) => ({
     index: i,
     isCurrent: i === currentPageIndex,
-    humanDisplay: i + 1
+    humanDisplay: i + 1,
   }));
 
 const Banner = () =>
@@ -190,7 +188,7 @@ export const HomePage = ({
   tags,
   feeds,
   activeFeedName,
-  activeFeedType
+  activeFeedType,
 }) =>
   html`
     <div class="home-page" key="home-page">
@@ -201,13 +199,13 @@ export const HomePage = ({
           <div class="col-md-9">
             <div class="feed-toggle">
               <ul data-test="feeds" class="nav nav-pills outline-active">
-                ${feeds.map(name => uiFeeds[name]({ activeFeedType, activeFeedName }))}
+                ${feeds.map((name) => uiFeeds[name]({ activeFeedType, activeFeedName }))}
               </ul>
             </div>
             ${ArticleList(
               { articles, isLoading },
               ListPagination({
-                pages: pages({ count: articlesCount, currentPageIndex })
+                pages: pages({ count: articlesCount, currentPageIndex }),
               })
             )}
           </div>
