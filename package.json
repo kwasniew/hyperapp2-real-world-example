@@ -5,7 +5,7 @@
     "prebuild": "npm run snowpack",
     "build": "parcel build src/index.html",
     "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
-    "start": "http-server src",
+    "start": "servor src index.html 8080 --reload --browse",
     "test": "mocha --require esm test/*.spec.js --timeout 5000",
     "test:coverage": "nyc npm run test && nyc report --reporter=html",
     "test:performance": "bundlesize"
@@ -30,7 +30,6 @@
     "@testing-library/user-event": "7.0.1",
     "bundlesize": "0.18.0",
     "esm": "3.2.25",
-    "http-server": "0.11.1",
     "isomorphic-unfetch": "3.0.0",
     "jsdom": "15.1.1",
     "jsdom-global": "3.0.2",
@@ -41,6 +40,7 @@
     "nyc": "15.0.0 ",
     "parcel": "2.0.0-alpha.3.2",
     "prettier": "2.0.1",
+    "servor": "^4.0.2",
     "undom": "0.4.0",
     "whatwg-fetch": "3.0.0"
   },
