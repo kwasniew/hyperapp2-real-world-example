@@ -1,11 +1,8 @@
 {
   "scripts": {
-    "snowpack": "snowpack",
-    "postinstall": "npm run snowpack",
-    "prebuild": "npm run snowpack",
-    "build": "parcel build index.html",
-    "format": "prettier --print-width 120 --write '{src,test}/**/*.js'",
-    "start": "servor . index.html 8080 --reload --browse"
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
   "dependencies": {
     "@hyperapp/events": "0.0.3",
@@ -13,14 +10,14 @@
     "classcat": "4.0.2",
     "hyperapp": "2.0.4",
     "hyperapp-v2-basiclogger": "0.3.0",
-    "hyperlit": "^0.1.2",
+    "hyperlit": "0.1.2",
     "page": "1.11.5",
-    "snarkdown": "1.2.2",
-    "snowpack": "2.3.1"
+    "snarkdown": "1.2.2"
   },
   "devDependencies": {
+    "esbuild": "0.4.9",
     "parcel": "2.0.0-alpha.3.2",
     "prettier": "2.0.1",
-    "servor": "^4.0.2"
+    "snowpack": "2.3.1"
   }
 }
