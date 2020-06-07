@@ -1,7 +1,7 @@
 {
   "scripts": {
     "mount:public": "mount public --to /",
-    "mount:src": "mount src --to /dist"
+    "mount:src": "mount src --to /src"
   },
-  "plugins": []
+  "plugins": ["@snowpack/plugin-parcel"]
 }

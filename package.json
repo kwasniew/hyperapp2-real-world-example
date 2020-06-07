@@ -2,6 +2,7 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
+    "postinstall": "snowpack install",
     "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
   "dependencies": {
@@ -15,8 +16,9 @@
     "snarkdown": "1.2.2"
   },
   "devDependencies": {
+    "@snowpack/plugin-parcel": "1.0.0",
     "esbuild": "0.4.9",
-    "parcel": "2.0.0-alpha.3.2",
+    "parcel": "1.12.4",
     "prettier": "2.0.1",
     "snowpack": "2.3.1"
   }
