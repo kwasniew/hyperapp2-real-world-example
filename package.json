@@ -1,8 +1,7 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
-    "postinstall": "snowpack install",
+    "build": "snowpack build && esbuild build/src/index.js --minify --bundle --outfile=build/src/index.js",
     "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
   "dependencies": {
@@ -18,7 +17,6 @@
   "devDependencies": {
     "@snowpack/plugin-parcel": "1.0.0",
     "esbuild": "0.4.9",
-    "parcel": "1.12.4",
     "prettier": "2.0.1",
     "snowpack": "2.3.1"
   }
