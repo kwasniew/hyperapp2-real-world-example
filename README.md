@@ -108,11 +108,11 @@ Things I don't use and what is used instead:
 
 ### Build tools as a production optimisation step
 
-Parcel is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even faster load time).
+esbuild is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even faster load time).
 
 Raw source size: < 1300 LOC (60% of the Hyperapp v1 version)
 
-Minified+gzipped bundle: 16.5kB (used to be 28.5kB in v1)
+Minified+gzipped bundle: 13.8kB (used to be 28.5kB in v1)
 
 Lighthouse score: 100
 
@@ -127,21 +127,8 @@ When comparing different implementations remember that:
 ### No code splitting
 
 I've run some experiments with this codebase and code splitting per route/page brings only minor improvements over single bundle when visiting a home page (16.5kB vs 15kB).
-After navigating all the pages, single bundle minifies/gzips more effectively so we ship fewer bytes overall (16.5kB vs 31kB).
+After navigating all the pages, single bundle minifies/gzips more effectively so we ship fewer bytes overall.
 
 Compare for yourself: [code splitting](https://hyperapp2.surge.sh/) vs [no code splitting](https://hyperapp2.netlify.com/)
 
-### Testing strategy
 
-I wanted to optimize for fast, easy to write and stable tests.
-
-I decided to go for page/component tests in jsdom. This style of testing allows for aggressive refactoring
-without breaking tests.
-
-Tools:
-* mocha - popular test runner with built-in reporter, less magical than jest (consider switching to tape or testmatrix)
-* esm - allows to use ES6 modules in Node.js before we get better native support
-* jsdom - faster than spinning the browser (jsdom startup time is still our major bottleneck)
-* polly.js - on first test run we're recording HTTP traffic (faster than writing manual stubs). For subsequent runs
-we reply the recorded responses for faster I/O
-* dom-testing-library - convenient utils for async waiting, DOM querying and firing events
