@@ -1,5 +1,10 @@
 # Real Word Example App in Hyperapp v2
 
+* 1285 LOC
+* 14.3kB JS bundle
+* instant dev mode (snowpack)
+* instant prod mode (esbuild)
+
 ## Design decisions
 
 ### Zero-dependency micro libraries
@@ -13,8 +18,8 @@ For production dependencies prefer tiny zero-dependency libraries because:
 
 
 Examples (minified+gzipped):
-* [hyperapp](https://bundlephobia.com/result?p=hyperapp@2.0.0-beta.22) 1.9kB
-* [htm](https://bundlephobia.com/result?p=htm@2.1.1) 0.7kB
+* [hyperapp](https://bundlephobia.com/result?p=hyperapp@2.0.4) 1.9kB
+* [hyperlit](https://bundlephobia.com/result?p=hyperlit@0.1.3) 0.8kB
 * [hyperapp-fx](https://bundlephobia.com/result?p=hyperapp-fx@2.0.0-beta.1) 1.6kB
 * [snarkdown](https://bundlephobia.com/result?p=snarkdown@1.2.2) 1.0kB
 * [classcat](https://bundlephobia.com/result?p=classcat@4.0.2) 0.3kB
@@ -29,7 +34,7 @@ View-source driven development in its finest form.
 Common obstacles:
 * browsers don't understand CommonJS syntax, so choose libraries with native ES6 modules support and write fully qualified
 imports in your source code
-* JSX requires transpilation, so use JavaScript (e.g. tagged templates in [htm](https://github.com/developit/htm) library)
+* JSX requires transpilation, so use JavaScript (e.g. tagged templates in [hyperlit](https://github.com/zaceno/hyperlit) library)
 * some transitive dependencies are not ES6 compliant, so translate npm dependencies for the browser at installation time with [snowpack](https://github.com/pikapkg/snowpack)
 * IDEs/text editors can't handle tagged templates formatting, so use prettier which does it pretty well
 
