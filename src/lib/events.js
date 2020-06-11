@@ -2,10 +2,7 @@ export const keyCode = (event) => event.keyCode;
 
 const OnKeyCode = (code) => (action) => [
   (state, keyCode) => {
-    if (keyCode === code) {
-      return action(state);
-    }
-    return state;
+    return keyCode === code ? action(state) : state;
   },
   keyCode,
 ];
