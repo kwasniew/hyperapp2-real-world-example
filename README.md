@@ -4,6 +4,7 @@
 * 14.3kB JS bundle
 * instant dev mode (snowpack)
 * instant prod mode (esbuild)
+* because life is too short for big frameworks and slow tooling
 
 ## Design decisions
 
