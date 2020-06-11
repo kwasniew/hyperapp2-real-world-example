@@ -1,4 +1,4 @@
-import { ReadFromStorage, RemoveFromStorage, WriteToStorage } from "../../../web_modules/@kwasniew/hyperapp-fx.js";
+import { ReadFromStorage, RemoveFromStorage, WriteToStorage } from "@kwasniew/hyperapp-fx";
 import { Redirect } from "../../lib/router.js";
 import { HOME } from "../links.js";
 

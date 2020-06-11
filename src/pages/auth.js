@@ -1,4 +1,4 @@
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
@@ -7,7 +7,7 @@ import { UserSuccess } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
-import { preventDefault, targetValue } from "../../web_modules/@hyperapp/events.js";
+import { preventDefault, targetValue } from "@hyperapp/events";
 
 // Actions & Effects
 const ChangeUsername = (state, username) => ({ ...state, username });

@@ -1,6 +1,6 @@
 import { html } from "../shared/html.js";
 import { pages } from "./index.js";
-import cc from "../../web_modules/classcat.js";
+import cc from "classcat";
 import { HOME, LOGIN, NEW_EDITOR, REGISTER, SETTINGS, profile } from "./links.js";
 
 // Views

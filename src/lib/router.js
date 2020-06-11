@@ -1,4 +1,4 @@
-import page from "../../web_modules/page.js";
+import page from "page";
 import { fromEntries } from "./object.js";
 
 const router = (dispatch, { routes }) => {

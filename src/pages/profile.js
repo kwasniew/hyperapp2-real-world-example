@@ -1,5 +1,5 @@
 import { html } from "../shared/html.js";
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { LogError } from "./fragments/forms.js";

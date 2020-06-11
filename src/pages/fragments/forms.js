@@ -1,6 +1,6 @@
 import { html } from "../../shared/html.js";
-import { Console } from "../../../web_modules/@kwasniew/hyperapp-fx.js";
-import { targetValue } from "../../../web_modules/@hyperapp/events.js";
+import { Console } from "@kwasniew/hyperapp-fx";
+import { targetValue } from "@hyperapp/events";
 
 // Form Fields
 export const formFields = { inProgress: false, errors: {} };

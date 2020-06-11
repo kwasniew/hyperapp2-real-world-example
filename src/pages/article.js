@@ -1,6 +1,6 @@
 import { html } from "../shared/html.js";
-import markdown from "../../web_modules/snarkdown.js";
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import markdown from "snarkdown";
+import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
 import { profile, editor, HOME, LOGIN, REGISTER } from "./links.js";
@@ -8,7 +8,7 @@ import { format } from "../shared/date.js";
 import { LogError } from "./fragments/forms.js";
 import { RedirectAction } from "../lib/router.js";
 import { ChangeFieldFromTarget } from "./fragments/forms.js";
-import { preventDefault } from "../../web_modules/@hyperapp/events.js";
+import { preventDefault } from "@hyperapp/events";
 import { FetchArticle } from "./fragments/article.js";
 
 // Actions & Effects

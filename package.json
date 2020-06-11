@@ -1,13 +1,14 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build && esbuild build/src/index.js --minify --bundle --outfile=build/src/index.js",
+    "build": "snowpack build && esbuild src/index.js --minify --bundle --outfile=build/src/index.js",
     "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
   "dependencies": {
     "@hyperapp/events": "0.0.3",
     "@kwasniew/hyperapp-fx": "2.0.0-beta.2",
     "classcat": "4.0.2",
+    "htm": "3.0.4",
     "hyperapp": "2.0.4",
     "hyperapp-v2-basiclogger": "0.3.0",
     "hyperlit": "0.1.2",

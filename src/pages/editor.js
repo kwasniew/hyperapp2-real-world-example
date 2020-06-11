@@ -3,7 +3,7 @@ import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
 import { OnEnter } from "../lib/events.js";
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { HOME } from "./links.js";
@@ -11,7 +11,7 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/router.js";
 import { NEW_EDITOR } from "./links.js";
-import { preventDefault } from "../../web_modules/@hyperapp/events.js";
+import { preventDefault } from "@hyperapp/events";
 
 // Actions & Effects
 const AddTag = (state) => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });

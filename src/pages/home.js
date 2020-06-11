@@ -1,10 +1,10 @@
 import { html } from "../shared/html.js";
-import cc from "../../web_modules/classcat.js";
-import { Http } from "../../web_modules/@kwasniew/hyperapp-fx.js";
+import cc from "classcat";
+import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
-import { preventDefault } from "../../web_modules/@hyperapp/events.js";
+import { preventDefault } from "@hyperapp/events";
 import { eventWith } from "../lib/events.js";
 
 // Actions & Effects
