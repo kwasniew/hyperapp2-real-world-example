@@ -157,7 +157,7 @@ const CommentInput = ({ state }) => html`
     </div>
     <div class="card-footer">
       ${state.user.image
-        ? html` <img src=${state.user.image} class="comment-author-img" alt=${state.user.username} /> `
+        ? html`<img src=${state.user.image} class="comment-author-img" alt=${state.user.username} />`
         : ""}
       <button class="btn btn-sm btn-primary" type="submit">
         Post Comment
@@ -166,7 +166,7 @@ const CommentInput = ({ state }) => html`
   </form>
 `;
 
-const DeleteButton = ({ comment, slug, user }) => {
+const DeleteButton = ({ comment, user }) => {
   const canModify = canModifySelector(comment.author)(user);
   return canModify
     ? html`
