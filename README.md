@@ -65,20 +65,20 @@ no magic.
 We're doing client-side routing to be compliant with the RealWorld app spec. Personally I'd prefer server-side
 navigation between pages (less client side code, already implemented by the browser, no back-button amnesia etc.).
 
-Out app's navigation flow:
+This app's navigation flow:
 * open some URL (directly in a navigation bar or with a link)
 * client-side router triggers page init action
 * init action sets immediate state and renders initial view
 * if needed, init action triggers the effect to fetch server data
 * when the server data arrives view rendering completes
 
-Ability to trigger action that sets immediate initial state is crucial as it allows to avoid unnecessary null checks
+Ability to trigger action that sets immediate initial state removes unnecessary null checks
 in the view code.
 
 ### Business centric code organization
 
 Main application pages are split into individual files (pages/article.js, pages/editor.js etc.) with shared fragments
-extracted into a separate directory (page/fragments).
+extracted into a separate directory (pages/fragments).
 
 Inside each page file we have the following structure:
 ```
@@ -114,13 +114,13 @@ Things I don't use and what is used instead:
 
 ### Build tools as a production optimisation step
 
-esbuild is used to create a transpiled (older browsers support) and minified/tree-shaken bundle (even faster load time).
+esbuild is used to create ES6 minified/tree-shaken bundle (even faster load time).
 
 Raw source size: < 1300 LOC (60% of the Hyperapp v1 version)
 
 Minified+gzipped bundle: 13.8kB (used to be 28.5kB in v1)
 
-Lighthouse score: 100
+Lighthouse score: 98 (with CSS being a constraint)
 
 
 It makes it one of the smallest and fastest to load versions of RealWorld app.
@@ -132,9 +132,8 @@ When comparing different implementations remember that:
 
 ### No code splitting
 
-I've run some experiments with this codebase and code splitting per route/page brings only minor improvements over single bundle when visiting a home page (16.5kB vs 15kB).
-After navigating all the pages, single bundle minifies/gzips more effectively so we ship fewer bytes overall.
+I've run some experiments with this codebase and code splitting per route/page brings only minor improvements over single bundle when visiting a home page.
+Single bundle minifies/gzips more efficiently so we ship fewer bytes overall when we navigate to other pages.
 
-Compare for yourself: [code splitting](https://hyperapp2.surge.sh/) vs [no code splitting](https://hyperapp2.netlify.com/)
 
 
