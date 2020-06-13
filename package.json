@@ -11,7 +11,7 @@
     "htm": "3.0.4",
     "hyperapp": "2.0.4",
     "hyperapp-v2-basiclogger": "0.3.0",
-    "hyperlit": "0.1.2",
+    "hyperlit": "0.1.4",
     "page": "1.11.5",
     "snarkdown": "1.2.2"
   },
