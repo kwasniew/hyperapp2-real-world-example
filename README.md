@@ -1,7 +1,7 @@
 # Real Word Example App in Hyperapp v2
 
-* 1285 LOC
-* 14.3kB JS bundle
+* 1280 LOC
+* 14.2kB JS bundle
 * instant dev mode (snowpack)
 * instant prod mode (esbuild)
 * because life is too short for big frameworks and slow tooling
