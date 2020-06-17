@@ -1,5 +1,4 @@
 import { html } from "../shared/html.js";
-import cc from "classcat";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
@@ -111,7 +110,7 @@ const FeedTab = ({ active, type, name }, children) =>
       <a
         href=""
         data-test="feed"
-        class=${cc({ "nav-link": true, active })}
+        class=${{ "nav-link": true, active }}
         onclick=${[preventDefault(ChangeTab), eventWith({ activeFeedName: name, activeFeedType: type })]}
       >
         ${children}

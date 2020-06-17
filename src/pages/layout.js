@@ -1,12 +1,11 @@
 import { html } from "../shared/html.js";
 import { pages } from "./index.js";
-import cc from "classcat";
 import { HOME, LOGIN, NEW_EDITOR, REGISTER, SETTINGS, profile } from "./links.js";
 
 // Views
 const NavItem = ({ page, path }, children) => html`
   <li class="nav-item">
-    <a href="${path}" class="${cc({ "nav-link": true, active: page === path })}">
+    <a href="${path}" class=${{ "nav-link": true, active: page === path }}>
       ${children}
     </a>
   </li>
