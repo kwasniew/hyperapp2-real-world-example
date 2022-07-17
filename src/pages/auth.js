@@ -24,7 +24,7 @@ const Login = ({ email, password }) =>
     action: UserSuccess,
     error: FormError,
   });
-const SubmitLogin = (state) => [Submitting(state), [Login({ email: state.email, password: state.password })]];
+const SubmitLogin = (state) => [Submitting(state), Login({ email: state.email, password: state.password })];
 
 const Register = ({ email, password, username }) =>
   Http({
@@ -42,13 +42,13 @@ const Register = ({ email, password, username }) =>
   });
 const SubmitRegister = (state) => [
   { ...state, inProgress: true },
-  [
+  //[
     Register({
       email: state.email,
       password: state.password,
       username: state.username,
     }),
-  ],
+  //],
 ];
 
 const defaultAuthFields = {

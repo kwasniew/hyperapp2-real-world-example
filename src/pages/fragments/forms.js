@@ -1,11 +1,9 @@
 import html from "hyperlit";
 import { Console } from "@kwasniew/hyperapp-fx";
-//import { targetValue } from "@hyperapp/events";
 
 // Form Fields
 export const formFields = { inProgress: false, errors: {} };
 const ChangeField = (field) => (state, value) => ({ ...state, [field]: value });
-//export const ChangeFieldFromTarget = (field) => [ChangeField(field), targetValue];
 
 // Form Errors
 // Actions & Effects

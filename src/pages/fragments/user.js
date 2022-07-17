@@ -15,5 +15,5 @@ export const UserSuccess = (state, { user }) => [{ ...state, user }, SaveUser(us
 
 export const Logout = (state) => [
   { ...state, user: {} },
-  [RemoveFromStorage({ key: SESSION }), Redirect({ path: HOME })],
+  RemoveFromStorage({ key: SESSION }), Redirect({ path: HOME }),
 ];

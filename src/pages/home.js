@@ -15,11 +15,6 @@ export const FetchTags = Http({
   errorResponse: "json",
 });
 
-/*export const FetchTags = Http(
-  API_ROOT + "/tags",
-  SetTags,
-);*/
-
 export const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
 export const FetchGlobalFeed = ({ pageIndex, token }) =>

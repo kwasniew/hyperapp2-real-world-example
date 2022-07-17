@@ -2,7 +2,7 @@ import { ListErrors } from "./fragments/forms.js";
 import { formFields } from "./fragments/forms.js";
 import html from "hyperlit";
 import { errorsList } from "./fragments/forms.js";
-import { OnEnter } from "../lib/events.js";
+//import { OnEnter } from "../lib/events.js";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
@@ -11,7 +11,6 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/router.js";
 import { NEW_EDITOR } from "./links.js";
-//import { preventDefault } from "@hyperapp/events";
 
 // Actions & Effects
 const AddTag = (state) => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });

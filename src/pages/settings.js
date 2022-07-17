@@ -7,7 +7,6 @@ import { UserSuccess, Logout } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
-//import { preventDefault } from "@hyperapp/events";
 
 // Actions & Effects
 const UpdateSettings = (user) => {
