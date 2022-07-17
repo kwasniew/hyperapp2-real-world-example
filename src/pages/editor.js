@@ -1,5 +1,5 @@
 import { ListErrors } from "./fragments/forms.js";
-import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
+import { formFields } from "./fragments/forms.js";
 import { html } from "../shared/html.js";
 import { errorsList } from "./fragments/forms.js";
 import { OnEnter } from "../lib/events.js";
@@ -11,7 +11,7 @@ import { authHeader } from "../shared/authHeader.js";
 import { FetchArticle } from "./fragments/article.js";
 import { RedirectAction } from "../lib/router.js";
 import { NEW_EDITOR } from "./links.js";
-import { preventDefault } from "@hyperapp/events";
+//import { preventDefault } from "@hyperapp/events";
 
 // Actions & Effects
 const AddTag = (state) => ({ ...state, currentTag: "", tagList: [...state.tagList, state.currentTag] });
@@ -87,7 +87,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                   data-test="title"
                   placeholder="Article Title"
                   value=${title}
-                  oninput=${ChangeFieldFromTarget("title")}
+                  oninput=${(state, event)=>({...state, title: event.target.value})}
                 />
               </fieldset>
 
@@ -98,7 +98,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                   data-test="description"
                   placeholder="What's this article about?"
                   value=${description}
-                  oninput=${ChangeFieldFromTarget("description")}
+                  oninput=${(state, event)=>({...state, description: event.target.value})}
                 />
               </fieldset>
 
@@ -109,7 +109,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                   data-test="body"
                   placeholder="Write your article (in markdown)"
                   value=${body}
-                  oninput=${ChangeFieldFromTarget("body")}
+                  oninput=${(state, event)=>({...state, body: event.target.value})}
                 />
               </fieldset>
 
@@ -120,8 +120,11 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                   data-test="tags"
                   placeholder="Enter tags"
                   value=${currentTag}
-                  onkeyup=${preventDefault(OnEnter(AddTag))}
-                  oninput=${ChangeFieldFromTarget("currentTag")}
+                  onkeyup=${(state, event) => {
+                    return event.keyCode===13 ? [AddTag, currentTag] : state;
+                    event.preventDefault();
+                  }}
+                  oninput=${(state, event)=>({...state, currentTag: event.target.value})}
                 />
 
                 <div class="tag-list">
@@ -141,7 +144,7 @@ export const EditorPage = ({ title, description, body, currentTag, tagList, erro
                 class="btn btn-lg pull-xs-right btn-primary"
                 type="button"
                 disabled=${inProgress}
-                onclick=${preventDefault(SubmitArticle)}
+                onclick=${(_, event) => {event.preventDefault(); return SubmitArticle}}
               >
                 Publish Article
               </button>

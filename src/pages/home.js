@@ -3,8 +3,8 @@ import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
-import { preventDefault } from "@hyperapp/events";
-import { eventWith } from "../lib/events.js";
+//import { preventDefault } from "@hyperapp/events";
+//import { eventWith } from "../lib/events.js";
 
 // Actions & Effects
 export const SetTags = (state, { tags }) => ({ ...state, tags });
@@ -111,7 +111,7 @@ const FeedTab = ({ active, type, name }, children) =>
         href=""
         data-test="feed"
         class=${{ "nav-link": true, active }}
-        onclick=${[preventDefault(ChangeTab), eventWith({ activeFeedName: name, activeFeedType: type })]}
+        onclick=${(_, event) => {event.preventDefault(); return [ChangeTab, { activeFeedName: name, activeFeedType: type }]}}
       >
         ${children}
       </a>
@@ -126,7 +126,7 @@ const Tags = ({ tags }) => html`
           href=""
           data-test="tag"
           class="tag-pill tag-default"
-          onclick=${[preventDefault(ChangeTab), eventWith({ activeFeedType: TAG_FEED, activeFeedName: tag })]}
+          onclick=${(_, event) => {event.preventDefault(); return [ChangeTab, { activeFeedType: TAG_FEED, activeFeedName: tag }]}}
         >
           ${tag}
         </a>
@@ -149,7 +149,7 @@ const ListPagination = ({ pages }) => {
                 <a
                   class="page-link"
                   href=""
-                  onclick=${[preventDefault(ChangePage), eventWith({ currentPageIndex: page.index })]}
+                  onclick=${(_, event) => {event.preventDefault(); ({ currentPageIndex: page.index })}}
                 >
                   ${page.humanDisplay}
                 </a>

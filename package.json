@@ -5,7 +5,6 @@
     "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
   "dependencies": {
-    "@hyperapp/events": "0.0.3",
     "@kwasniew/hyperapp-fx": "2.0.0-beta.2",
     "hyperapp": "2.0.4",
     "hyperapp-v2-basiclogger": "0.3.0",
