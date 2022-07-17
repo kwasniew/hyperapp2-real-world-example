@@ -1,6 +1,6 @@
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import { errorsList } from "./fragments/forms.js";
 import { ListErrors } from "./fragments/forms.js";
 import { UserSuccess } from "./fragments/user.js";

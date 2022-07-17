@@ -6,9 +6,9 @@
   },
   "dependencies": {
     "@kwasniew/hyperapp-fx": "2.0.0-beta.2",
-    "hyperapp": "2.0.4",
+    "hyperapp": "2.0.22",
     "hyperapp-v2-basiclogger": "0.3.0",
-    "hyperlit": "0.1.4",
+    "hyperlit": "0.3.6",
     "page": "1.11.5",
     "snarkdown": "1.2.2"
   },

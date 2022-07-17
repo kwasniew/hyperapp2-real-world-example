@@ -1,4 +1,4 @@
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { authHeader } from "../shared/authHeader.js";
@@ -41,10 +41,8 @@ export const LoadPage = (activeFeedType) => (page) => (state, { username }) => {
   };
   return [
     newState,
-    [
-      FetchProfile({ username, token: state.user.token }),
-      fetches[activeFeedType]({ page, username, token: state.user.token }),
-    ],
+    FetchProfile({ username, token: state.user.token }),
+    fetches[activeFeedType]({ page, username, token: state.user.token }),
   ];
 };
 export const LoadProfilePage = LoadPage(AUTHOR_FEED);

@@ -1,4 +1,4 @@
-import { html } from "../../shared/html.js";
+import html from "hyperlit";
 import { Console } from "@kwasniew/hyperapp-fx";
 //import { targetValue } from "@hyperapp/events";
 

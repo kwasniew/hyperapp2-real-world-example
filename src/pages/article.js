@@ -1,4 +1,4 @@
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import markdown from "snarkdown";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
@@ -40,7 +40,7 @@ const AddComment = (state, { comment }) => ({
 
 const SubmitComment = (state) => [
   state,
-  [
+  //[
     Http({
       url: API_ROOT + "/articles/" + state.slug + "/comments",
       options: {
@@ -54,7 +54,7 @@ const SubmitComment = (state) => [
       action: AddComment,
       error: LogError,
     }),
-  ],
+  //],
 ];
 
 const DeleteArticle = ({ slug, token }) =>
@@ -91,7 +91,7 @@ export const LoadArticlePage = (page) => (state, { slug }) => {
   };
   return [
     newState,
-    [FetchArticle({ slug, token: state.user.token }), FetchComments({ slug, token: state.user.token })],
+    FetchArticle({ slug, token: state.user.token }), FetchComments({ slug, token: state.user.token }),
   ];
 };
 

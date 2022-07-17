@@ -1,4 +1,4 @@
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import { ListErrors } from "./fragments/forms.js";
 import { errorsList } from "./fragments/forms.js";
 import { Http } from "@kwasniew/hyperapp-fx";
@@ -31,7 +31,7 @@ const UpdateSettings = (user) => {
 
 const SubmitForm = (state) => [
   Submitting(state),
-  [
+  //[
     UpdateSettings({
       image: state.image,
       username: state.username,
@@ -40,7 +40,7 @@ const SubmitForm = (state) => [
       password: state.password,
       token: state.user.token,
     }),
-  ],
+  //],
 ];
 
 export const LoadSettingsPage = (page) => (state) => {

@@ -1,4 +1,4 @@
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import { pages } from "./index.js";
 import { HOME, LOGIN, NEW_EDITOR, REGISTER, SETTINGS, profile } from "./links.js";
 

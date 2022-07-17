@@ -1,13 +1,12 @@
-import { html } from "../shared/html.js";
+import html from "hyperlit";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { LogError } from "./fragments/forms.js";
 import { ArticleList, FetchArticles, loadingArticles } from "./fragments/articles.js";
-//import { preventDefault } from "@hyperapp/events";
-//import { eventWith } from "../lib/events.js";
 
 // Actions & Effects
-export const SetTags = (state, { tags }) => ({ ...state, tags });
+
+export const SetTags = (state, {tags}) => ({ ...state, tags });
 
 export const FetchTags = Http({
   url: API_ROOT + "/tags",
@@ -15,6 +14,11 @@ export const FetchTags = Http({
   error: LogError,
   errorResponse: "json",
 });
+
+/*export const FetchTags = Http(
+  API_ROOT + "/tags",
+  SetTags,
+);*/
 
 export const FetchUserFeed = ({ pageIndex, token }) =>
   FetchArticles(`/articles/feed?limit=10&offset=${pageIndex * 10}`, token);
@@ -54,7 +58,7 @@ const ChangeTab = (state, { activeFeedType, activeFeedName }) => {
     currentPageIndex: 0,
     ...loadingArticles,
   };
-  return [newState, [FetchFeed(newState)]];
+  return [newState, FetchFeed(newState)];
 };
 
 const ChangePage = (state, { currentPageIndex }) => {
@@ -64,7 +68,7 @@ const ChangePage = (state, { currentPageIndex }) => {
     currentPageIndex,
   };
 
-  return [newState, [FetchFeed(newState)]];
+  return [newState, FetchFeed(newState)];
 };
 
 export const LoadHomePage = (page) => (state) => {
@@ -81,7 +85,8 @@ export const LoadHomePage = (page) => (state) => {
     currentPageIndex: 0,
     ...loadingArticles,
   };
-  return [newState, [FetchFeed(newState), FetchTags]];
+  return [newState, FetchFeed(newState), FetchTags];
+  //return [newState, FetchTags];
 };
 
 // Views

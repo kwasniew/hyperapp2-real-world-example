@@ -11,7 +11,7 @@ const SaveUser = (user) => WriteToStorage({ key: SESSION, value: user });
 
 export const ReadUser = ReadFromStorage({ key: SESSION, action: SetUser });
 
-export const UserSuccess = (state, { user }) => [{ ...state, user }, [SaveUser(user), Redirect({ path: HOME })]];
+export const UserSuccess = (state, { user }) => [{ ...state, user }, SaveUser(user), Redirect({ path: HOME })];
 
 export const Logout = (state) => [
   { ...state, user: {} },

@@ -1,4 +1,4 @@
-import { html } from "../../shared/html.js";
+import html from "hyperlit";
 import { article as articleLink } from "../links.js";
 import { format } from "../../shared/date.js";
 import { Http } from "@kwasniew/hyperapp-fx";
