@@ -81,7 +81,6 @@ export const LoadHomePage = (page) => (state) => {
     ...loadingArticles,
   };
   return [newState, FetchFeed(newState), FetchTags];
-  //return [newState, FetchTags];
 };
 
 // Views

@@ -11,6 +11,7 @@ const router = (dispatch, { routes }) => {
     });
   });
 
+  //page('*', notfound)
   page.start();
 
   return () => {

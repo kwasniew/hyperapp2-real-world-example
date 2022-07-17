@@ -38,21 +38,19 @@ const AddComment = (state, { comment }) => ({
 
 const SubmitComment = (state) => [
   state,
-  //[
-    Http({
-      url: API_ROOT + "/articles/" + state.slug + "/comments",
-      options: {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...authHeader(state.user.token),
-        },
-        body: JSON.stringify({ comment: { body: state.commentText } }),
+  Http({
+    url: API_ROOT + "/articles/" + state.slug + "/comments",
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeader(state.user.token),
       },
-      action: AddComment,
-      error: LogError,
-    }),
-  //],
+      body: JSON.stringify({ comment: { body: state.commentText } }),
+    },
+    action: AddComment,
+    error: LogError,
+  }),
 ];
 
 const DeleteArticle = ({ slug, token }) =>

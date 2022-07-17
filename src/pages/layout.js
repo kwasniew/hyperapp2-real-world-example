@@ -33,6 +33,14 @@ const AnonymousView = ({ page }) => html`
   </ul>
 `;
 
+const p404 = ({state}) => html`
+  <div class="404 container page" key="404">
+    <h1>404.</h1>
+    <p>Page not found.</p>
+    <a href="/">Go back to home page</a>
+  </div>
+`;
+
 const Header = ({ page, user }) =>
   html`
     <nav class="navbar navbar-light">
@@ -47,6 +55,6 @@ const Header = ({ page, user }) =>
 
 export const view = (state) => html`
   <div>
-    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : ""}
+    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : p404(state)}
   </div>
 `;

@@ -2,7 +2,6 @@ import { ListErrors } from "./fragments/forms.js";
 import { formFields } from "./fragments/forms.js";
 import html from "hyperlit";
 import { errorsList } from "./fragments/forms.js";
-//import { OnEnter } from "../lib/events.js";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { FormError, Submitting } from "./fragments/forms.js";
@@ -38,19 +37,17 @@ const SaveArticle = ({ article, token, method, url }) =>
 
 const SubmitArticle = (state) => [
   Submitting(state),
-  //[
-    SaveArticle({
-      article: {
-        title: state.title,
-        description: state.description,
-        body: state.body,
-        tagList: state.tagList,
-      },
-      token: state.user.token,
-      url: API_ROOT + "/articles" + (state.page === NEW_EDITOR ? "" : `/${state.slug}`),
-      method: state.page === NEW_EDITOR ? "POST" : "PUT",
-    }),
-  //],
+  SaveArticle({
+    article: {
+      title: state.title,
+      description: state.description,
+      body: state.body,
+      tagList: state.tagList,
+    },
+    token: state.user.token,
+    url: API_ROOT + "/articles" + (state.page === NEW_EDITOR ? "" : `/${state.slug}`),
+    method: state.page === NEW_EDITOR ? "POST" : "PUT",
+  }),
 ];
 
 export const LoadNewEditorPage = (page) => (state) => ({

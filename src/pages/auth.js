@@ -42,13 +42,11 @@ const Register = ({ email, password, username }) =>
   });
 const SubmitRegister = (state) => [
   { ...state, inProgress: true },
-  //[
-    Register({
-      email: state.email,
-      password: state.password,
-      username: state.username,
-    }),
-  //],
+  Register({
+    email: state.email,
+    password: state.password,
+    username: state.username,
+  }),
 ];
 
 const defaultAuthFields = {
