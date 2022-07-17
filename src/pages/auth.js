@@ -7,12 +7,8 @@ import { UserSuccess } from "./fragments/user.js";
 import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { REGISTER, LOGIN } from "./links.js";
-import { preventDefault, targetValue } from "@hyperapp/events";
 
 // Actions & Effects
-const ChangeUsername = (state, username) => ({ ...state, username });
-const ChangeEmail = (state, email) => ({ ...state, email });
-const ChangePassword = (state, password) => ({ ...state, password });
 
 const Login = ({ email, password }) =>
   Http({
@@ -91,7 +87,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
 
           ${ListErrors({ errors: errorsList({ errors }) })}
 
-          <form onsubmit=${preventDefault(SubmitLogin)}>
+          <form onsubmit=${(_, event) => {event.preventDefault(); return SubmitLogin}}>
             <fieldset>
               <fieldset class="form-group">
                 <input
@@ -100,7 +96,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
                   type="email"
                   placeholder="Email"
                   value=${email}
-                  oninput=${[ChangeEmail, targetValue]}
+                  oninput=${(state, event) => ({...state, email: event.target.value})}
                 />
               </fieldset>
 
@@ -111,7 +107,7 @@ export const LoginPage = ({ email, password, inProgress, errors }) => html`
                   data-test="password"
                   placeholder="Password"
                   value=${password}
-                  oninput=${[ChangePassword, targetValue]}
+                  oninput=${(state, event) => ({...state, password: event.target.value})}
                 />
               </fieldset>
 
@@ -138,7 +134,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
 
           ${ListErrors({ errors: errorsList({ errors }) })}
 
-          <form onsubmit=${preventDefault(SubmitRegister)}>
+          <form onsubmit=${(_, event) => {event.preventDefault(); return SubmitRegister}}>
             <fieldset>
               <fieldset class="form-group">
                 <input
@@ -147,7 +143,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                   data-test="username"
                   placeholder="Username"
                   value=${username}
-                  oninput=${[ChangeUsername, targetValue]}
+                  oninput=${(state, event) => ({...state, username: event.target.value})}
                 />
               </fieldset>
 
@@ -158,7 +154,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                   data-test="email"
                   placeholder="Email"
                   value=${email}
-                  oninput=${[ChangeEmail, targetValue]}
+                  oninput=${(state, event) => ({...state, email: event.target.value})}
                 />
               </fieldset>
 
@@ -169,7 +165,7 @@ export const RegisterPage = ({ username, password, email, inProgress, errors }) 
                   data-test="password"
                   placeholder="Password"
                   value=${password}
-                  oninput=${[ChangePassword, targetValue]}
+                  oninput=${(state, event) => ({...state, password: event.target.value})}
                 />
               </fieldset>
 
