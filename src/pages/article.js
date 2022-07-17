@@ -144,14 +144,14 @@ const ArticleBanner = ({ state }) =>
   `;
 
 const CommentInput = ({ state }) => html`
-  <form class="card comment-form" onsubmit=${preventDefault(SubmitComment)}>
+  <form class="card comment-form" onsubmit=${(_, event) => {event.preventDefault(); return SubmitComment}}>
     <div class="card-block">
       <textarea
         class="form-control"
         placeholder="Write a comment..."
         data-test="commentInput"
         value=${state.commentText}
-        oninput=${ChangeFieldFromTarget("commentText")}
+        oninput=${(state, event) => ({...state, commentText: event.target.value})}
         rows="3"
       />
     </div>
