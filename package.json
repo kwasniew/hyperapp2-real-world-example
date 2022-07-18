@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "snowpack dev",
+    "start": "snowpack dev --port 8080",
     "build": "snowpack build && esbuild src/index.js --minify --bundle --outfile=build/src/index.js",
     "format": "prettier --print-width 120 --write 'src/**/*.js'"
   },
@@ -9,12 +9,12 @@
     "hyperapp": "2.0.22",
     "hyperapp-v2-basiclogger": "0.3.0",
     "hyperlit": "0.3.6",
-    "page": "1.11.5",
-    "snarkdown": "1.2.2"
+    "page": "1.11.6",
+    "snarkdown": "2.0.0"
   },
   "devDependencies": {
-    "esbuild": "0.4.9",
-    "prettier": "2.0.1",
-    "snowpack": "2.3.1"
+    "esbuild": "0.14.48",
+    "prettier": "2.7.1",
+    "snowpack": "^3.8.8"
   }
 }

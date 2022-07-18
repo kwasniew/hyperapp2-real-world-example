@@ -17,23 +17,7 @@ const UserLink = ({ user }) => html`
   ${user.image ? UserImage({ user }) : ""} <span data-test="profile">${user.username}</span>
 `;
 
-const UserView = ({ page, user }) => html`
-  <ul class="nav navbar-nav pull-xs-right">
-    ${NavItem({ page, path: HOME }, "Home")}
-    ${NavItem({ page, path: NEW_EDITOR }, html` <i class="ion-compose" /> New Post `)}
-    ${NavItem({ page, path: SETTINGS }, html` <i class="ion-gear-a" /> Settings `)}
-    ${NavItem({ page, path: profile(user.username) }, UserLink({ user }))}
-  </ul>
-`;
-
-const AnonymousView = ({ page }) => html`
-  <ul class="nav navbar-nav pull-xs-right">
-    ${NavItem({ page, path: HOME }, "Home")} ${NavItem({ page, path: LOGIN }, "Sign in")}
-    ${NavItem({ page, path: REGISTER }, "Sign up")}
-  </ul>
-`;
-
-const p404 = ({state}) => html`
+const P404Page = ({state}) => html`
   <div class="404 container page" key="404">
     <h1>404.</h1>
     <p>Page not found.</p>
@@ -48,13 +32,22 @@ const Header = ({ page, user }) =>
         <a class="navbar-brand" href=${HOME}>
           conduit
         </a>
-        ${user.token ? UserView({ page, user }) : AnonymousView({ page })}
+        <ul class="nav navbar-nav pull-xs-right">
+        ${NavItem({ page, path: HOME }, "Home")}
+        ${user.token && NavItem({ page, path: NEW_EDITOR }, html` <i class="ion-compose" /> New Post `)}
+        ${user.token ? 
+          NavItem({ page, path: SETTINGS }, html` <i class="ion-gear-a" /> Settings `) 
+          : NavItem({ page, path: LOGIN }, "Sign in")}
+        ${user.token ? 
+          NavItem({ page, path: profile(user.username) }, UserLink({ user })) 
+          : NavItem({ page, path: REGISTER }, "Sign up")}
+        </ul>
       </div>
     </nav>
   `;
 
 export const view = (state) => html`
   <div>
-    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : p404(state)}
+    ${Header({ page: state.page, user: state.user })} ${state.page ? pages[state.page](state) : ""}
   </div>
 `;
