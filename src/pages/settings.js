@@ -4,10 +4,10 @@ import { errorsList } from "./fragments/forms.js";
 import { Http } from "@kwasniew/hyperapp-fx";
 import { API_ROOT } from "../config.js";
 import { UserSuccess, Logout } from "./fragments/user.js";
-import { formFields, ChangeFieldFromTarget } from "./fragments/forms.js";
+import { formFields } from "./fragments/forms.js";
 import { FormError, Submitting } from "./fragments/forms.js";
 import { authHeader } from "../shared/authHeader.js";
-import { preventDefault } from "@hyperapp/events";
+//import { preventDefault } from "@hyperapp/events";
 
 // Actions & Effects
 const UpdateSettings = (user) => {
@@ -55,7 +55,7 @@ export const LoadSettingsPage = (page) => (state) => {
 
 // Views
 const SettingsForm = ({ image, username, bio, email, password, inProgress }) => html`
-  <form onsubmit=${preventDefault(SubmitForm)}>
+  <form onsubmit=${(_, event) => {event.preventDefault(); return SubmitForm}}>
     <fieldset>
       <fieldset class="form-group">
         <input
@@ -64,7 +64,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
           data-test="image"
           placeholder="URL of profile picture"
           value=${image}
-          oninput=${ChangeFieldFromTarget("image")}
+          oninput=${(state, event)=>({...state, image: event.target.value})}
         />
       </fieldset>
 
@@ -75,7 +75,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
           data-test="username"
           placeholder="Username"
           value=${username}
-          oninput=${ChangeFieldFromTarget("username")}
+          oninput=${(state, event)=>({...state, username: event.target.value})}
         />
       </fieldset>
 
@@ -86,7 +86,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
           data-test="bio"
           placeholder="Short bio about you"
           value=${bio}
-          oninput=${ChangeFieldFromTarget("bio")}
+          oninput=${(state, event)=>({...state, bio: event.target.value})}
         />
       </fieldset>
 
@@ -97,7 +97,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
           data-test="email"
           placeholder="Email"
           value=${email}
-          oninput=${ChangeFieldFromTarget("email")}
+          oninput=${(state, event)=>({...state, email: event.target.value})}
         />
       </fieldset>
 
@@ -108,7 +108,7 @@ const SettingsForm = ({ image, username, bio, email, password, inProgress }) => 
           data-test="password"
           placeholder="New Password"
           value=${password}
-          oninput=${ChangeFieldFromTarget("password")}
+          oninput=${(state, event)=>({...state, password: event.target.value})}
         />
       </fieldset>
 
